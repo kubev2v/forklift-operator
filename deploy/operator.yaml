@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: virt-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: virt-operator
+  template:
+    metadata:
+      labels:
+        name: virt-operator
+    spec:
+      serviceAccountName: virt-operator
+      containers:
+        - name: virt-operator
+          image: "quay.io/fbladilo/virt-operator:v0.1"
+          imagePullPolicy: "Always"
+          volumeMounts:
+          - mountPath: /tmp/ansible-operator/runner
+            name: runner
+          env:
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "virt-operator"
+            - name: ANSIBLE_GATHERING
+              value: explicit
+      volumes:
+        - name: runner
+          emptyDir: {}

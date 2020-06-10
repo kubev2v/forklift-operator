@@ -1,0 +1,7 @@
+---
+- version: v1alpha1
+  group: virt.migration.openshift.io
+  kind: Migration
+  role: /opt/ansible/roles/migration
+  reconcilePeriod: 30m
+  manageStatus: False
