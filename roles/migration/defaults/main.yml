@@ -1,2 +1,11 @@
 ---
 image_pull_policy: Always
+mtv_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'openshift-migration' }}"
+mtv_controller_repo: "{{ lookup( 'env', 'MTV_CONTROLLER_REPO') }}"
+mtv_controller_image: "{{ registry }}/{{ project }}/{{ mtv_controller_repo }}"
+mtv_controller_limits_cpu: "100m"
+mtv_controller_limits_memory: "800Mi"
+mtv_controller_requests_cpu: "100m"
+mtv_controller_requests_memory: "350Mi"
+registry: "{{ lookup( 'env', 'REGISTRY') }}"
+project: "{{ lookup( 'env', 'PROJECT') }}"

@@ -1,1 +1,17 @@
 ---
+- name: "Setup RBAC"
+  k8s:
+    state: present
+    definition: "{{ lookup('template', 'mtv_rbac.yml.j2' )}}"
+
+- name: "Create required CRDs"
+  k8s:
+    state: present
+    src: "{{ role_path }}/files/{{ item }}"
+  with_items:
+    - "virt_v1alpha1_plan.yaml"
+
+- name: "Deploy MTV controller"
+  k8s:
+    state : present
+    definition: "{{ lookup('template', 'mtv_controller.yml.j2' )}}"
