@@ -16,7 +16,7 @@ spec:
       serviceAccountName: virt-operator
       containers:
         - name: virt-operator
-          image: "quay.io/fbladilo/virt-operator:v0.1"
+          image: "quay.io/konveyor/virt-operator:latest"
           imagePullPolicy: "Always"
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner
