@@ -50,13 +50,7 @@ rules:
   - configmaps
   - secrets
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - '*'
 - apiGroups:
   - apps
   resources:
@@ -65,13 +59,7 @@ rules:
   - replicasets
   - statefulsets
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - '*'
 - apiGroups:
   - monitoring.coreos.com
   resources:
@@ -87,19 +75,6 @@ rules:
   - deployments/finalizers
   verbs:
   - update
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-- apiGroups:
-  - apps
-  resources:
-  - replicasets
-  - deployments
-  verbs:
-  - get
 - apiGroups:
   - virt.migration.openshift.io
   resources:
@@ -172,7 +147,7 @@ spec:
               value: quay.io
             - name: PROJECT
               value: konveyor
-            - name: MTV_CONTROLLER_REPO
+            - name: VIRT_CONTROLLER_REPO
               value: virt-controller
             - name: ANSIBLE_GATHERING
               value: explicit

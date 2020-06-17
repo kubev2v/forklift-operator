@@ -9,7 +9,7 @@ metadata:
   labels:
     app: migration
   name: virt-controller
-  namespace: {{ mtv_namespace }}
+  namespace: {{ virt_namespace }}
 spec:
   selector:
     matchLabels:
@@ -19,7 +19,7 @@ spec:
       labels:
         app: migration
     spec:
-      serviceAccountName: mtv-controller
+      serviceAccountName: virt-controller
       containers:
       - name: virt-controller
         command:
@@ -33,8 +33,8 @@ spec:
         imagePullPolicy: {{ image_pull_policy }}
         resources:
           limits:
-            cpu: {{ mtv_controller_limits_cpu }}
-            memory: {{ mtv_controller_limits_memory }}
+            cpu: {{ virt_controller_limits_cpu }}
+            memory: {{ virt_controller_limits_memory }}
           requests:
-            cpu: {{ mtv_controller_requests_cpu }}
-            memory: {{ mtv_controller_requests_memory }}
+            cpu: {{ virt_controller_requests_cpu }}
+            memory: {{ virt_controller_requests_memory }}

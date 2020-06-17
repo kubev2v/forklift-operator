@@ -1,0 +1,6 @@
+apiVersion: virt.migration.openshift.io/v1alpha1
+kind: Migration
+metadata:
+  name: virt-controller
+spec:
+  olm_managed: true
