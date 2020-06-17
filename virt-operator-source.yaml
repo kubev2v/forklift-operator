@@ -6,6 +6,6 @@ metadata:
 spec:
   type: appregistry
   endpoint: https://quay.io/cnr
-  registryNamespace: fbladilo
+  registryNamespace: konveyor
   displayName: "Konveyor Virt Operator"
   publisher: "ocp-migrate-team@redhat.com"
