@@ -14,10 +14,10 @@ metadata:
     alm-examples: |-
       [
         {
-          "apiVersion": "virt.migration.openshift.io/v1alpha1",
-          "kind": "Migration",
+          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "kind": "VirtController",
           "metadata": {
-            "name": "migration",
+            "name": "virt-controller",
             "namespace": "openshift-migration"
           },
           "spec": {
@@ -25,7 +25,7 @@ metadata:
           }
         },
         {
-          "apiVersion": "virt.migration.openshift.io/v1alpha1",
+          "apiVersion": "virt.konveyor.io/v1alpha1",
           "kind": "Plan",
           "metadata": {
             "name": "plan",
@@ -152,7 +152,7 @@ spec:
           verbs:
           - update
         - apiGroups:
-          - virt.migration.openshift.io
+          - virt.konveyor.io
           resources:
           - '*'
           verbs:
@@ -161,7 +161,7 @@ spec:
       - serviceAccountName: virt-controller
         rules:
         - apiGroups:
-          - virt.migration.openshift.io
+          - virt.konveyor.io
           resources:
           - '*'
           verbs:
@@ -188,12 +188,17 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - name: migrations.virt.migration.openshift.io
+    - name: virtcontrollers.virt.konveyor.io
+      version: v1alpha1
+      kind: VirtController
+      displayName: VirtController
+      description: VM migration controller
+    - name: migrations.virt.konveyor.io
       version: v1alpha1
       kind: Migration
       displayName: Migration
       description: VM migration
-    - name: plans.virt.migration.openshift.io
+    - name: plans.virt.konveyor.io
       version: v1alpha1
       kind: Plan
       displayName: Plan

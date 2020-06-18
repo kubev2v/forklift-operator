@@ -67,7 +67,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - virt.migration.openshift.io
+  - virt.konveyor.io
   resources:
   - '*'
   verbs:

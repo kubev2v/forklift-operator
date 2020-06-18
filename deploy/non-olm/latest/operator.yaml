@@ -15,17 +15,18 @@ metadata:
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: migrations.virt.migration.openshift.io
+  name: virtcontrollers.virt.konveyor.io
 spec:
-  group: virt.migration.openshift.io
+  group: virt.konveyor.io
   names:
-    kind: Migration
-    listKind: MigrationList
-    plural: migrations
-    singular: migration
+    kind: VirtController
+    listKind: VirtControllerList
+    plural: virtcontrollers
+    singular: virtcontroller
   scope: Namespaced
   subresources:
     status: {}
+  version: v1alpha1
   versions:
   - name: v1alpha1
     served: true
@@ -76,7 +77,7 @@ rules:
   verbs:
   - update
 - apiGroups:
-  - virt.migration.openshift.io
+  - virt.konveyor.io
   resources:
   - '*'
   verbs:
