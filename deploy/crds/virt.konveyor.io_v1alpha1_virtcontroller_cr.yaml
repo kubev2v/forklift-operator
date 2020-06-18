@@ -1,4 +1,4 @@
 apiVersion: virt.konveyor.io/v1alpha1
 kind: VirtController
 metadata:
-  name: virt-controller
+  name: example-virtcontroller

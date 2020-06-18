@@ -1,6 +1,0 @@
-apiVersion: virt.migration.openshift.io/v1alpha1
-kind: Migration
-metadata:
-  name: virt-migration
-spec:
-  size: 3

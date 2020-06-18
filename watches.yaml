@@ -1,7 +1,7 @@
 ---
 - version: v1alpha1
-  group: virt.migration.openshift.io
-  kind: Migration
-  role: /opt/ansible/roles/migration
+  group: virt.konveyor.io
+  kind: VirtController
+  role: /opt/ansible/roles/virtcontroller
   reconcilePeriod: 30m
   manageStatus: False

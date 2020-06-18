@@ -16,6 +16,7 @@
         src: "{{ role_path }}/files/{{ item }}"
       with_items:
         - "virt_v1alpha1_plan.yaml"
+        - "virt_v1alpha1_migration.yaml"
 
   - when: olm_managed
     block:
@@ -26,8 +27,8 @@
 
     - name: "Clean conditions and set Reconciling state"
       operator_sdk.util.k8s_status:
-        api_version: virt.migration.openshift.io/v1alpha1
-        kind: Migration
+        api_version: virt.konveyor.io/v1alpha1
+        kind: VirtController
         name: "{{ meta.name }}"
         namespace: "{{ meta.namespace }}"
         force: true
@@ -45,8 +46,8 @@
 
   always:
   - operator_sdk.util.k8s_status:
-      api_version: virt.migration.openshift.io/v1alpha1
-      kind: Migration
+      api_version: virt.konveyor.io/v1alpha1
+      kind: VirtController
       name: "{{ meta.name }}"
       namespace: "{{ meta.namespace }}"
       status:
@@ -54,8 +55,8 @@
     when: olm_managed and reconciled
 
   - operator_sdk.util.k8s_status:
-      api_version: virt.migration.openshift.io/v1alpha1
-      kind: Migration
+      api_version: virt.konveyor.io/v1alpha1
+      kind: VirtController
       name: "{{ meta.name }}"
       namespace: "{{ meta.namespace }}"
       status:
@@ -64,8 +65,8 @@
 
   - name: Retrieve virt controller status
     k8s_facts:
-      api_version: virt.migration.openshift.io/v1alpha1
-      kind: Migration
+      api_version: virt.konveyor.io/v1alpha1
+      kind: VirtController
       namespace: "{{ virt_namespace }}"
     register: controller
 
@@ -74,8 +75,8 @@
           controller.resources[0].status.conditions is defined
     block:
     - operator_sdk.util.k8s_status:
-        api_version: virt.migration.openshift.io/v1alpha1
-        kind: Migration
+        api_version: virt.konveyor.io/v1alpha1
+        kind: VirtController
         name: "{{ meta.name }}"
         namespace: "{{ meta.namespace }}"
         status:
