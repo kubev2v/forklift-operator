@@ -10,7 +10,7 @@ The same versions are available for use without OLM. Run the command correspondi
 1. `oc create -f deploy/non-olm/latest/operator.yaml`
 
 ## VirtController CR Creation
-#### OpenShift 4 OLM
+#### OpenShift 4 with OLM
 1. In the OpenShift console navigate to Operators>Installed Operators
 1. Click on Konveyor Operator for VMs
 1. Locate VirtController on the top menu and click on it
