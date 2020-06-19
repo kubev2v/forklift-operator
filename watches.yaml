@@ -4,4 +4,3 @@
   kind: VirtController
   role: /opt/ansible/roles/virtcontroller
   reconcilePeriod: 30m
-  manageStatus: False
