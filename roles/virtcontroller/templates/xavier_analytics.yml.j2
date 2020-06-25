@@ -108,6 +108,27 @@ spec:
 apiVersion: v1
 kind: Service
 spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+    - name: https
+      port: 8443
+      targetPort: 8443
+  selector:
+    deploymentConfig: xavier-analytics-kieserver
+metadata:
+  name: xavier-analytics-kieserver
+  namespace: {{ virt_namespace }}
+  labels:
+    application: xavier-analytics
+    service: xavier-analytics-kieserver
+  annotations:
+    description: All the KIE server web server's ports.
+---
+apiVersion: v1
+kind: Service
+spec:
   clusterIP: None
   ports:
   - name: ping
