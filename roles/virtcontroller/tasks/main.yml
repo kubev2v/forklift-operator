@@ -41,6 +41,11 @@
       state : present
       definition: "{{ lookup('template', 'virt_controller.yml.j2' )}}"
 
+  - name: "Deploy xavier analytics"
+    k8s:
+      state : present
+      definition: "{{ lookup('template', 'xavier_analytics.yml.j2' )}}"
+
   - set_fact:
       reconciled: true
 

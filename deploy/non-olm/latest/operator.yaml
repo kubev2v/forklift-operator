@@ -110,7 +110,7 @@ subjects:
     namespace: "openshift-migration"
 namespace: "openshift-migration"
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: virt-operator

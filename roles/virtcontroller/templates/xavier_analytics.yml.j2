@@ -1,0 +1,143 @@
+---
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+      app: xavier-analytics
+      application: xavier-analytics
+      service: xavier-analytics-kieserver
+  name: xavier-analytics-kieserver
+  namespace: {{ virt_namespace }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentConfig: xavier-analytics-kieserver
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        application: xavier-analytics
+        deploymentConfig: xavier-analytics-kieserver
+        service: xavier-analytics-kieserver
+      name: xavier-analytics-kieserver
+    spec:
+      containers:
+      - env:
+        - name: KIE_ADMIN_USER
+          value: kie-admin-user
+        - name: KIE_ADMIN_PWD
+          value: kie-admin-password
+        - name: KIE_SERVER_MODE
+          value: DEVELOPMENT
+        - name: KIE_MBEANS
+          value: enabled
+        - name: DROOLS_SERVER_FILTER_CLASSES
+          value: "true"
+        - name: KIE_SERVER_BYPASS_AUTH_USER
+          value: "false"
+        - name: KIE_SERVER_ID
+          value: xavier-analytics-kieserver
+        - name: KIE_SERVER_ROUTE_NAME
+          value: xavier-analytics-kieserver
+        - name: KIE_SERVER_USE_SECURE_ROUTE_NAME
+          value: "false"
+        - name: KIE_SERVER_USER
+          value: executionUser
+        - name: KIE_SERVER_PWD
+          value: kie-server-password
+        image: quay.io/mrizzi/xavier-analytics:dev
+        imagePullPolicy: Always
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl --fail --silent -u $KIE_ADMIN_USER:$KIE_ADMIN_PWD http://localhost:8080/services/rest/server/healthcheck
+          failureThreshold: 3
+          initialDelaySeconds: 180
+          periodSeconds: 15
+          successThreshold: 1
+          timeoutSeconds: 2
+        name: xavier-analytics-kieserver
+        ports:
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl --fail --silent -u $KIE_ADMIN_USER:$KIE_ADMIN_PWD http://localhost:8080/services/rest/server/readycheck
+          failureThreshold: 6
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 2
+        resources:
+          limits:
+            cpu: "1"
+            memory: 2Gi
+          requests:
+            cpu: 400m
+            memory: 2Gi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 60
+  test: false
+  triggers:
+  - type: ConfigChange
+---
+apiVersion: v1
+kind: Service
+spec:
+  clusterIP: None
+  ports:
+  - name: ping
+    port: 8888
+    targetPort: 8888
+  selector:
+    deploymentConfig: xavier-analytics-kieserver
+  type: ClusterIP
+metadata:
+  name: xavier-analytics-kieserver-ping
+  namespace: {{ virt_namespace }}
+  labels:
+    application: xavier-analytics
+    service: xavier-analytics-kieserver
+  annotations:
+    description: The JGroups ping port for clustering.
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    application: xavier-analytics
+    service: xavier-analytics-kieserver
+  name: xavier-analytics
+  namespace: {{ virt_namespace }}
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: xavier-analytics-kieserver
+  wildcardPolicy: None
