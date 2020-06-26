@@ -110,7 +110,7 @@ subjects:
     namespace: "openshift-migration"
 namespace: "openshift-migration"
 ---
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: virt-operator
@@ -119,10 +119,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
+      app: migration
       name: virt-operator
   template:
     metadata:
       labels:
+        app: migration
         name: virt-operator
     spec:
       serviceAccountName: virt-operator
@@ -134,22 +136,30 @@ spec:
           - mountPath: /tmp/ansible-operator/runner
             name: runner
           env:
-            - name: WATCH_NAMESPACE
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.namespace
+            - name: OPERATOR_NAME
+              value: virt-operator
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
-            - name: OPERATOR_NAME
-              value: virt-operator
+            - name: WATCH_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
             - name: REGISTRY
               value: quay.io
             - name: PROJECT
               value: konveyor
             - name: VIRT_CONTROLLER_REPO
               value: virt-controller
+            - name: VIRT_CONTROLLER_TAG
+              value: latest
+            - name: MA_PROJECT
+              value: mrizzi
+            - name: MA_REPO
+              value: xavier-analytics
+            - name: MA_TAG
+              value: dev
             - name: ANSIBLE_GATHERING
               value: explicit
       volumes:

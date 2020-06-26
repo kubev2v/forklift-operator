@@ -36,6 +36,25 @@
         status:
           phase: Reconciling
 
+  - name: "Deploy MA analytics"
+    k8s:
+      state : present
+      definition: "{{ lookup('template', 'xavier_analytics.yml.j2' )}}"
+
+  - name: "Obtain MA analytics route"
+    k8s_facts:
+      kind: Route
+      namespace: "{{ meta.namespace }}"
+      label_selectors: "application=xavier-analytics"
+    register: route
+    until: route.resources | length > 0
+    delay: 10
+    retries: 6
+
+  - name: "Set MA analytics route"
+    set_fact:
+      ma_route: "{{ route.resources[0].spec.host }}"
+
   - name: "Deploy virt controller"
     k8s:
       state : present

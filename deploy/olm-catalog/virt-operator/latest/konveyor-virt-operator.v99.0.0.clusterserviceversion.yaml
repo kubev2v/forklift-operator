@@ -61,10 +61,12 @@ spec:
           replicas: 1
           selector:
             matchLabels:
+              app: migration
               name: virt-operator
           template:
             metadata:
               labels:
+                app: migration
                 name: virt-operator
             spec:
               serviceAccountName: virt-operator
@@ -86,6 +88,14 @@ spec:
                   value: konveyor
                 - name: VIRT_CONTROLLER_REPO
                   value: virt-controller
+                - name: VIRT_CONTROLLER_TAG
+                  value: latest
+                - name: MA_PROJECT
+                  value: mrizzi
+                - name: MA_REPO
+                  value: xavier-analytics
+                - name: MA_TAG
+                  value: dev
                 - name: ANSIBLE_GATHERING
                   value: explicit
                 image: quay.io/konveyor/virt-operator:latest
