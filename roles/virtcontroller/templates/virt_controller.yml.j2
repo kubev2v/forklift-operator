@@ -10,10 +10,12 @@ spec:
   selector:
     matchLabels:
       app: migration
+      name: virt-controller
   template:
     metadata:
       labels:
         app: migration
+        name: virt-controller
     spec:
       serviceAccountName: virt-controller
       containers:

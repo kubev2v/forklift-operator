@@ -119,10 +119,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
+      app: migration
       name: virt-operator
   template:
     metadata:
       labels:
+        app: migration
         name: virt-operator
     spec:
       serviceAccountName: virt-operator
