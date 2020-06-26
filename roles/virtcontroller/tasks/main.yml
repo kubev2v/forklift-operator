@@ -26,7 +26,7 @@
         definition: "{{ lookup('template', 'virt_controller_olm_patch.yml.j2') }}"
 
     - name: "Clean conditions and set Reconciling state"
-      operator_sdk.util.k8s_status:
+      k8s_status:
         api_version: virt.konveyor.io/v1alpha1
         kind: VirtController
         name: "{{ meta.name }}"
@@ -64,7 +64,7 @@
       reconciled: true
 
   always:
-  - operator_sdk.util.k8s_status:
+  - k8s_status:
       api_version: virt.konveyor.io/v1alpha1
       kind: VirtController
       name: "{{ meta.name }}"
@@ -73,7 +73,7 @@
         phase: Reconciled
     when: olm_managed and reconciled
 
-  - operator_sdk.util.k8s_status:
+  - k8s_status:
       api_version: virt.konveyor.io/v1alpha1
       kind: VirtController
       name: "{{ meta.name }}"
@@ -93,7 +93,7 @@
           controller.resources is defined and
           controller.resources[0].status.conditions is defined
     block:
-    - operator_sdk.util.k8s_status:
+    - k8s_status:
         api_version: virt.konveyor.io/v1alpha1
         kind: VirtController
         name: "{{ meta.name }}"
