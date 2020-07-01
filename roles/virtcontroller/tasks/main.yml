@@ -17,6 +17,7 @@
       with_items:
         - "virt_v1alpha1_plan.yaml"
         - "virt_v1alpha1_migration.yaml"
+        - "virt_v1alpha1_provider.yaml"
 
   - when: olm_managed
     block:

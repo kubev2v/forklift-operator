@@ -26,12 +26,42 @@ metadata:
         },
         {
           "apiVersion": "virt.konveyor.io/v1alpha1",
+          "kind": "Migration",
+          "metadata": {
+            "name": "example-migration",
+            "namespace": "openshift-migration"
+          },
+          "spec": {
+             "plan": {
+                "name": "example-plan",
+                "namespace": "openshift-migration"
+             }
+          }
+        },
+        {
+          "apiVersion": "virt.konveyor.io/v1alpha1",
           "kind": "Plan",
           "metadata": {
-            "name": "plan",
+            "name": "example-plan",
             "namespace": "openshift-migration"
           },
           "spec": {}
+        },
+        {
+          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "kind": "Provider",
+          "metadata": {
+            "name": "example-provider",
+            "namespace": "openshift-migration"
+          },
+          "spec": {
+             "type": "vmware",
+             "secret": {
+                "name": "",
+                "namespace": ""
+             },
+             "url": ""
+          }
         }
       ]
     certified: "false"
@@ -213,3 +243,8 @@ spec:
       kind: Plan
       displayName: Plan
       description: VM migration plan
+    - name: providers.virt.konveyor.io
+      version: v1alpha1
+      kind: Provider
+      displayName: Provider
+      description: VM provider
