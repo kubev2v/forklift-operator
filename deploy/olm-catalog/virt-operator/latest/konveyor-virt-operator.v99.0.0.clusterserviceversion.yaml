@@ -32,9 +32,10 @@ metadata:
             "namespace": "openshift-migration"
           },
           "spec": {
-             "plan":
+             "plan": {
                 "name": "example-plan",
                 "namespace": "openshift-migration"
+             }
           }
         },
         {
@@ -55,9 +56,10 @@ metadata:
           },
           "spec": {
              "type": "vmware",
-             "secret":
+             "secret": {
                 "name": "",
                 "namespace": ""
+             },
              "url": ""
           }
         }
