@@ -155,6 +155,12 @@ spec:
           - update
           - watch
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
           - pods
@@ -184,6 +190,18 @@ spec:
           - get
           - create
         - apiGroups:
+          - apps.openshift.io
+          resources:
+          - deploymentconfigs
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
           - apps
           resourceNames:
           - virt-operator
@@ -206,6 +224,18 @@ spec:
           - '*'
           verbs:
           - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
   installModes:
   - type: OwnNamespace
     supported: true
@@ -248,3 +278,13 @@ spec:
       kind: Provider
       displayName: Provider
       description: VM provider
+    - name: hosts.virt.konveyor.io
+      version: v1alpha1
+      kind: Host
+      displayName: Host
+      description: VM host
+    - name: maps.virt.konveyor.io
+      version: v1alpha1
+      kind: Map
+      displayName: Map
+      description: VM map

@@ -24,7 +24,7 @@ The same versions are available for use without OLM. Run the command correspondi
 ## Cleanup
 ```
 oc delete namespace openshift-migration
-oc delete crd virtcontrollers.virt.konveyor.io migrations.virt.konveyor.io plans.virt.konveyor.io providers.virt.konveyor.io
+oc delete crd virtcontrollers.virt.konveyor.io migrations.virt.konveyor.io plans.virt.konveyor.io providers.virt.konveyor.io hosts.virt.konveyor.io maps.virt.konveyor.io
 oc delete clusterrole virt-controller
 oc delete clusterrolebindings virt-operator virt-controller
 ```

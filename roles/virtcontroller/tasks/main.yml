@@ -18,6 +18,8 @@
         - "virt_v1alpha1_plan.yaml"
         - "virt_v1alpha1_migration.yaml"
         - "virt_v1alpha1_provider.yaml"
+        - "virt_v1alpha1_host.yaml"
+        - "virt_v1alpha1_map.yaml"
 
   - when: olm_managed
     block:
