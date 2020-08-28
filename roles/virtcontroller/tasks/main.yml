@@ -58,6 +58,11 @@
     set_fact:
       ma_route: "{{ route.resources[0].spec.host }}"
 
+  - name: "Setup up inventory service and route"
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'inventory.yml.j2') }}"
+
   - name: "Deploy virt controller"
     k8s:
       state : present
