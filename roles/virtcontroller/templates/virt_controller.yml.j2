@@ -58,7 +58,7 @@ spec:
     spec:
       serviceAccountName: virt-controller
       containers:
-      - name: virt-controller
+      - name: main
         command:
         - /manager
         env:
@@ -67,7 +67,7 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
         - name: ROLE
-          value: controller
+          value: main
         - name: MA_ROUTE
           value: {{ ma_route }}
         - name: SECRET_NAME
