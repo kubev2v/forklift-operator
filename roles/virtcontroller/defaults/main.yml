@@ -21,3 +21,4 @@ ma_image_fqin: "{{ registry }}/{{ ma_project }}/{{ ma_repo }}:{{ ma_version }}"
 olm_managed: false
 registry: "{{ lookup( 'env', 'REGISTRY') }}"
 project: "{{ lookup( 'env', 'PROJECT') }}"
+inventory_volume_path: "/var/cache/inventory"
