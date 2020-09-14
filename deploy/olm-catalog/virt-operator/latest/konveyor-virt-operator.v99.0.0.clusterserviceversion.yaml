@@ -236,6 +236,22 @@ spec:
           - update
           - patch
           - delete
+        - apiGroups:
+          - k8s.cni.cncf.io
+          resources:
+          - network-attachment-definitions
+          verbs:
+          - get
+          - list
+          - watch
+        - apiGroups:
+          - storage.k8s.io
+          resources:
+          - storageclasses
+          verbs:
+          - get
+          - list
+          - watch
   installModes:
   - type: OwnNamespace
     supported: true
@@ -283,8 +299,13 @@ spec:
       kind: Host
       displayName: Host
       description: VM host
-    - name: maps.virt.konveyor.io
+    - name: networkmaps.virt.konveyor.io
       version: v1alpha1
-      kind: Map
-      displayName: Map
-      description: VM map
+      kind: NetworkMap
+      displayName: NetworkMap
+      description: VM network map
+    - name: storagemaps.virt.konveyor.io
+      version: v1alpha1
+      kind: StorageMap
+      displayName: StorageMap
+      description: VM storage map
