@@ -28,5 +28,6 @@ project: "{{ lookup( 'env', 'PROJECT') }}"
 inventory_volume_path: "/var/cache/inventory"
 cors_origins: []
 ui_configmap_name: "virt-ui-config"
+ui_configmap_path: "/etc/virt-ui"
 ui_config_namespace: "openshift-migration"
 ui_oauth_user_scope: "user:full"

@@ -40,12 +40,15 @@ spec:
         - name: mig-ui
           image: "{{ virt_ui_image_fqin }}"
           imagePullPolicy: "{{ image_pull_policy }}"
+          env:
+            - name: META_FILE
+              value: {{ ui_configmap_path }}/virtmeta.json
           ports:
             - containerPort: 9000
               protocol: TCP
           volumeMounts:
             - name: "{{ ui_configmap_name }}"
-              mountPath: /etc/mig-ui
+              mountPath: "{{ ui_configmap_path }}"
       volumes:
         - name: "{{ ui_configmap_name }}"
           configMap:

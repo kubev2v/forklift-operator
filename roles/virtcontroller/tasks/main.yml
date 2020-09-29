@@ -132,7 +132,7 @@
 
   - name: "Set OAuth redirect url"
     set_fact:
-      mig_ui_oauth_redirect_url: "https://{{ mig_ui_url }}/login/callback"
+      ui_oauth_redirect_url: "https://{{ mig_ui_url }}/login/callback"
 
   - name: "Check if MTV UI oauthclient secret exists already so we don't update it"
     k8s_facts:
@@ -144,12 +144,12 @@
 
   - name: "Generate random secret value for oauth client"
     set_fact:
-      mig_ui_oauth_secret: "{{ 99999999 | random | to_uuid | b64encode }}"
+      ui_oauth_secret: "{{ 99999999 | random | to_uuid | b64encode }}"
     when: (oauthclient_status.resources|length) == 0
 
   - name: "Use existing secret value for oauth client"
     set_fact:
-      mig_ui_oauth_secret: "{{ oauthclient_status.resources[0].secret }}"
+      ui_oauth_secret: "{{ oauthclient_status.resources[0].secret }}"
     when: (oauthclient_status.resources|length) > 0
 
   - name: "Set up MTV UI oauthclient secret"
