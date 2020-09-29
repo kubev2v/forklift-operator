@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: migration-ui
+  namespace: "{{ virt_namespace }}"
+  labels:
+    app: migration
+    service: migration-ui
+spec:
+  ports:
+    - name: port-9000
+      port: 9000
+      targetPort: 9000
+      protocol: TCP
+  selector:
+    app: migration
+    service: migration-ui
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: virt-ui
+  namespace: "{{ virt_namespace }}"
+  labels:
+    app: migration
+    service: migration-ui
+spec:
+  selector:
+     matchLabels:
+       app: migration
+       service: migration-ui
+  template:
+    metadata:
+      labels:
+        app: migration
+        service: migration-ui
+    spec:
+      containers:
+        - name: mig-ui
+          image: "{{ virt_ui_image_fqin }}"
+          imagePullPolicy: "{{ image_pull_policy }}"
+          ports:
+            - containerPort: 9000
+              protocol: TCP
+          volumeMounts:
+            - name: "{{ ui_configmap_name }}"
+              mountPath: /etc/mig-ui
+      volumes:
+        - name: "{{ ui_configmap_name }}"
+          configMap:
+            name: "{{ ui_configmap_name }}"

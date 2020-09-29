@@ -1,1 +1,11 @@
 ---
+mig_ui_configmap_data:
+  clusterApi: "{{ ui_cluster_api_endpoint }}"
+  namespace: "{{ virt_namespace }}"
+  configNamespace: "{{ ui_config_namespace }}"
+  inventoryApi: "{{ inventory_api_url }}"
+  oauth:
+    clientId: migration
+    redirectUrl: "{{ mig_ui_oauth_redirect_url }}"
+    userScope: "{{ ui_oauth_user_scope }}"
+    clientSecret: "{{ mig_ui_oauth_secret }}"
