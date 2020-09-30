@@ -1,1 +1,11 @@
 ---
+virt_ui_configmap_data:
+  clusterApi: "{{ ui_cluster_api_endpoint }}"
+  namespace: "{{ virt_namespace }}"
+  configNamespace: "{{ ui_config_namespace }}"
+  inventoryApi: "{{ inventory_api_url }}"
+  oauth:
+    clientId: migration
+    redirectUrl: "{{ ui_oauth_redirect_url }}"
+    userScope: "{{ ui_oauth_user_scope }}"
+    clientSecret: "{{ ui_oauth_secret }}"

@@ -120,6 +120,10 @@ spec:
                   value: virt-controller
                 - name: VIRT_CONTROLLER_TAG
                   value: latest
+                - name: VIRT_UI_REPO
+                  value: virt-ui
+                - name: VIRT_UI_TAG
+                  value: latest
                 - name: MA_PROJECT
                   value: mrizzi
                 - name: MA_REPO
@@ -216,6 +220,27 @@ spec:
           verbs:
           - '*'
       clusterPermissions:
+      - serviceAccountName: virt-operator
+        rules:
+        - apiGroups:
+          - config.openshift.io
+          resources:
+          - infrastructures
+          - clusterversions
+          verbs:
+          - get
+        - apiGroups:
+          - config.openshift.io
+          resources:
+          - apiservers
+          verbs:
+          - '*'
+        - apiGroups:
+          - oauth.openshift.io
+          resources:
+          - oauthclients
+          verbs:
+          - '*'
       - serviceAccountName: virt-controller
         rules:
         - apiGroups:

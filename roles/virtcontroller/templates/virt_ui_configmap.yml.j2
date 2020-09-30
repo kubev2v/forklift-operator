@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ ui_configmap_name }}"
+  namespace: "{{ virt_namespace }}"
+data:
+  virtmeta.json: '{{ virt_ui_configmap_data | to_json }}'
