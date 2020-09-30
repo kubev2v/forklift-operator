@@ -43,14 +43,14 @@
   #This ConfigMap contains the cluster config on Openshift 4.
   #Looking for it provides a rudimentary way to see what version we're on.
   #It also lets us generate the cluster API endpoint URL on Openshift 4.
-  - name: "Get cluster config"
+  - name: "Obtain cluster config"
     k8s_facts:
       api_version: config.openshift.io/v1
       kind: ClusterVersion
       name: version
     register: cluster_version
 
-  - name: Get the infrastructure
+  - name: "Obtain cluster infrastructure"
     k8s_facts:
       api_version: config.openshift.io/v1
       kind: Infrastructure
@@ -105,13 +105,16 @@
       definition: "{{ lookup('template', 'virt_ui_route.yml.j2') }}"
     when: (route_status.resources|length) == 0
 
-  - name: "Find generated MTV UI route"
+  - name: "Obtain MTV UI route"
     k8s_facts:
       api_version: "route.openshift.io/v1"
       kind: "Route"
       namespace: "{{ virt_namespace }}"
       name: migration
     register: route
+    until: route.resources | length > 0
+    delay: 10
+    retries: 6
 
   - name: "Determine MTV UI CORS URL"
     set_fact:
