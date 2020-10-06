@@ -1,5 +1,0 @@
-packageName: konveyor-virt-operator
-channels:
-- name: latest
-  currentCSV: konveyor-virt-operator.v99.0.0
-defaultChannel: latest
