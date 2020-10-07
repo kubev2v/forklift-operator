@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
-  name: konveyor-for-vms-bundle
+  name: konveyor-for-vms
   namespace: openshift-marketplace
 spec:
   sourceType: grpc
