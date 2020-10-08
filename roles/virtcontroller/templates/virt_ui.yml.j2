@@ -9,9 +9,9 @@ metadata:
     service: migration-ui
 spec:
   ports:
-    - name: port-9000
-      port: 9000
-      targetPort: 9000
+    - name: port-8080
+      port: 8080
+      targetPort: 8080
       protocol: TCP
   selector:
     app: migration
@@ -44,7 +44,7 @@ spec:
             - name: META_FILE
               value: {{ ui_configmap_path }}/virtmeta.json
           ports:
-            - containerPort: 9000
+            - containerPort: 8080
               protocol: TCP
           volumeMounts:
             - name: "{{ ui_configmap_name }}"
