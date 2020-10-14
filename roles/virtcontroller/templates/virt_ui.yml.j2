@@ -42,7 +42,7 @@ spec:
           imagePullPolicy: "{{ image_pull_policy }}"
           env:
             - name: META_FILE
-              value: {{ ui_configmap_path }}/virtmeta.json
+              value: {{ ui_configmap_path }}/virtMeta.json
           ports:
             - containerPort: 8080
               protocol: TCP
