@@ -12,7 +12,7 @@ virt_controller_image_fqin: "{{ virt_controller_image }}:{{ virt_controller_vers
 virt_ui_image: "{{ registry }}/{{ project }}/{{ virt_ui_repo }}"
 virt_ui_repo: "{{ lookup( 'env', 'VIRT_UI_REPO') }}"
 virt_ui_version: "{{ lookup( 'env', 'VIRT_UI_TAG') }}"
-virt_ui_image_fqin: "docker.io/bitnami/nginx"
+virt_ui_image_fqin: "{{ virt_ui_image }}:{{ virt_ui_version }}"
 ma_image: "{{ registry }}/{{ ma_project }}/{{ ma_repo }}"
 ma_limits_cpu: "1"
 ma_limits_memory: "2Gi"
