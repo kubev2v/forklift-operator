@@ -277,6 +277,14 @@ spec:
           - get
           - list
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - namespaces
+          verbs:
+          - get
+          - list
+          - watch
   installModes:
   - type: OwnNamespace
     supported: true
