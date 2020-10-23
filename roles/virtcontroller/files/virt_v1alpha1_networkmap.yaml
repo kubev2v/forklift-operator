@@ -48,8 +48,6 @@ spec:
                         type: string
                     required:
                     - type
-                    - namespace
-                    - name
                     type: object
                   source:
                     description: Source network.
@@ -68,6 +66,16 @@ spec:
               type: array
             provider:
               description: Provider
+              properties:
+                destination:
+                  description: Destination.
+                  type: object
+                source:
+                  description: Source.
+                  type: object
+              required:
+              - source
+              - destination
               type: object
           required:
           - provider
