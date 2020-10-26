@@ -43,6 +43,8 @@ spec:
           env:
             - name: META_FILE
               value: {{ ui_configmap_path }}/virtMeta.json
+            - name: NODE_EXTRA_CA_CERTS
+              value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
           ports:
             - containerPort: 8080
               protocol: TCP
