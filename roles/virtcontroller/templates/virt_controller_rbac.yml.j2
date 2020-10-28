@@ -15,6 +15,7 @@ rules:
   - ""
   resources:
   - secrets
+  - namespaces
   verbs:
   - get
   - list
@@ -35,6 +36,27 @@ rules:
   - storage.k8s.io
   resources:
   - storageclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - v2v.kubevirt.io
+  resources:
+  - resourcemappings
+  - virtualmachineimports
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update
+  - patch
+  - delete
+- apiGroups:
+  - cdi.kubevirt.io
+  resources:
+  - datavolumes
   verbs:
   - get
   - list
