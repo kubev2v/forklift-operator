@@ -154,6 +154,10 @@ spec:
               value: virt-controller
             - name: VIRT_CONTROLLER_TAG
               value: latest
+            - name: VIRT_PAYLOAD_REPO
+              value: virt-payload
+            - name: VIRT_PAYLOAD_TAG
+              value: latest
             - name: VIRT_UI_REPO
               value: virt-ui
             - name: VIRT_UI_TAG

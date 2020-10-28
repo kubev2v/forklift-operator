@@ -116,6 +116,10 @@ spec:
                   value: quay.io
                 - name: PROJECT
                   value: konveyor
+                - name: VIRT_PAYLOAD_REPO
+                  value: virt-payload
+                - name: VIRT_PAYLOAD_TAG
+                  value: latest
                 - name: VIRT_CONTROLLER_REPO
                   value: virt-controller
                 - name: VIRT_CONTROLLER_TAG
