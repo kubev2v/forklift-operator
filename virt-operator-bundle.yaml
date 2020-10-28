@@ -4,5 +4,10 @@ metadata:
   name: konveyor-for-vms
   namespace: openshift-marketplace
 spec:
+  displayName: Konveyor for VMs Operator
+  publisher: Red Hat
   sourceType: grpc
   image: quay.io/konveyor/virt-operator-index:latest
+  updateStrategy:
+    registryPoll:
+      interval: 10m
