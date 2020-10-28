@@ -253,6 +253,7 @@ spec:
           - ""
           resources:
           - secrets
+          - namespaces
           verbs:
           - get
           - list
@@ -278,9 +279,22 @@ spec:
           - list
           - watch
         - apiGroups:
-          - ""
+          - v2v.kubevirt.io
           resources:
-          - namespaces
+          - resourcemappings
+          - virtualmachineimports
+          verbs:
+          - get
+          - list
+          - watch
+          - create
+          - update
+          - patch
+          - delete
+        - apiGroups:
+          - cdi.kubevirt.io
+          resources:
+          - datavolumes
           verbs:
           - get
           - list
