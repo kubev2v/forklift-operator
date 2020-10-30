@@ -113,7 +113,7 @@ spec:
         imagePullPolicy: {{ image_pull_policy }}
         ports:
         - name: api
-          containerPort: 8080
+          containerPort: 8443
           name: webhook-server
           protocol: TCP
         resources:
@@ -126,11 +126,16 @@ spec:
         volumeMounts:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
+        - mountPath: /var/run/secrets/inventory-tls
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
+      - name: inventory-tls
+        secret:
+          defaultMode: 420
+          secretName: inventory-tls
       - name: inventory
         emptyDir: {}
