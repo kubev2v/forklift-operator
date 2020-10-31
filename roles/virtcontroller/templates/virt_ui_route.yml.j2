@@ -13,8 +13,6 @@ spec:
   to:
     kind: Service
     name: migration-ui
-  port:
-    targetPort: port-8080
   tls:
-    termination: edge
+    termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect
