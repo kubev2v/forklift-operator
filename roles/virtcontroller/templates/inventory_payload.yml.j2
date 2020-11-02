@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: virt-payload
+  name: inventory-payload
   namespace: "{{ virt_namespace }}"
   labels:
     app: migration
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: inventory-payload
-          image: "{{ virt_payload_image_fqin }}"
+          image: "{{ inventory_payload_image_fqin }}"
           imagePullPolicy: "{{ image_pull_policy }}"
           ports:
             - containerPort: 8080

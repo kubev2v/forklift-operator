@@ -4,6 +4,7 @@ virt_ui_configmap_data:
   namespace: "{{ virt_namespace }}"
   configNamespace: "{{ ui_config_namespace }}"
   inventoryApi: "{{ inventory_api_url }}"
+  inventoryPayloadApi: "{{ inventory_payload_url }}"
   oauth:
     clientId: migration
     redirectUrl: "{{ ui_oauth_redirect_url }}"

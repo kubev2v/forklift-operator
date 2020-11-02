@@ -89,7 +89,26 @@
   - name: "Deploy Inventory Payload"
     k8s:
       state : present
-      definition: "{{ lookup('template', 'virt_payload.yml.j2' )}}"
+      definition: "{{ lookup('template', 'inventory_payload.yml.j2' )}}"
+
+  - name: "Obtain Inventory Payload route"
+    k8s_facts:
+      kind: Route
+      namespace: "{{ meta.namespace }}"
+      label_selectors: "app=inventory-payload"
+    register: route
+    until: route.resources | length > 0
+    delay: 10
+    retries: 6
+
+  - name: "Set Inventory Payload route"
+    set_fact:
+      inventory_payload_route: "{{ route.resources[0].spec.host }}"
+
+  - when: (inventory_payload_route.resources|length) > 0
+    block:
+    - set_fact:
+        inventory_payload_url: "https://{{ inventory_payload_route.resources[0].spec.host}}"
 
   - name: "Set default CORS URLs"
     set_fact:
