@@ -71,6 +71,10 @@ spec:
   relatedImages:
   - name: controller
     image: quay.io/konveyor/virt-controller:latest
+  - name: ui
+    image: quay.io/konveyor/virt-ui:latest
+  - name: payload
+    image: quay.io/konveyor/virt-payload:latest
   displayName: Konveyor Operator for VMs
   description: |
     The Konveyor Virt Operator enables installation of the OpenShift VMs migration tooling.
