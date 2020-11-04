@@ -101,14 +101,10 @@
     delay: 10
     retries: 6
 
-  - name: "Set Inventory Payload route"
-    set_fact:
-      inventory_payload_route: "{{ route.resources[0].spec.host }}"
-
-  - when: (inventory_payload_route.resources|length) > 0
+  - when: (route.resources|length) > 0
     block:
     - set_fact:
-        inventory_payload_url: "https://{{ inventory_payload_route.resources[0].spec.host}}"
+        inventory_payload_url: "https://{{ route.resources[0].spec.host }}"
 
   - name: "Set default CORS URLs"
     set_fact:
