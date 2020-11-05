@@ -50,6 +50,13 @@ spec:
           ports:
             - containerPort: 8443
               protocol: TCP
+          resources:
+            limits:
+              cpu: {{ virt_ui_limits_cpu }}
+              memory: {{ virt_ui_limits_memory }}
+            requests:
+              cpu: {{ virt_ui_requests_cpu }}
+              memory: {{ virt_ui_requests_memory }}
           volumeMounts:
             - name: "{{ ui_configmap_name }}"
               mountPath: "{{ ui_configmap_path }}"
