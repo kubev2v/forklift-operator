@@ -1,10 +1,10 @@
 ---
 virt_ui_configmap_data:
-  clusterApi: "{{ ui_cluster_api_endpoint }}"
   namespace: "{{ virt_namespace }}"
   configNamespace: "{{ ui_config_namespace }}"
-  inventoryApi: "{{ inventory_api_url }}"
-  inventoryPayloadApi: "{{ inventory_payload_url }}"
+  clusterApi: "https://kubernetes.default.svc.cluster.local"
+  inventoryApi: "http://inventory.{{ virt_namespace }}.svc.cluster.local"
+  inventoryPayloadApi: "http://inventory-payload.{{ virt_namespace }}.svc.cluster.local:8080"
   oauth:
     clientId: migration
     redirectUrl: "{{ ui_oauth_redirect_url }}"
