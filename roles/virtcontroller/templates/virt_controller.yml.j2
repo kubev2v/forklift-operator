@@ -106,6 +106,8 @@ spec:
           value: inventory
         - name: SECRET_NAME
           value: webhook-server-secret
+        - name: API_PORT
+          value: "8443"
         - name: API_TLS_CERTIFICATE
           value: /var/run/secrets/inventory-tls/tls.crt
         - name: API_TLS_KEY
@@ -131,6 +133,7 @@ spec:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
         - mountPath: /var/run/secrets/inventory-tls
+          name: inventory-tls
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
