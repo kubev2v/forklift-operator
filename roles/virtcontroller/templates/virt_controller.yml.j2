@@ -106,6 +106,12 @@ spec:
           value: inventory
         - name: SECRET_NAME
           value: webhook-server-secret
+        - name: API_PORT
+          value: "8443"
+        - name: API_TLS_CERTIFICATE
+          value: /var/run/secrets/inventory-tls/tls.crt
+        - name: API_TLS_KEY
+          value: /var/run/secrets/inventory-tls/tls.key
         envFrom:
         - configMapRef:
             name: virt-controller
@@ -113,7 +119,7 @@ spec:
         imagePullPolicy: {{ image_pull_policy }}
         ports:
         - name: api
-          containerPort: 8080
+          containerPort: 8443
           name: webhook-server
           protocol: TCP
         resources:
@@ -126,11 +132,17 @@ spec:
         volumeMounts:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
+        - mountPath: /var/run/secrets/inventory-tls
+          name: inventory-tls
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
+      - name: inventory-tls
+        secret:
+          defaultMode: 420
+          secretName: inventory-tls
       - name: inventory
         emptyDir: {}
