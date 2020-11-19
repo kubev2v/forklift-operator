@@ -72,6 +72,12 @@ spec:
           value: main
         - name: MA_ROUTE
           value: {{ ma_route }}
+        - name: API_HOST
+          value: inventory.{{ virt_namespace }}.svc.cluster.local
+        - name: API_PORT
+          value: "8443"
+        - name: API_TLS_ENABLED
+          value: "true"
         - name: SECRET_NAME
           value: webhook-server-secret
         envFrom:
@@ -108,6 +114,8 @@ spec:
           value: webhook-server-secret
         - name: API_PORT
           value: "8443"
+        - name: API_TLS_ENABLED
+          value: "true"
         - name: API_TLS_CERTIFICATE
           value: /var/run/secrets/inventory-tls/tls.crt
         - name: API_TLS_KEY
