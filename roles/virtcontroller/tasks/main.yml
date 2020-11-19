@@ -86,6 +86,10 @@
     set_fact:
       ma_route: "{{ route.resources[0].spec.host }}"
 
+  - name: "Set MA default URL"
+    set_fact:
+      ma_url: "http://{{ ma_svc_name }}:8080/services/rest/server/containers/instances/{{ ma_app_version }}"
+
   - name: "Deploy Inventory Payload"
     k8s:
       state : present
