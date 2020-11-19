@@ -3,42 +3,21 @@
     reconciled: false
 
 - block:
-  - when: not olm_managed
-    block:
-    - name: "Setup MTV controller RBAC"
-      k8s:
-        state: present
-        definition: "{{ lookup('template', 'virt_controller_rbac.yml.j2' )}}"
+  - name: "Patch MTV controller CR for OLM"
+    k8s:
+      state: "present"
+      definition: "{{ lookup('template', 'virt_controller_olm_patch.yml.j2') }}"
 
-    - name: "Create MTV controller CRDs"
-      k8s:
-        state: present
-        src: "{{ role_path }}/files/{{ item }}"
-      with_items:
-        - "virt_v1alpha1_plan.yaml"
-        - "virt_v1alpha1_migration.yaml"
-        - "virt_v1alpha1_provider.yaml"
-        - "virt_v1alpha1_host.yaml"
-        - "virt_v1alpha1_networkmap.yaml"
-        - "virt_v1alpha1_storagemap.yaml"
-
-  - when: olm_managed
-    block:
-    - name: "Patch MTV controller CR for OLM"
-      k8s:
-        state: "present"
-        definition: "{{ lookup('template', 'virt_controller_olm_patch.yml.j2') }}"
-
-    - name: "Clean conditions and set Reconciling state"
-      k8s_status:
-        api_version: virt.konveyor.io/v1alpha1
-        kind: VirtController
-        name: "{{ meta.name }}"
-        namespace: "{{ meta.namespace }}"
-        force: true
-        conditions: []
-        status:
-          phase: Reconciling
+  - name: "Clean conditions and set Reconciling state"
+    k8s_status:
+      api_version: virt.konveyor.io/v1alpha1
+      kind: VirtController
+      name: "{{ meta.name }}"
+      namespace: "{{ meta.namespace }}"
+      force: true
+      conditions: []
+      status:
+        phase: Reconciling
 
   #This ConfigMap contains the cluster config on Openshift 4.
   #Looking for it provides a rudimentary way to see what version we're on.
@@ -267,7 +246,7 @@
       namespace: "{{ meta.namespace }}"
       status:
         phase: Reconciled
-    when: olm_managed and reconciled
+    when: reconciled
 
   - k8s_status:
       api_version: virt.konveyor.io/v1alpha1
@@ -276,7 +255,7 @@
       namespace: "{{ meta.namespace }}"
       status:
         phase: Failed
-    when: olm_managed and not reconciled
+    when: not reconciled
 
   - name: Retrieve virt controller status
     k8s_facts:
@@ -285,8 +264,7 @@
       namespace: "{{ virt_namespace }}"
     register: controller
 
-  - when: olm_managed and
-          controller.resources is defined and
+  - when: controller.resources is defined and
           controller.resources[0].status.conditions is defined
     block:
     - k8s_status:

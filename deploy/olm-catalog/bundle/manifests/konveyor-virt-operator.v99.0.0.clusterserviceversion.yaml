@@ -21,9 +21,7 @@ metadata:
             "name": "virt-controller",
             "namespace": "openshift-migration"
           },
-          "spec": {
-             "olm_managed": true
-          }
+          "spec": {}
         },
         {
           "apiVersion": "virt.konveyor.io/v1alpha1",
