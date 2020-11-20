@@ -34,7 +34,6 @@ ma_user: "kie-admin-user"
 ma_password: "kie-admin-password"
 ma_app_version: "xavier-analytics_0.0.1-SNAPSHOT"
 ma_svc_name: "xavier-analytics-kieserver"
-olm_managed: false
 registry: "{{ lookup( 'env', 'REGISTRY') }}"
 project: "{{ lookup( 'env', 'PROJECT') }}"
 inventory_volume_path: "/var/cache/inventory"

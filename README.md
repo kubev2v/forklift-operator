@@ -1,35 +1,43 @@
-# Konveyor for VMs Operator
+# Konveyor Operator for VMs
+
+Konveyor Operator for VMs (virt-operator) installs a suite of migration tools that facilitate the migration of VM workloads to OpenShift Virtualization.
 
 ## Prerequisites
 
-1. OCP 4.5+ for OLM based deployments
+1. OCP 4.6+
 
-## Operator Installation on OpenShift 4 with OLM
+## Konveyor for VMs Operator Installation
+
+Konveyor operator for VMs is installable on OpenShift 4 via OperatorHub.
+
+### Installing _released versions_
+
+1. Visit the OpenShift Web Console.
+1. Navigate to _Operators => OperatorHub_.
+1. Search for _Konveyor Operator for VMs_.
+1. Install the desired _Konveyor Operator for VMs_ version.
+
+### Installing _latest_
+
+Installing latest is almost an identical procedure to released versions but requires creating a new catalog source
+
 1. `oc create -f virt-operator-bundle.yaml`
-1. Login to OpenShift console and search for Konveyor Operator for VMs
-1. Install the desired version
-
-## Operator Installation on OpenShift 4 without OLM
-The same versions are available for use without OLM. Run the command corresponding to the version you wish to use:
-1. `oc create -f deploy/non-olm/latest/operator.yaml`
+1. Follow the same procedure as released versions until the Search for _Konveyor Operator for VMs_ step
+1. There should be two _Konveyor Operator for VMs_ available for installation now
+1. Select the _Konveyor Operator for VMs_ without the _community_ tag
+1. Proceed to install latest
 
 ## VirtController CR Creation
-#### OpenShift 4 with OLM
-1. In the OpenShift console navigate to Operators>Installed Operators
-1. Click on Konveyor Operator for VMs
-1. Locate VirtController on the top menu and click on it
+
+1. Visit OpenShift Web Console, navigate to _Operators => Installed Operators_
+1. Select _Konveyor Operator for VMs_
+1. Locate _VirtController_ on the top menu and click on it
 1. Adjust settings if desired and click Create instance
 
-#### OpenShift 4 without OLM
-1. Retrieve controller.yml sample file in the `deploy/nom-olm/latest` (or desired version directories)
-1. Adjust default settings if needed
-1. Execute `oc create -f deploy/nom-olm/latest/controller.yml`
+## Customize Settings
 
-## Cleanup
+Custom settings can be applied by editing the `VirtController` CR.
+
 ```
-oc delete namespace openshift-migration
-oc delete crd virtcontrollers.virt.konveyor.io migrations.virt.konveyor.io plans.virt.konveyor.io providers.virt.konveyor.io hosts.virt.konveyor.io networkmaps.virt.konveyor.io storagemaps.virt.konveyor.io
-oc delete clusterrole virt-controller
-oc delete clusterrolebindings virt-operator virt-controller
-oc delete oauthclient migration
+oc edit virtcontroller -n openshift-migration
 ```
