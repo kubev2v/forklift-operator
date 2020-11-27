@@ -1,0 +1,112 @@
+---
+- kubevirtVersion: v2.5.0
+  provisioners:
+  - name: kubernetes.io/aws-ebs
+    features: []
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/azure-disk
+    features: []
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/azure-file
+    features: []
+    volumeModes:
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteMany
+        features:
+        - LiveMigration
+      - name: ReadWriteOnce
+        features: []
+      - name: ReadOnlyMany
+        features: []
+  - name: kubernetes.io/cinder
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/gce-pd
+    features: []
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/hostpath-provisioner
+    features: []
+    volumeModes:
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/rbd
+    features: []
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteMany
+        features:
+        - LiveMigration
+      - name: ReadWriteOnce
+        features: []
+  - name: kubernetes.io/vsphere-volume
+    features: []
+    volumeModes:
+    - name: Block
+      features: []
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+    - name: Filesystem
+      accessModes:
+      - name: ReadWriteOnce
+        features: []
+  - name: manila.csi.openstack.org
+    features: []
+    volumeModes:
+    - name: Filesystem
+      features: []
+      accessModes:
+      - name: ReadWriteMany
+        features:
+        - LiveMigration
