@@ -46,26 +46,6 @@
       - infrastructures.resources | length > 0
       - infrastructures.resources[0].get('status', {}).get('apiServerURL', '') != ''
 
-  - name: "Deploy Inventory Payload"
-    k8s:
-      state : present
-      definition: "{{ lookup('template', 'inventory_payload.yml.j2' )}}"
-
-  - name: "Obtain Inventory Payload route"
-    k8s_facts:
-      kind: Route
-      namespace: "{{ meta.namespace }}"
-      label_selectors: "app=inventory-payload"
-    register: route
-    until: route.resources | length > 0
-    delay: 10
-    retries: 6
-
-  - when: (route.resources|length) > 0
-    block:
-    - set_fact:
-        inventory_payload_url: "https://{{ route.resources[0].spec.host }}"
-
   - name: "Set default CORS URLs"
     set_fact:
       mig_ui_cors_loopback: "//127.0.0.1(:|$)"
