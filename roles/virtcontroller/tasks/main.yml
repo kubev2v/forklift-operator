@@ -1,14 +1,16 @@
 ---
+# We start the reconcile iteration by assuming it's not reconciled
 - set_fact:
     reconciled: false
 
+# We use a block to be able to have an 'always' section
 - block:
-  - name: "Patch MTV controller CR for OLM"
+  - name: "Ensure the VirtController CR is as expected"
     k8s:
       state: "present"
-      definition: "{{ lookup('template', 'virt_controller_olm_patch.yml.j2') }}"
+      definition: "{{ lookup('template', 'virtcontroller.yml.j2') }}"
 
-  - name: "Clean conditions and set Reconciling state"
+  - name: "Clear conditions and set reconciling state"
     k8s_status:
       api_version: virt.konveyor.io/v1alpha1
       kind: VirtController
