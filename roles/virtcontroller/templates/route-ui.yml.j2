@@ -4,15 +4,15 @@ kind: Route
 metadata:
   annotations:
     haproxy.router.openshift.io/timeout: 300s
-  name: migration
+  name: "{{ ui_route_name }}"
   namespace: "{{ virt_namespace }}"
   labels:
-    app: migration
-    service: migration
+    app: forklift
+    service: forklift-ui
 spec:
   to:
     kind: Service
-    name: migration-ui
+    name: forklift-ui
   tls:
     termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect

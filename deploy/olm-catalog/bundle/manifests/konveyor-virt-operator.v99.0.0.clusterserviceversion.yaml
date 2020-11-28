@@ -113,15 +113,15 @@ spec:
                   value: virt-operator
                 - name: REGISTRY
                   value: quay.io
-                - name: PROJECT
+                - name: IMAGE_ORG
                   value: konveyor
-                - name: VIRT_CONTROLLER_REPO
+                - name: CONTROLLER_REPO
                   value: virt-controller
-                - name: VIRT_CONTROLLER_TAG
+                - name: CONTROLLER_TAG
                   value: latest
-                - name: VIRT_UI_REPO
+                - name: UI_REPO
                   value: virt-ui
-                - name: VIRT_UI_TAG
+                - name: UI_TAG
                   value: latest
                 - name: ANSIBLE_GATHERING
                   value: explicit

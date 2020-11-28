@@ -1,0 +1,16 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    control-plane: controller-manager
+    controller-tools.k8s.io: "1.0"
+  name: {{ inventory_route_name }}
+  namespace: {{ virt_namespace }}
+spec:
+  to:
+    kind: Service
+    name: {{ inventory_service_name }}
+  tls:
+    termination: reencrypt
+    insecureEdgeTerminationPolicy: Redirect
