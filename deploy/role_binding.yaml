@@ -1,11 +1,11 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: virt-operator
+  name: forklift-operator
 subjects:
 - kind: ServiceAccount
-  name: virt-operator
+  name: forklift-operator
 roleRef:
   kind: Role
-  name: virt-operator
+  name: forklift-operator
   apiGroup: rbac.authorization.k8s.io

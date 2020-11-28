@@ -5,14 +5,14 @@ metadata:
   annotations:
     haproxy.router.openshift.io/timeout: 300s
   name: "{{ ui_route_name }}"
-  namespace: "{{ virt_namespace }}"
+  namespace: "{{ app_namespace }}"
   labels:
-    app: forklift
-    service: forklift-ui
+    app: {{ app_name }}
+    service: {{ ui_service_name }}
 spec:
   to:
     kind: Service
-    name: forklift-ui
+    name: {{ ui_service_name }}
   tls:
     termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect

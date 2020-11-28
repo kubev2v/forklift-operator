@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: virt-ui
+  name: {{ ui_deployment_name }}
   namespace: "{{ app_namespace }}"
   labels:
     app: {{ app_name }}
@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: {{ ui_container_name }}
-          image: "{{ virt_ui_image_fqin }}"
+          image: "{{ ui_image_fqin }}"
           imagePullPolicy: "{{ image_pull_policy }}"
           env:
             - name: META_FILE
@@ -32,21 +32,21 @@ spec:
               protocol: TCP
           resources:
             limits:
-              cpu: {{ virt_ui_limits_cpu }}
-              memory: {{ virt_ui_limits_memory }}
+              cpu: {{ ui_container_limits_cpu }}
+              memory: {{ ui_container_limits_memory }}
             requests:
-              cpu: {{ virt_ui_requests_cpu }}
-              memory: {{ virt_ui_requests_memory }}
+              cpu: {{ ui_container_requests_cpu }}
+              memory: {{ ui_container_requests_memory }}
           volumeMounts:
             - name: "{{ ui_configmap_name }}"
               mountPath: "{{ ui_configmap_path }}"
-            - name: migration-ui-tls
-              mountPath: /var/run/secrets/migration-ui-tls
+            - name: {{ ui_service_name }}-serving-cert
+              mountPath: /var/run/secrets/{{ ui_service_name }}-serving-cert
       volumes:
         - name: "{{ ui_configmap_name }}"
           configMap:
             name: "{{ ui_configmap_name }}"
-        - name: migration-ui-tls
+        - name: {{ ui_service_name }}-serving-cert
           secret:
             defaultMode: 420
-            secretName: migration-ui-tls
+            secretName: {{ ui_service_name }}-serving-cert

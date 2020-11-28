@@ -1,14 +1,15 @@
+---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
 metadata:
-  name: virtcontrollers.virt.konveyor.io
+  name: forkliftcontrollers.virt.konveyor.io
 spec:
   group: virt.konveyor.io
   names:
-    kind: VirtController
-    listKind: VirtControllerList
-    plural: virtcontrollers
-    singular: virtcontroller
+    kind: ForkliftController
+    listKind: ForkliftControllerList
+    plural: forkliftcontrollers
+    singular: forkliftcontroller
   scope: Namespaced
   subresources:
     status: {}

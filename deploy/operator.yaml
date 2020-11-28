@@ -2,21 +2,21 @@
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: virt-operator
+  name: forklift-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: virt-operator
+      name: forklift-operator
   template:
     metadata:
       labels:
-        name: virt-operator
+        name: forklift-operator
     spec:
-      serviceAccountName: virt-operator
+      serviceAccountName: forklift-operator
       containers:
-        - name: virt-operator
-          image: "quay.io/konveyor/virt-operator:latest"
+        - name: forklift-operator
+          image: "quay.io/konveyor/forklift-operator:latest"
           imagePullPolicy: "Always"
           volumeMounts:
           - mountPath: /tmp/ansible-operator/runner
@@ -31,7 +31,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "virt-operator"
+              value: "forklift-operator"
             - name: ANSIBLE_GATHERING
               value: explicit
       volumes:
