@@ -4,7 +4,6 @@ virt_ui_configmap_data:
   configNamespace: "{{ ui_config_namespace }}"
   clusterApi: "https://kubernetes.default.svc.cluster.local"
   inventoryApi: "https://inventory.{{ virt_namespace }}.svc.cluster.local:8443"
-  inventoryPayloadApi: "https://inventory-payload.{{ virt_namespace }}.svc.cluster.local:8443"
   oauth:
     clientId: migration
     redirectUrl: "{{ ui_oauth_redirect_url }}"

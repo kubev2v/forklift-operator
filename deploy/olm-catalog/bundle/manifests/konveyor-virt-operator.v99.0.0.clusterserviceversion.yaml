@@ -72,8 +72,6 @@ spec:
     image: quay.io/konveyor/virt-controller:latest
   - name: ui
     image: quay.io/konveyor/virt-ui:latest
-  - name: payload
-    image: quay.io/konveyor/virt-payload:latest
   displayName: Konveyor Operator for VMs
   description: |+
     The Konveyor Virt Operator fully manages the deployment and life cycle of Migration Toolkit for VMs on OpenShift.
@@ -117,10 +115,6 @@ spec:
                   value: quay.io
                 - name: PROJECT
                   value: konveyor
-                - name: VIRT_PAYLOAD_REPO
-                  value: virt-payload
-                - name: VIRT_PAYLOAD_TAG
-                  value: latest
                 - name: VIRT_CONTROLLER_REPO
                   value: virt-controller
                 - name: VIRT_CONTROLLER_TAG
