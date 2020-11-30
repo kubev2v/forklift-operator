@@ -30,9 +30,6 @@ metadata:
   namespace: {{ virt_namespace }}
 data:
   WORKING_DIR: {{ inventory_volume_path }}
-  XAVIER_URL: {{ ma_url }}
-  XAVIER_USER: {{ ma_user }}
-  XAVIER_PASSWORD: {{ ma_password }}
   CORS_ALLOWED_ORIGINS: {{ cors_origins | join(' ') }}
 ---
 apiVersion: apps/v1
@@ -73,8 +70,6 @@ spec:
               fieldPath: metadata.namespace
         - name: ROLE
           value: main
-        - name: MA_ROUTE
-          value: {{ ma_route }}
         - name: API_HOST
           value: inventory.{{ virt_namespace }}.svc.cluster.local
         - name: API_PORT
