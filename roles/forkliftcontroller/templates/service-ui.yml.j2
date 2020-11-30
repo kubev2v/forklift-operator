@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    service.beta.openshift.io/serving-cert-secret-name: {{ ui_service_name }}-serving-cert
+  name: {{ ui_service_name }}
+  namespace: "{{ app_namespace }}"
+  labels:
+    app: {{ app_name }}
+    service: {{ ui_service_name }}
+spec:
+  ports:
+    - name: port-8443
+      port: 8443
+      targetPort: 8443
+      protocol: TCP
+  selector:
+    app: {{ app_name }}
+    service: {{ ui_service_name }}

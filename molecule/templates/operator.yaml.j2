@@ -2,20 +2,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: virt-operator
+  name: forklift-operator
 spec:
   replicas: 1
   selector:
     matchLabels:
-      name: virt-operator
+      name: forklift-operator
   template:
     metadata:
       labels:
-        name: virt-operator
+        name: forklift-operator
     spec:
-      serviceAccountName: virt-operator
+      serviceAccountName: forklift-operator
       containers:
-        - name: virt-operator
+        - name: forklift-operator
           # Replace this with the built image name
           image: "{{ image }}"
           imagePullPolicy: "{{ pull_policy }}"
@@ -32,7 +32,7 @@ spec:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
-              value: "virt-operator"
+              value: "forklift-operator"
             - name: ANSIBLE_GATHERING
               value: explicit
       volumes:

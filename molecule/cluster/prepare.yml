@@ -13,7 +13,7 @@
   tasks:
     - name: Create Custom Resource Definition
       k8s:
-        definition: "{{ lookup('file', '/'.join([deploy_dir, 'crds/virt.konveyor.io_virtcontrollers_crd.yaml'])) }}"
+        definition: "{{ lookup('file', '/'.join([deploy_dir, 'crds/virt.konveyor.io_forkliftcontrollers_crd.yaml'])) }}"
 
     - name: Create namespace
       k8s:

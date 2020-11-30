@@ -3,4 +3,4 @@
   hosts: localhost
   connection: local
   roles:
-    - virtcontroller
+    - forkliftcontroller
