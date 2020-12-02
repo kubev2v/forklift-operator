@@ -31,7 +31,7 @@ inventory_service_name: "{{ app_name }}-inventory"
 inventory_route_name: "{{ inventory_service_name }}"
 
 ui_oauth_user_scope: "user:full"
-ui_configmap_path: "/etc/virt-ui"
+ui_configmap_path: "/etc/forklift-ui"
 ui_configmap_name: "{{ ui_service_name }}-config"
 ui_service_name: "{{ app_name }}-ui"
 ui_deployment_name: "{{ ui_service_name }}"
