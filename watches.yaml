@@ -1,6 +1,6 @@
 ---
 - version: v1alpha1
-  group: virt.konveyor.io
+  group: forklift.konveyor.io
   kind: ForkliftController
   role: /opt/ansible/roles/forkliftcontroller
   reconcilePeriod: 30m

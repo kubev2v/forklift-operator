@@ -4,9 +4,9 @@ metadata:
   creationTimestamp: null
   labels:
     controller-tools.k8s.io: "1.0"
-  name: migrations.virt.konveyor.io
+  name: migrations.forklift.konveyor.io
 spec:
-  group: virt.konveyor.io
+  group: forklift.konveyor.io
   names:
     kind: Migration
     plural: migrations
@@ -73,6 +73,9 @@ spec:
                               annotations:
                                 description: Annotations.
                                 type: object
+                              description:
+                                description: Name
+                                type: string
                               error:
                                 description: Error.
                                 properties:
