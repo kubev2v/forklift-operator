@@ -24,7 +24,7 @@ spec:
           imagePullPolicy: "{{ image_pull_policy }}"
           env:
             - name: META_FILE
-              value: {{ ui_configmap_path }}/virtMeta.json
+              value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
             - name: NODE_EXTRA_CA_CERTS
               value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
           ports:

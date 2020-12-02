@@ -5,7 +5,7 @@ metadata:
   name: "{{ ui_configmap_name }}"
   namespace: "{{ app_namespace }}"
 data:
-  virtMeta.json: |
+  "{{ ui_meta_file_name }}": |
     {    
       "namespace": "{{ app_namespace }}",
       "configNamespace": "{{ app_namespace }}",
