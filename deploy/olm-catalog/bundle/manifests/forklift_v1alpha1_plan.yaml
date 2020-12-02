@@ -4,9 +4,9 @@ metadata:
   creationTimestamp: null
   labels:
     controller-tools.k8s.io: "1.0"
-  name: plans.virt.konveyor.io
+  name: plans.forklift.konveyor.io
 spec:
-  group: virt.konveyor.io
+  group: forklift.konveyor.io
   names:
     kind: Plan
     plural: plans
@@ -133,6 +133,9 @@ spec:
                     description: 'The VM identifier. For:   - vSphere: The managed
                       object ID.'
                     type: string
+                  name:
+                    description: Name
+                    type: string
                 required:
                 - id
                 type: object
@@ -180,6 +183,9 @@ spec:
                                   annotations:
                                     description: Annotations.
                                     type: object
+                                  description:
+                                    description: Name
+                                    type: string
                                   error:
                                     description: Error.
                                     properties:

@@ -67,7 +67,7 @@ rules:
   verbs:
   - get
 - apiGroups:
-  - virt.konveyor.io
+  - forklift.konveyor.io
   resources:
   - '*'
   verbs:

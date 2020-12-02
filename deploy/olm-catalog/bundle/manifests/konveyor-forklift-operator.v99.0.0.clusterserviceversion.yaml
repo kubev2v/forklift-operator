@@ -15,7 +15,7 @@ metadata:
     alm-examples: |-
       [
         {
-          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1alpha1",
           "kind": "ForkliftController",
           "metadata": {
             "name": "forklift-controller",
@@ -24,7 +24,7 @@ metadata:
           "spec": {}
         },
         {
-          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1alpha1",
           "kind": "Migration",
           "metadata": {
             "name": "example-migration",
@@ -38,7 +38,7 @@ metadata:
           }
         },
         {
-          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1alpha1",
           "kind": "Plan",
           "metadata": {
             "name": "example-plan",
@@ -47,7 +47,7 @@ metadata:
           "spec": {}
         },
         {
-          "apiVersion": "virt.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1alpha1",
           "kind": "Provider",
           "metadata": {
             "name": "example-provider",
@@ -207,7 +207,7 @@ spec:
           verbs:
           - update
         - apiGroups:
-          - virt.konveyor.io
+          - forklift.konveyor.io
           resources:
           - '*'
           verbs:
@@ -236,7 +236,7 @@ spec:
       - serviceAccountName: forklift-controller
         rules:
         - apiGroups:
-          - virt.konveyor.io
+          - forklift.konveyor.io
           resources:
           - '*'
           verbs:
@@ -314,37 +314,37 @@ spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
-    - name: forkliftcontrollers.virt.konveyor.io
+    - name: forkliftcontrollers.forklift.konveyor.io
       version: v1alpha1
       kind: ForkliftController
       displayName: ForkliftController
       description: VM migration controller
-    - name: migrations.virt.konveyor.io
+    - name: migrations.forklift.konveyor.io
       version: v1alpha1
       kind: Migration
       displayName: Migration
       description: VM migration
-    - name: plans.virt.konveyor.io
+    - name: plans.forklift.konveyor.io
       version: v1alpha1
       kind: Plan
       displayName: Plan
       description: VM migration plan
-    - name: providers.virt.konveyor.io
+    - name: providers.forklift.konveyor.io
       version: v1alpha1
       kind: Provider
       displayName: Provider
       description: VM provider
-    - name: hosts.virt.konveyor.io
+    - name: hosts.forklift.konveyor.io
       version: v1alpha1
       kind: Host
       displayName: Host
       description: VM host
-    - name: networkmaps.virt.konveyor.io
+    - name: networkmaps.forklift.konveyor.io
       version: v1alpha1
       kind: NetworkMap
       displayName: NetworkMap
       description: VM network map
-    - name: storagemaps.virt.konveyor.io
+    - name: storagemaps.forklift.konveyor.io
       version: v1alpha1
       kind: StorageMap
       displayName: StorageMap

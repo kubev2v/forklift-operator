@@ -5,7 +5,7 @@
    - community.kubernetes
 
   vars:
-    image: virt.konveyor.io/forklift-operator:testing
+    image: forklift.konveyor.io/forklift-operator:testing
 
   tasks:
     # using command so we don't need to install any dependencies
@@ -29,7 +29,7 @@
    - community.kubernetes
 
   vars:
-    image: virt.konveyor.io/forklift-operator:testing
+    image: forklift.konveyor.io/forklift-operator:testing
     operator_template: "{{ '/'.join([template_dir, 'operator.yaml.j2']) }}"
 
   tasks:
