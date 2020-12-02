@@ -1,6 +1,6 @@
 ---
-app_name: "{{ lookup('env', 'APP_NAME') | default('forklift') }}"
-app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') | default('openshift-migration') }}"
+app_name: "{{ lookup('env', 'APP_NAME') or 'forklift' }}"
+app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'openshift-migration' }}"
 
 image_registry: "{{ lookup( 'env', 'IMAGE_REGISTRY') }}"
 image_org: "{{ lookup( 'env', 'IMAGE_ORG') }}"

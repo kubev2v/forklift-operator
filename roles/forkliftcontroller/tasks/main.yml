@@ -45,7 +45,7 @@
   - name: "Setup the webhook secret"
     k8s:
       state: present
-      definition: " {{ lookup('template', 'secret-webhook-server-secret.yml.j2') }}"
+      definition: "{{ lookup('template', 'secret-webhook-server-secret.yml.j2') }}"
 
   - name: "Setup controller config map"
     k8s:
@@ -93,8 +93,8 @@
 
   - name: "Use existing secret value for oauth client"
     set_fact:
-      ui_oauth_secret: "{{ oauthclient_status.resources[0].secret }}"
-    when: (oauthclient_status.resources | length) > 0
+      ui_oauth_secret: "{{ ui_oauthclient_status.resources[0].secret }}"
+    when: (ui_oauthclient_status.resources | length) > 0
 
   - name: "Setup UI config map"
     k8s:

@@ -1,10 +1,10 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
-  name: konveyor-for-vms
+  name: konveyor-forklift
   namespace: openshift-marketplace
 spec:
-  displayName: Konveyor for VMs Operator
+  displayName: Konveyor Forklift Operator
   publisher: Red Hat
   sourceType: grpc
   image: quay.io/konveyor/forklift-operator-index:latest

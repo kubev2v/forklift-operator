@@ -106,7 +106,7 @@ spec:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
         - mountPath: /var/run/secrets/{{ inventory_service_name }}-serving-cert
-          name: {{ inventory_service_name }}-service-cert
+          name: {{ inventory_service_name }}-serving-cert
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
