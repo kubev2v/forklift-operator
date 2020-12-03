@@ -246,6 +246,7 @@ spec:
           resources:
           - secrets
           - namespaces
+          - events
           verbs:
           - get
           - list
