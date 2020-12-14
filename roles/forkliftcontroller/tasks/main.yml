@@ -148,6 +148,12 @@
       state: present
       definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
 
+  - name: "Installing the Provisioner CR"
+    k8s:
+      state: present
+      definition: "{{ lookup('template', item) }}"
+    with_fileglob: "templates/provisioner-*.j2"
+
   - set_fact:
       reconciled: true
 
