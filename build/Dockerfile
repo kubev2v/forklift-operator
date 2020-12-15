@@ -1,5 +1,6 @@
-FROM quay.io/operator-framework/ansible-operator:v1.2.0
+FROM quay.io/operator-framework/ansible-operator:v0.19.4
 
+WORKDIR /opt/ansible
 COPY requirements.yml requirements.yml
 RUN ansible-galaxy collection install -r requirements.yml
 
