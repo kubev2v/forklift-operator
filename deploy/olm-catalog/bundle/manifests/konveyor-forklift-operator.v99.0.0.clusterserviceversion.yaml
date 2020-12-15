@@ -350,3 +350,8 @@ spec:
       kind: StorageMap
       displayName: StorageMap
       description: VM storage map
+    - name: provisioners.forklift.konveyor.io
+      version: v1alpha1
+      kind: Provisioner
+      displayName: Provisioner
+      description: Storage Provisioner Capabilities
