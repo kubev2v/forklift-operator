@@ -4,7 +4,7 @@ Konveyor Forklift Operator installs a suite of migration tools that facilitate t
 
 ## Prerequisites
 
-1. OCP 4.6+
+* OCP 4.6+
 
 ## Konveyor Forklift Operator Installation
 

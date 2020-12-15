@@ -1,13 +1,9 @@
 ---
-- name: Assume reconciliation is not done
+- name: "Assume reconciliation is not done"
   set_fact:
     reconciled: false
 
 - block:
-  - name: "Patch the ForkliftController CR for OLM"
-    k8s:
-      state: "present"
-      definition: "{{ lookup('template', 'forkliftcontroller.yml.j2') }}"
 
   - name: "Clear conditions and set reconciling state"
     k8s_status:
@@ -20,14 +16,14 @@
       status:
         phase: Reconciling
 
-  - name: Get the Infrastructure resource named 'cluster'
+  - name: "Get the Infrastructure resource named cluster"
     k8s_facts:
       api_version: config.openshift.io/v1
       kind: Infrastructure
       name: cluster
     register: infrastructures
 
-  - name: Get the cluster DNS suffic from the Infrastucture resource
+  - name: "Get the cluster DNS suffic from the Infrastucture resource"
     set_fact:
       cluster_dns_suffix: "{{ infrastructures.resources[0].status.etcdDiscoveryDomain }}"
       when:
