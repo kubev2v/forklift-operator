@@ -17,7 +17,7 @@
         phase: Reconciling
 
   - name: "Get the Infrastructure resource named cluster"
-    k8s_facts:
+    k8s_info:
       api_version: config.openshift.io/v1
       kind: Infrastructure
       name: cluster
@@ -69,7 +69,7 @@
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
 
   - name: "Check if UI oauthclient exists already so we don't update it"
-    k8s_facts:
+    k8s_info:
       api_version: v1
       kind: OAuthClient
       name: "{{ ui_service_name }}"
@@ -114,7 +114,7 @@
 
   - block:
     - name: "Retrieve apiserver config definition"
-      k8s_facts:
+      k8s_info:
         api_version: "config.openshift.io/v1"
         kind: "apiserver"
         name: "cluster"
@@ -173,7 +173,7 @@
     when: not reconciled
 
   - name: Retrieve forklift controller status
-    k8s_facts:
+    k8s_info:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
       namespace: "{{ app_namespace }}"
