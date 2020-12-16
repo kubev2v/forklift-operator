@@ -125,7 +125,7 @@ spec:
                   value: release-v2.0.0-beta.0
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/konveyor/forklift-operator:latest
+                image: quay.io/konveyor/forklift-operator:release-v2.0.0-beta.0
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
@@ -310,7 +310,7 @@ spec:
   links:
   - name: Konveyor Forklift Operator
     url: https://github.com/konveyor/forklift-operator
-  version: release-v2.0.0-beta.0
+  version: 2.0.0-beta.0
   minKubeVersion: 1.19.0
   apiservicedefinitions: {}
   customresourcedefinitions:
