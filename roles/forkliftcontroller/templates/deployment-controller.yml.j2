@@ -85,6 +85,8 @@ spec:
           value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.crt
         - name: API_TLS_KEY
           value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.key
+        - name: METRICS_PORT
+          value: '8081'
         envFrom:
         - configMapRef:
             name: {{ controller_configmap_name }}
@@ -93,7 +95,6 @@ spec:
         ports:
         - name: api
           containerPort: 8443
-          name: webhook-server
           protocol: TCP
         resources:
           limits:
