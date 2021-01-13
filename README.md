@@ -39,5 +39,5 @@ Installing latest is almost an identical procedure to released versions but requ
 Custom settings can be applied by editing the `ForkliftController` CR.
 
 ```
-oc edit forkliftcontroller -n openshift-migration
+oc edit forkliftcontroller -n konveyor-forklift
 ```
