@@ -9,37 +9,32 @@
     k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       force: true
       conditions: []
       status:
         phase: Reconciling
 
-  - name: "Setup UI route"
-    k8s:
-      state: "present"
-      definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
+  - name: "Get the Infrastructure resource named cluster"
+    k8s_info:
+      api_version: config.openshift.io/v1
+      kind: Infrastructure
+      name: cluster
+    register: infrastructures
 
-  - name: "Obtain MTV UI route (timeout 60s)"
-    k8s_facts:
-      api_version: "route.openshift.io/v1"
-      kind: "Route"
-      namespace: "{{ app_namespace }}"
-      name: "{{ ui_route_name }}"
-    register: route
-    until: route.resources | length > 0
-    delay: 10
-    retries: 6
-
-  - name: "Get the Forklift UI FQDN from the route"
+  - name: "Get the cluster DNS suffic from the Infrastucture resource"
     set_fact:
-      ui_route_fqdn: "{{ route.resources[0].spec.host }}"
+      cluster_dns_suffix: "{{ infrastructures.resources[0].status.etcdDiscoveryDomain }}"
+      when:
+      - infrastructures is defined
+      - infrastructures.resources | length > 0
+      - infrastructures.resources[0].get('status', {}).get('etcdDiscoveryDomain', '') != ''
 
   - name: "Configure CORS allowed origins for UI"
     set_fact:
       cors_origins:
-      - "(?i)//{{ ui_route_fqdn }}(:|\\z)"
+      - "(?i)//{{ ui_route_name }}-{{ app_namespace }}.{{ cluster_dns_suffix }}(:|\\z)"
       - "//127.0.0.1(:|$)"
       - "//localhost(:|$)"
 
@@ -112,6 +107,11 @@
       state: "present"
       definition: "{{ lookup('template', 'deployment-ui.yml.j2') }}"
 
+  - name: "Setup UI route"
+    k8s:
+      state: "present"
+      definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
+
   - block:
     - name: "Retrieve apiserver config definition"
       k8s_info:
@@ -157,8 +157,8 @@
   - k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       status:
         phase: Reconciled
     when: reconciled
@@ -166,8 +166,8 @@
   - k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       status:
         phase: Failed
     when: not reconciled
@@ -185,8 +185,8 @@
     - k8s_status:
         api_version: forklift.konveyor.io/v1alpha1
         kind: ForkliftController
-        name: "{{ meta.name }}"
-        namespace: "{{ meta.namespace }}"
+        name: "{{ ansible_operator_meta.name }}"
+        namespace: "{{ ansible_operator_meta.namespace }}"
         status:
           phase: Failed
       when: item.type == 'Critical'

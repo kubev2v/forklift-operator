@@ -6,5 +6,5 @@ metadata:
   namespace: "{{ app_namespace }}"
 grantMethod: auto
 redirectURIs:
-- "https://{{ ui_route_fqdn }}/login/callback"
+- "https://{{ ui_route_name }}-{{ app_namespace }}.apps.{{ cluster_dns_suffix }}/login/callback"
 secret: "{{ ui_oauth_secret }}"

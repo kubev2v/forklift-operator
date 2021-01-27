@@ -1,0 +1,8 @@
+domain: konveyor.io
+layout: ansible.sdk.operatorframework.io/v1
+projectName: forklift-operator
+resources:
+- group: forklift
+  kind: ForkliftController
+  version: v1alpha1
+version: 3-alpha

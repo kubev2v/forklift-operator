@@ -1,6 +1,5 @@
 ---
 collections:
   - name: community.kubernetes
-    version: 0.11.1
-  - name: operator_sdk.util
-    version: 0.0.0
+    version: "<1.0.0"
+  - operator_sdk.util

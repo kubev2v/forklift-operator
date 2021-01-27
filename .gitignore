@@ -1,2 +1,11 @@
-*.retry
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+.idea
 *.swp
+*.swo
+*~
+*.retry
+bin
