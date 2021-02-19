@@ -72,6 +72,16 @@
     k8s:
       state: present
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
+      
+  - name: "Setup validation deployment"
+    k8s:
+      state : present
+      definition: "{{ lookup('template', 'deployment-validation.yml.j2') }}"
+
+  - name: "Setup validation service"
+    k8s:
+      state : present
+      definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
   - name: "Check if UI oauthclient exists already so we don't update it"
     k8s_info:
