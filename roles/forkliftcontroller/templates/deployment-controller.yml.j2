@@ -22,8 +22,12 @@ spec:
         control-plane: controller-manager
         controller-tools.k8s.io: "1.0"
       annotations:
+{% if cors_origins is defined %}
         configHash: "{{ (inventory_volume_path | string)
         | join(cors_origins | string) }}"
+{% else %}
+        configHash: "{{ (inventory_volume_path | string) }}"
+{% endif %}
     spec:
       serviceAccountName: {{ controller_service_name }}
       containers:
