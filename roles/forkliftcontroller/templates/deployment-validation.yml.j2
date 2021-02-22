@@ -24,7 +24,7 @@ spec:
           image: {{ validation_image_fqin }}
           imagePullPolicy: {{ image_pull_policy }}
           ports:
-            - name: http
+            - name: opa
               containerPort: 8181
           env:
             - name: CA_TLS_CERTIFICATE
