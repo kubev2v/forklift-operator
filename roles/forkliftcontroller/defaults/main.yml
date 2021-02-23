@@ -1,6 +1,6 @@
 ---
 app_name: "{{ lookup('env', 'APP_NAME') or 'forklift' }}"
-app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
+app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'openshift-migration' }}"
 
 # Deployment features
 feature_ui: true
