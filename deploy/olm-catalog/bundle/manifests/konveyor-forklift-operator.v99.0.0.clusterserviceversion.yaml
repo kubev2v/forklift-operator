@@ -121,6 +121,10 @@ spec:
                   value: forklift-controller
                 - name: CONTROLLER_TAG
                   value: latest
+                - name: VALIDATION_REPO
+                  value: forklift-validation
+                - name: VALIDATION_TAG
+                  value: latest
                 - name: UI_REPO
                   value: forklift-ui
                 - name: UI_TAG
