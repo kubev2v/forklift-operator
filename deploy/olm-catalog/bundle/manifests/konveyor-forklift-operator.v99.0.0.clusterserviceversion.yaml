@@ -21,7 +21,9 @@ metadata:
             "name": "forklift-controller",
             "namespace": "konveyor-forklift"
           },
-          "spec": {}
+          "spec": {
+            "feature_ui": "true"
+          }
         },
         {
           "apiVersion": "forklift.konveyor.io/v1alpha1",
