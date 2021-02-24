@@ -74,6 +74,18 @@
     k8s:
       state: present
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
+      
+  - when: feature_validation
+    block:
+    - name: "Setup validation deployment"
+      k8s:
+        state : present
+        definition: "{{ lookup('template', 'deployment-validation.yml.j2') }}"
+  
+    - name: "Setup validation service"
+      k8s:
+        state : present
+        definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
   - when: feature_ui
     block:

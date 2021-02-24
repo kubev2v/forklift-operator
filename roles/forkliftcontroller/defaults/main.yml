@@ -4,6 +4,7 @@ app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 
 # Deployment features
 feature_ui: true
+feature_validation: true
 
 image_registry: "{{ lookup( 'env', 'IMAGE_REGISTRY') }}"
 image_org: "{{ lookup( 'env', 'IMAGE_ORG') }}"
@@ -27,6 +28,14 @@ controller_container_limits_cpu: "100m"
 controller_container_limits_memory: "800Mi"
 controller_container_requests_cpu: "100m"
 controller_container_requests_memory: "350Mi"
+
+validation_service_name: "{{ app_name }}-validation"
+validation_deployment_name: "{{ validation_service_name }}"
+validation_container_name: "{{ app_name }}-validation"
+validation_repo: "{{ lookup( 'env', 'VALIDATION_REPO') }}"
+validation_image: "{{ image_registry }}/{{ image_org }}/{{ validation_repo }}"
+validation_version: "{{ lookup( 'env', 'VALIDATION_TAG') | default('latest') }}"
+validation_image_fqin: "{{ validation_image }}:{{ validation_version }}"
 
 inventory_volume_path: "/var/cache/inventory"
 inventory_container_name: "{{ app_name }}-inventory"
