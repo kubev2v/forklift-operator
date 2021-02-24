@@ -74,6 +74,8 @@ spec:
     image: quay.io/konveyor/forklift-controller:latest
   - name: ui
     image: quay.io/konveyor/forklift-ui:latest
+  - name: validation
+    image: quay.io/konveyor/forklift-validation:latest
   displayName: Konveyor Forklift Operator
   description: |+
     The Konveyor Forklift Operator fully manages the deployment and life cycle of Forklift on OpenShift.

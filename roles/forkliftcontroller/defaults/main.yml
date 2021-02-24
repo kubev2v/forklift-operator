@@ -4,6 +4,7 @@ app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 
 # Deployment features
 feature_ui: true
+feature_validation: true
 
 image_registry: "{{ lookup( 'env', 'IMAGE_REGISTRY') }}"
 image_org: "{{ lookup( 'env', 'IMAGE_ORG') }}"
