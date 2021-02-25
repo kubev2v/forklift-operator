@@ -115,22 +115,12 @@ spec:
                       fieldPath: metadata.name
                 - name: OPERATOR_NAME
                   value: forklift-operator
-                - name: IMAGE_REGISTRY
-                  value: quay.io
-                - name: IMAGE_ORG
-                  value: konveyor
-                - name: CONTROLLER_REPO
-                  value: forklift-controller
-                - name: CONTROLLER_TAG
-                  value: latest
-                - name: VALIDATION_REPO
-                  value: forklift-validation
-                - name: VALIDATION_TAG
-                  value: latest
-                - name: UI_REPO
-                  value: forklift-ui
-                - name: UI_TAG
-                  value: latest
+                - name: CONTROLLER_IMAGE
+                  value: quay.io/konveyor/forklift-controller:latest
+                - name: UI_IMAGE
+                  value: quay.io/konveyor/forklift-ui:latest
+                - value: VALIDATION_IMAGE
+                  value: quay.io/konveyor/forklift-validation:latest
                 - name: ANSIBLE_GATHERING
                   value: explicit
                 image: quay.io/konveyor/forklift-operator:latest
