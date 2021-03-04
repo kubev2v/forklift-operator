@@ -22,7 +22,8 @@ metadata:
             "namespace": "konveyor-forklift"
           },
           "spec": {
-            "feature_ui": "true"
+            "feature_ui": "true",
+            "feature_validation": "true"
           }
         },
         {
@@ -119,7 +120,7 @@ spec:
                   value: quay.io/konveyor/forklift-controller:latest
                 - name: UI_IMAGE
                   value: quay.io/konveyor/forklift-ui:latest
-                - value: VALIDATION_IMAGE
+                - name: VALIDATION_IMAGE
                   value: quay.io/konveyor/forklift-validation:latest
                 - name: ANSIBLE_GATHERING
                   value: explicit
