@@ -7,7 +7,7 @@ spec:
   displayName: Konveyor Forklift Operator
   publisher: Red Hat
   sourceType: grpc
-  image: quay.io/fbladilo/forklift-operator-index:latest
+  image: quay.io/konveyor/forklift-operator-index:latest
   updateStrategy:
     registryPoll:
       interval: 10m

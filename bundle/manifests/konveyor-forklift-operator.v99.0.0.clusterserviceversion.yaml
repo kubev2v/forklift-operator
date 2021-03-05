@@ -126,7 +126,7 @@ spec:
                   value: quay.io/konveyor/forklift-validation:latest
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/fbladilo/forklift-operator:latest
+                image: quay.io/konveyor/forklift-operator:latest
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
