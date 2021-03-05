@@ -9,8 +9,8 @@
     k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       force: true
       conditions: []
       status:
@@ -173,8 +173,8 @@
   - k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       status:
         phase: Reconciled
     when: reconciled
@@ -182,8 +182,8 @@
   - k8s_status:
       api_version: forklift.konveyor.io/v1alpha1
       kind: ForkliftController
-      name: "{{ meta.name }}"
-      namespace: "{{ meta.namespace }}"
+      name: "{{ ansible_operator_meta.name }}"
+      namespace: "{{ ansible_operator_meta.namespace }}"
       status:
         phase: Failed
     when: not reconciled
@@ -201,8 +201,8 @@
     - k8s_status:
         api_version: forklift.konveyor.io/v1alpha1
         kind: ForkliftController
-        name: "{{ meta.name }}"
-        namespace: "{{ meta.namespace }}"
+        name: "{{ ansible_operator_meta.name }}"
+        namespace: "{{ ansible_operator_meta.namespace }}"
         status:
           phase: Failed
       when: item.type == 'Critical'

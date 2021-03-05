@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: konveyor-forklift
+  namespace: openshift-marketplace
+spec:
+  displayName: Konveyor Forklift Operator
+  publisher: Red Hat
+  sourceType: grpc
+  image: quay.io/fbladilo/forklift-operator-index:latest
+  updateStrategy:
+    registryPoll:
+      interval: 10m
