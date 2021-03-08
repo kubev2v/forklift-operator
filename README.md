@@ -21,7 +21,7 @@ Konveyor Forklift Operator is installable on OpenShift 4 via OperatorHub.
 
 Installing latest is almost an identical procedure to released versions but requires creating a new catalog source
 
-1. `oc create -f forklift-operator-bundle.yaml`
+1. `oc create -f forklift-operator-catalog.yaml`
 1. Follow the same procedure as released versions until the Search for _Konveyor Forklift Operator_ step
 1. There should be two _Konveyor Forklift Operator_ available for installation now
 1. Select the _Konveyor Forklift Operator_ without the _community_ tag

@@ -4,3 +4,4 @@
   kind: ForkliftController
   role: /opt/ansible/roles/forkliftcontroller
   reconcilePeriod: 30m
+# +kubebuilder:scaffold:watch
