@@ -351,3 +351,8 @@ spec:
       kind: Provisioner
       displayName: Provisioner
       description: Storage Provisioner Capabilities
+    - name: hooks.forklift.konveyor.io
+      version: v1alpha1
+      kind: Hook
+      displayName: Hook
+      description: Hook schema for the hooks API
