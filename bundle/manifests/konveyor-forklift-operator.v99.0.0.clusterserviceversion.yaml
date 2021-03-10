@@ -288,6 +288,14 @@ spec:
           - get
           - list
           - watch
+        - apiGroups:
+          - kubevirt.io
+          resources:
+          - virtualmachines
+          verbs:
+          - get
+          - list
+          - watch
   installModes:
   - type: OwnNamespace
     supported: true
