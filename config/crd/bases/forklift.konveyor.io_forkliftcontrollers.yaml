@@ -30,9 +30,15 @@ spec:
           metadata:
             type: object
           spec:
-            description: Spec defines the desired state of ForkliftController
+            description: ForkliftController specification.
+            properties:
+              feature_ui:
+                description: Deploy UI feature [true,false].
+                type: string
+              feature_validation:
+                description: Deploy validation feature [true,false].
+                type: string
             type: object
-            x-kubernetes-preserve-unknown-fields: true
           status:
             description: Status defines the observed state of ForkliftController
             type: object
@@ -42,3 +48,9 @@ spec:
     storage: true
     subresources:
       status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
