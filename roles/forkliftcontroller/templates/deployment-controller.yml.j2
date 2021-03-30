@@ -91,6 +91,12 @@ spec:
           value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.key
         - name: METRICS_PORT
           value: '8081'
+{% if feature_validation|bool %}
+        - name: POLICY_AGENT_URL
+          value: "https://{{ validation_service_name }}.{{ app_namespace }}.svc.cluster.local:8181"
+        - name: POLICY_AGENT_SEARCH_INTERVAL
+          value: "{{ validation_policy_agent_search_interval }}"
+{% endif %}
         envFrom:
         - configMapRef:
             name: {{ controller_configmap_name }}
