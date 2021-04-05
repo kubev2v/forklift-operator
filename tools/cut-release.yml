@@ -62,6 +62,12 @@
       regexp: 'LABEL operators.operatorframework.io.bundle.channels.v1=.*'
       replace: "LABEL operators.operatorframework.io.bundle.channels.v1={{ channel }}"
 
+  - name: "Replace version in defaults/main.yml"
+    replace:
+      path: "{{ repo_root }}/roles/forkliftcontroller/defaults/main.yml"
+      regexp: 'forklift_operator_version:.*'
+      replace: "forklift_operator_version: \"{{ release }}\""
+
   - name: "Validate release-v{{ release }} bundle"
     shell: "operator-sdk bundle validate {{ repo_root }}/bundle"
     tags: validate
