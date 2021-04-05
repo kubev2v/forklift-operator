@@ -89,6 +89,18 @@
 
   - when: feature_ui
     block:
+    - name: "Obtain OCP version"
+      k8s_info:
+        kind: ClusterVersion
+        name: version
+      register: ocp_cv
+
+    - name: "Extract OCP version"
+      set_fact:
+        forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
+      vars:
+        query: "resources[0].status.history[?state=='Completed'].version"
+
     - name: "Check if UI oauthclient exists already so we don't update it"
       k8s_info:
         api_version: v1
