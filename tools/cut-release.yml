@@ -1,0 +1,67 @@
+- hosts: localhost
+  vars:
+    repo_root: "{{ playbook_dir }}/../"
+    operator_name: "konveyor-forklift-operator"
+    release: ""
+  tasks:
+  - assert:
+      that:
+        - release != ''
+      fail_msg: "release must be provided and must follow semver convention (i.e 2.0.0)"
+
+# If channel, not provided follow convention release-v<major>.<minor> by default (i.e release-v2.0)
+  - set_fact:
+      channel: "release-v{{ release | regex_replace('[.].$', '') }}"
+    when: channel is not defined
+
+  - name: "Replace operator tags in CSV"
+    replace:
+      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
+      regexp: ':latest'
+      replace: ":release-v{{ release }}"
+
+  - name: "Replace operand in CSV"
+    replace:
+      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
+      regexp: 'value: latest'
+      replace: "value: release-v{{ release }}"
+
+  - name: "Fix the version in the CSV"
+    replace:
+      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
+      regexp: '99\.0\.0'
+      replace: "{{ release }}"
+
+  - name: "Rename CSV"
+    shell: |
+           git mv \
+           {{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml \
+           {{ repo_root }}/bundle/manifests/{{ operator_name }}.v{{ release }}.clusterserviceversion.yaml
+
+  - name: "Replace default channel in annotations"
+    replace:
+      path:  "{{ repo_root }}/bundle/metadata/annotations.yaml"
+      regexp: 'operators.operatorframework.io.bundle.channel.default.v1:.*'
+      replace: "operators.operatorframework.io.bundle.channel.default.v1: {{ channel }}"
+
+  - name: "Replace channel list in annotations"
+    replace:
+      path:  "{{ repo_root }}/bundle/metadata/annotations.yaml"
+      regexp: 'operators.operatorframework.io.bundle.channels.v1:.*'
+      replace: "operators.operatorframework.io.bundle.channels.v1: {{ channel }}"
+
+  - name: "Replace default channel in bundle dockerfile"
+    replace:
+      path:  "{{ repo_root }}/bundle.Dockerfile"
+      regexp: 'LABEL operators.operatorframework.io.bundle.channel.default.v1=.*'
+      replace: "LABEL operators.operatorframework.io.bundle.channel.default.v1={{ channel }}"
+
+  - name: "Replace channel list in bundle dockerfile"
+    replace:
+      path:  "{{ repo_root }}/bundle.Dockerfile"
+      regexp: 'LABEL operators.operatorframework.io.bundle.channels.v1=.*'
+      replace: "LABEL operators.operatorframework.io.bundle.channels.v1={{ channel }}"
+
+  - name: "Validate release-v{{ release }} bundle"
+    shell: "operator-sdk bundle validate {{ repo_root }}/bundle"
+    tags: validate
