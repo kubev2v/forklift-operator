@@ -7,6 +7,7 @@ feature_ui: true
 feature_validation: true
 
 image_pull_policy: Always
+forklift_operator_version: "2.0.0"
 
 controller_image_fqin: "{{ lookup( 'env', 'CONTROLLER_IMAGE') }}"
 controller_configmap_name: "{{ controller_service_name }}-config"

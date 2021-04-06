@@ -27,6 +27,10 @@ spec:
               value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
             - name: NODE_EXTRA_CA_CERTS
               value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+            - name: FORKLIFT_OPERATOR_VERSION
+              value: {{ forklift_operator_version }}
+            - name: FORKLIFT_CLUSTER_VERSION
+              value: {{ forklift_cluster_version }}
           ports:
             - containerPort: 8443
               protocol: TCP
