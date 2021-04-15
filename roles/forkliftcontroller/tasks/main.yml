@@ -1,49 +1,5 @@
 ---
-- name: "Assume reconciliation is not done"
-  set_fact:
-    reconciled: false
-
 - block:
-
-  - name: "Clear conditions and set reconciling state"
-    k8s_status:
-      api_version: forklift.konveyor.io/v1alpha1
-      kind: ForkliftController
-      name: "{{ ansible_operator_meta.name }}"
-      namespace: "{{ ansible_operator_meta.namespace }}"
-      force: true
-      conditions: []
-      status:
-        phase: Reconciling
-
-  - when: feature_ui
-    block:
-    - name: "Setup UI route"
-      k8s:
-        state: "present"
-        definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
-
-    - name: "Obtain MTV UI route (timeout 60s)"
-      k8s_info:
-        api_version: "route.openshift.io/v1"
-        kind: "Route"
-        namespace: "{{ app_namespace }}"
-        name: "{{ ui_route_name }}"
-      register: route
-      until: route.resources | length > 0
-      delay: 10
-      retries: 6
-
-    - name: "Get the Forklift UI FQDN from the route"
-      set_fact:
-        ui_route_fqdn: "{{ route.resources[0].spec.host }}"
-
-    - name: "Configure CORS allowed origins for UI"
-      set_fact:
-        cors_origins:
-        - "(?i)//{{ ui_route_fqdn }}(:|\\z)"
-        - "//127.0.0.1(:|$)"
-        - "//localhost(:|$)"
 
   - name: "Setup the webhook secret"
     k8s:
@@ -74,8 +30,19 @@
     k8s:
       state: present
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
+
+  - name: "Set up default Provider"
+    k8s:
+      state: present
+      definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
+
+  - name: "Installing the Provisioner CR"
+    k8s:
+      state: present
+      definition: "{{ lookup('template', item) }}"
+    with_fileglob: "templates/provisioner-*.j2"
       
-  - when: feature_validation
+  - when: feature_validation|bool
     block:
     - name: "Setup validation deployment"
       k8s:
@@ -87,7 +54,7 @@
         state : present
         definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
-  - when: feature_ui
+  - when: feature_ui|bool
     block:
     - name: "Obtain OCP version"
       k8s_info:
@@ -100,6 +67,33 @@
         forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
       vars:
         query: "resources[0].status.history[?state=='Completed'].version"
+
+    - name: "Setup UI route"
+      k8s:
+        state: present
+        definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
+
+    - name: "Obtain MTV UI route (timeout 60s)"
+      k8s_info:
+        api_version: "route.openshift.io/v1"
+        kind: "Route"
+        namespace: "{{ app_namespace }}"
+        name: "{{ ui_route_name }}"
+      register: route
+      until: route.resources | length > 0
+      delay: 10
+      retries: 6
+
+    - name: "Get the Forklift UI FQDN from the route"
+      set_fact:
+        ui_route_fqdn: "{{ route.resources[0].spec.host }}"
+
+    - name: "Configure CORS allowed origins for UI"
+      set_fact:
+        cors_origins:
+        - "(?i)//{{ ui_route_fqdn }}(:|\\z)"
+        - "//127.0.0.1(:|$)"
+        - "//localhost(:|$)"
 
     - name: "Check if UI oauthclient exists already so we don't update it"
       k8s_info:
@@ -124,21 +118,6 @@
       set_fact:
         ui_oauth_secret: "{{ ui_oauthclient_status.resources[0].secret }}"
       when: (ui_oauthclient_status.resources | length) > 0
-
-    - name: "Setup UI config map"
-      k8s:
-        state: "present"
-        definition: "{{ lookup('template', 'configmap-ui.yml.j2') }}"
-
-    - name: "Setup UI service to generate serving cert"
-      k8s:
-        state: "present"
-        definition: "{{ lookup('template', 'service-ui.yml.j2') }}"
-
-    - name: "Setup UI deployment"
-      k8s:
-        state: "present"
-        definition: "{{ lookup('template', 'deployment-ui.yml.j2') }}"
 
     - block:
       - name: "Retrieve apiserver config definition"
@@ -167,55 +146,17 @@
             state: present
             definition: "{{ apiserver_definition }}"
 
-  - name: "Set up default Provider"
-    k8s:
-      state: present
-      definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
+    - name: "Setup UI config map"
+      k8s:
+        state: present
+        definition: "{{ lookup('template', 'configmap-ui.yml.j2') }}"
 
-  - name: "Installing the Provisioner CR"
-    k8s:
-      state: present
-      definition: "{{ lookup('template', item) }}"
-    with_fileglob: "templates/provisioner-*.j2"
+    - name: "Setup UI service to generate serving cert"
+      k8s:
+        state: present
+        definition: "{{ lookup('template', 'service-ui.yml.j2') }}"
 
-  - set_fact:
-      reconciled: true
-
-  always:
-  - k8s_status:
-      api_version: forklift.konveyor.io/v1alpha1
-      kind: ForkliftController
-      name: "{{ ansible_operator_meta.name }}"
-      namespace: "{{ ansible_operator_meta.namespace }}"
-      status:
-        phase: Reconciled
-    when: reconciled
-
-  - k8s_status:
-      api_version: forklift.konveyor.io/v1alpha1
-      kind: ForkliftController
-      name: "{{ ansible_operator_meta.name }}"
-      namespace: "{{ ansible_operator_meta.namespace }}"
-      status:
-        phase: Failed
-    when: not reconciled
-
-  - name: Retrieve forklift controller status
-    k8s_info:
-      api_version: forklift.konveyor.io/v1alpha1
-      kind: ForkliftController
-      namespace: "{{ app_namespace }}"
-    register: controller
-
-  - when: controller.resources is defined and
-          controller.resources[0].status.conditions is defined
-    block:
-    - k8s_status:
-        api_version: forklift.konveyor.io/v1alpha1
-        kind: ForkliftController
-        name: "{{ ansible_operator_meta.name }}"
-        namespace: "{{ ansible_operator_meta.namespace }}"
-        status:
-          phase: Failed
-      when: item.type == 'Critical'
-      with_items: "{{ controller.resources[0].status.conditions }}"
+    - name: "Setup UI deployment"
+      k8s:
+        state: present
+        definition: "{{ lookup('template', 'deployment-ui.yml.j2') }}"
