@@ -4,7 +4,7 @@ Konveyor Forklift Operator installs a suite of migration tools that facilitate t
 
 ## Prerequisites
 
-* OCP 4.6+
+* __OCP 4.7+__
 
 ## Konveyor Forklift Operator Installation
 
@@ -19,25 +19,29 @@ Konveyor Forklift Operator is installable on OpenShift 4 via OperatorHub.
 
 ### Installing _latest_
 
-Installing latest is almost an identical procedure to released versions but requires creating a new catalog source
+Installing latest is almost an identical procedure to released versions but requires creating a new catalog source.
 
 1. `oc create -f forklift-operator-catalog.yaml`
-1. Follow the same procedure as released versions until the Search for _Konveyor Forklift Operator_ step
-1. There should be two _Konveyor Forklift Operator_ available for installation now
-1. Select the _Konveyor Forklift Operator_ without the _community_ tag
-1. Proceed to install latest
+1. Follow the same procedure as released versions until the Search for _Konveyor Forklift Operator_ step.
+1. There should be two _Konveyor Forklift Operator_ available for installation now.
+1. Select the _Konveyor Forklift Operator_ without the _community_ tag.
+1. Proceed to install latest.
+
+**Note:** Installing _Latest_ will also include OLM channels for released versions.
 
 ## ForkliftController CR Creation
 
-1. Visit OpenShift Web Console, navigate to _Operators => Installed Operators_
-1. Select _Konveyor Forklift Operator_
-1. Locate _ForkliftController_ on the top menu and click on it
-1. Adjust settings if desired and click Create instance
+1. Visit OpenShift Web Console, navigate to _Operators => Installed Operators_.
+1. Select _Konveyor Forklift Operator_.
+1. Locate _ForkliftController_ on the top menu and click on it.
+1. Adjust settings if desired and click Create instance.
 
 ## Customize Settings
 
 Custom settings can be applied by editing the `ForkliftController` CR.
 
-```
-oc edit forkliftcontroller -n konveyor-forklift
-```
+`oc edit forkliftcontroller -n konveyor-forklift`
+
+## Forklift Documentation
+
+See the [Konveyor Forklift Documentation](https://forklift-docs.konveyor.io/) for detailed installation instructions as well as how to use Konveyor Forklift.
