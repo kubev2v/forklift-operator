@@ -38,7 +38,7 @@ rules:
       - update
       - watch
   ##
-  ## Rules for forklift.konveyor.io/v1alpha1, Kind: ForkliftController
+  ## Rules for forklift.konveyor.io/v1beta1, Kind: ForkliftController
   ##
   - apiGroups:
       - forklift.konveyor.io
