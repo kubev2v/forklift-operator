@@ -49,6 +49,18 @@ spec:
           value: "true"
         - name: SECRET_NAME
           value: webhook-server-secret
+{% if controller_log_level is defined and controller_log_level is integer %}
+        - name: LOG_LEVEL
+          value: "{{ controller_log_level }}"
+{% endif %}
+{% if controller_profile_kind is defined and controller_profile_path is defined and controller_profile_duration is defined %}
+        - name: PROFILE_KIND
+          value: "{{ controller_profile_kind }}"
+        - name: PROFILE_PATH
+          value: "{{ controller_profile_path }}"
+        - name: PROFILE_DURATION
+          value: "{{ controller_profile_duration }}"
+{% endif %}
         envFrom:
         - configMapRef:
             name: {{ controller_configmap_name }}
@@ -69,6 +81,8 @@ spec:
         - mountPath: /tmp/cert
           name: cert
           readOnly: true
+        - mountPath: {{ profiler_volume_path }}
+          name: profiler
       - name: inventory
         command:
         - /usr/local/bin/manager
@@ -97,9 +111,17 @@ spec:
         - name: POLICY_AGENT_SEARCH_INTERVAL
           value: "{{ validation_policy_agent_search_interval }}"
 {% endif %}
-{% if controller_log_level is defined %}
+{% if controller_log_level is defined and controller_log_level is integer %}
         - name: LOG_LEVEL
-          value: controller_log_level
+          value: "{{ controller_log_level }}"
+{% endif %}
+{% if controller_profile_kind is defined and controller_profile_path is defined and controller_profile_duration is defined %}
+        - name: PROFILE_KIND
+          value: "{{ controller_profile_kind }}"
+        - name: PROFILE_PATH
+          value: "{{ controller_profile_path }}"
+        - name: PROFILE_DURATION
+          value: "{{ controller_profile_duration }}"
 {% endif %}
         envFrom:
         - configMapRef:
@@ -120,6 +142,8 @@ spec:
         volumeMounts:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
+        - mountPath: {{ profiler_volume_path }}
+          name: profiler
         - mountPath: /var/run/secrets/{{ inventory_service_name }}-serving-cert
           name: {{ inventory_service_name }}-serving-cert
       terminationGracePeriodSeconds: 10
@@ -133,4 +157,6 @@ spec:
           defaultMode: 420
           secretName: {{ inventory_service_name }}-serving-cert
       - name: inventory
+        emptyDir: {}
+      - name: profiler
         emptyDir: {}
