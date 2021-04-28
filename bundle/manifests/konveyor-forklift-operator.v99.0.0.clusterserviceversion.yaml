@@ -15,7 +15,7 @@ metadata:
     alm-examples: |-
       [
         {
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "kind": "ForkliftController",
           "metadata": {
             "name": "forklift-controller",
@@ -27,7 +27,7 @@ metadata:
           }
         },
         {
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "kind": "Migration",
           "metadata": {
             "name": "example-migration",
@@ -41,7 +41,7 @@ metadata:
           }
         },
         {
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "kind": "Plan",
           "metadata": {
             "name": "example-plan",
@@ -50,7 +50,7 @@ metadata:
           "spec": {}
         },
         {
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "kind": "Provider",
           "metadata": {
             "name": "example-provider",
@@ -67,7 +67,7 @@ metadata:
         },
         {
           "kind": "Host",
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
             "name": "example-host",
             "namespace": "konveyor-forklift"
@@ -83,7 +83,7 @@ metadata:
         },
         {
           "kind": "NetworkMap",
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
              "name": "example-networkmap",
              "namespace": "konveyor-forklift"
@@ -109,7 +109,7 @@ metadata:
         },
         {
           "kind": "StorageMap",
-          "apiVersion": "forklift.konveyor.io/v1alpha1",
+          "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
              "name": "example-storagemap",
              "namespace": "konveyor-forklift"
@@ -133,7 +133,7 @@ metadata:
         },
         {
            "kind": "Hook",
-           "apiVersion": "forklift.konveyor.io/v1alpha1",
+           "apiVersion": "forklift.konveyor.io/v1beta1",
            "metadata": {
               "name": "example-hook",
               "namespace": "konveyor-forklift"
@@ -143,7 +143,7 @@ metadata:
               "playbook": "<base64-encoded-playbook>"
            }
         },
-        {"kind":"Provisioner","apiVersion":"forklift.konveyor.io/v1alpha1","metadata":{"name":"cinder","namespace":"konveyor-forklift"},"spec":{"name":"kubernetes.io/cinder","volumeModes":[{"name":"Block","priority":0,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]},{"name":"Filesystem","priority":1,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]}]}}
+        {"kind":"Provisioner","apiVersion":"forklift.konveyor.io/v1beta1","metadata":{"name":"cinder","namespace":"konveyor-forklift"},"spec":{"name":"kubernetes.io/cinder","volumeModes":[{"name":"Block","priority":0,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]},{"name":"Filesystem","priority":1,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]}]}}
       ]
     certified: "false"
     support: Red Hat
@@ -394,47 +394,47 @@ spec:
   customresourcedefinitions:
     owned:
     - name: forkliftcontrollers.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: ForkliftController
       displayName: ForkliftController
       description: VM migration controller
     - name: migrations.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Migration
       displayName: Migration
       description: VM migration
     - name: plans.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Plan
       displayName: Plan
       description: VM migration plan
     - name: providers.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Provider
       displayName: Provider
       description: VM provider
     - name: hosts.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Host
       displayName: Host
       description: VM host
     - name: networkmaps.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: NetworkMap
       displayName: NetworkMap
       description: VM network map
     - name: storagemaps.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: StorageMap
       displayName: StorageMap
       description: VM storage map
     - name: provisioners.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Provisioner
       displayName: Provisioner
       description: Storage Provisioner Capabilities
     - name: hooks.forklift.konveyor.io
-      version: v1alpha1
+      version: v1beta1
       kind: Hook
       displayName: Hook
       description: Hook schema for the hooks API
