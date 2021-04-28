@@ -97,6 +97,10 @@ spec:
         - name: POLICY_AGENT_SEARCH_INTERVAL
           value: "{{ validation_policy_agent_search_interval }}"
 {% endif %}
+{% if controller_log_level is defined %}
+        - name: LOG_LEVEL
+          value: controller_log_level
+{% endif %}
         envFrom:
         - configMapRef:
             name: {{ controller_configmap_name }}

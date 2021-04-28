@@ -199,7 +199,7 @@ spec:
                   value: quay.io/konveyor/forklift-ui:latest
                 - name: VALIDATION_IMAGE
                   value: quay.io/konveyor/forklift-validation:latest
-                image: quay.io/konveyor/forklift-operator:latest
+                image: quay.io/fbladilo/forklift-operator:latest
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
