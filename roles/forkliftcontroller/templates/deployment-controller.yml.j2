@@ -134,11 +134,11 @@ spec:
           protocol: TCP
         resources:
           limits:
-            cpu: {{ controller_container_limits_cpu }}
-            memory: {{ controller_container_limits_memory }}
+            cpu: {{ inventory_container_limits_cpu }}
+            memory: {{ inventory_container_limits_memory }}
           requests:
-            cpu: {{ controller_container_requests_cpu }}
-            memory: {{ controller_container_requests_memory }}
+            cpu: {{ inventory_container_requests_cpu }}
+            memory: {{ inventory_container_requests_memory }}
         volumeMounts:
         - mountPath: {{ inventory_volume_path }}
           name: inventory
