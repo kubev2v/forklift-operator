@@ -57,7 +57,7 @@ spec:
         - name: PROFILE_KIND
           value: "{{ controller_profile_kind }}"
         - name: PROFILE_PATH
-          value: "{{ controller_profile_path }}"
+          value: "{{ controller_profile_path }}/main"
         - name: PROFILE_DURATION
           value: "{{ controller_profile_duration }}"
 {% endif %}
@@ -119,7 +119,7 @@ spec:
         - name: PROFILE_KIND
           value: "{{ controller_profile_kind }}"
         - name: PROFILE_PATH
-          value: "{{ controller_profile_path }}"
+          value: "{{ controller_profile_path }}/inventory"
         - name: PROFILE_DURATION
           value: "{{ controller_profile_duration }}"
 {% endif %}
