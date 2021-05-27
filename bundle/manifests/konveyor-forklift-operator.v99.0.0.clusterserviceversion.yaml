@@ -12,20 +12,21 @@ metadata:
     containerImage: quay.io/konveyor/forklift-operator:latest
     createdAt: 2020-06-16T11:21:00Z
     repository: https://github.com/konveyor/forklift-operator
+    operatorframework.io/initialization-resource: |-
+      {
+        "apiVersion": "forklift.konveyor.io/v1beta1",
+        "kind": "ForkliftController",
+        "metadata": {
+          "name": "forklift-controller",
+          "namespace": "konveyor-forklift"
+        },
+        "spec": {
+          "feature_ui": "true",
+          "feature_validation": "true"
+        }
+      }
     alm-examples: |-
       [
-        {
-          "apiVersion": "forklift.konveyor.io/v1beta1",
-          "kind": "ForkliftController",
-          "metadata": {
-            "name": "forklift-controller",
-            "namespace": "konveyor-forklift"
-          },
-          "spec": {
-            "feature_ui": "true",
-            "feature_validation": "true"
-          }
-        },
         {
           "apiVersion": "forklift.konveyor.io/v1beta1",
           "kind": "Migration",
