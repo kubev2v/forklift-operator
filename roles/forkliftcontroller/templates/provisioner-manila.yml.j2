@@ -1,0 +1,18 @@
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provisioner
+metadata:
+  name: manila
+  namespace: {{ app_namespace }}
+spec:
+  name: manila.csi.openstack.org
+  features: []
+  volumeModes:
+  - name: Filesystem
+    priority: 0
+    features: []
+    accessModes:
+    - name: ReadWriteMany
+      priority: 0
+      features:
+      - LiveMigration

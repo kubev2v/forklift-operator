@@ -1,0 +1,50 @@
+---
+app_name: "{{ lookup('env', 'APP_NAME') or 'forklift' }}"
+app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
+
+# Deployment features
+feature_ui: true
+feature_validation: true
+
+image_pull_policy: Always
+forklift_operator_version: "latest"
+
+controller_image_fqin: "{{ lookup( 'env', 'CONTROLLER_IMAGE') }}"
+controller_configmap_name: "{{ controller_service_name }}-config"
+controller_service_name: "{{ app_name }}-controller"
+controller_deployment_name: "{{ controller_service_name }}"
+controller_container_name: "{{ app_name }}-controller"
+controller_container_limits_cpu: "500m"
+controller_container_limits_memory: "800Mi"
+controller_container_requests_cpu: "100m"
+controller_container_requests_memory: "350Mi"
+profiler_volume_path: "/var/cache/profiler"
+
+validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
+validation_service_name: "{{ app_name }}-validation"
+validation_deployment_name: "{{ validation_service_name }}"
+validation_container_name: "{{ app_name }}-validation"
+validation_policy_agent_search_interval: "120"
+
+inventory_volume_path: "/var/cache/inventory"
+inventory_container_name: "{{ app_name }}-inventory"
+inventory_service_name: "{{ app_name }}-inventory"
+inventory_route_name: "{{ inventory_service_name }}"
+inventory_container_limits_cpu: "1000m"
+inventory_container_limits_memory: "1Gi"
+inventory_container_requests_cpu: "500m"
+inventory_container_requests_memory: "500Mi"
+
+ui_image_fqin: "{{ lookup( 'env', 'UI_IMAGE') }}"
+ui_oauth_user_scope: "user:full"
+ui_configmap_path: "/etc/forklift-ui"
+ui_configmap_name: "{{ ui_service_name }}-config"
+ui_service_name: "{{ app_name }}-ui"
+ui_deployment_name: "{{ ui_service_name }}"
+ui_container_name: "{{ app_name }}-ui"
+ui_container_limits_cpu: "100m"
+ui_container_limits_memory: "800Mi"
+ui_container_requests_cpu: "100m"
+ui_container_requests_memory: "150Mi"
+ui_route_name: "virt"
+ui_meta_file_name: "meta.json"

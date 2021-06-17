@@ -1,0 +1,17 @@
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provisioner
+metadata:
+  name: hostpath-provisioner
+  namespace: {{ app_namespace }}
+spec:
+  name: kubernetes.io/hostpath-provisioner
+  features: []
+  volumeModes:
+  - name: Filesystem
+    priority: 0
+    features: []
+    accessModes:
+    - name: ReadWriteOnce
+      priority: 0
+      features: []

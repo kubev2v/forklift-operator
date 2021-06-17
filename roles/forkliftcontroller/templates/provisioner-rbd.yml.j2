@@ -1,0 +1,17 @@
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provisioner
+metadata:
+  name: rbd
+  namespace: {{ app_namespace }}
+spec:
+  name: kubernetes.io/rbd
+  features: []
+  volumeModes:
+  - name: Block
+    priority: 0
+    features: []
+    accessModes:
+    - name: ReadWriteOnce
+      priority: 0
+      features: []

@@ -1,0 +1,24 @@
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provisioner
+metadata:
+  name: azure-file
+  namespace: {{ app_namespace }}
+spec:
+  name: kubernetes.io/azure-file
+  features: []
+  volumeModes:
+  - name: Filesystem
+    priority: 0
+    features: []
+    accessModes:
+    - name: ReadWriteMany
+      priority: 0
+      features:
+      - LiveMigration
+    - name: ReadWriteOnce
+      priority: 1
+      features: []
+    - name: ReadOnlyMany
+      priority: 2
+      features: []

@@ -1,0 +1,21 @@
+---
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provisioner
+metadata:
+  name: ocs-cephfs
+  namespace: {{ app_namespace }}
+spec:
+  name: openshift-storage.cephfs.csi.ceph.com
+  features: []
+  volumeModes:
+  - name: Filesystem
+    priority: 0
+    features: []
+    accessModes:
+    - name: ReadWriteMany
+      priority: 0
+      features:
+      - LiveMigration
+    - name: ReadWriteOnce
+      priority: 0
+      features: []

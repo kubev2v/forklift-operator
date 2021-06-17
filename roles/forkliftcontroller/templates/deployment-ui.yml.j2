@@ -1,0 +1,56 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ ui_deployment_name }}
+  namespace: "{{ app_namespace }}"
+  labels:
+    app: {{ app_name }}
+    service: {{ ui_service_name }}
+spec:
+  selector:
+     matchLabels:
+       app: {{ app_name }}
+       service: {{ ui_service_name }}
+  template:
+    metadata:
+      labels:
+        app: {{ app_name }}
+        service: {{ ui_service_name }}
+    spec:
+      containers:
+        - name: {{ ui_container_name }}
+          image: "{{ ui_image_fqin }}"
+          imagePullPolicy: "{{ image_pull_policy }}"
+          env:
+            - name: META_FILE
+              value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
+            - name: NODE_EXTRA_CA_CERTS
+              value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+            - name: FORKLIFT_OPERATOR_VERSION
+              value: {{ forklift_operator_version }}
+            - name: FORKLIFT_CLUSTER_VERSION
+              value: {{ forklift_cluster_version }}
+          ports:
+            - containerPort: 8443
+              protocol: TCP
+          resources:
+            limits:
+              cpu: {{ ui_container_limits_cpu }}
+              memory: {{ ui_container_limits_memory }}
+            requests:
+              cpu: {{ ui_container_requests_cpu }}
+              memory: {{ ui_container_requests_memory }}
+          volumeMounts:
+            - name: "{{ ui_configmap_name }}"
+              mountPath: "{{ ui_configmap_path }}"
+            - name: {{ ui_service_name }}-serving-cert
+              mountPath: /var/run/secrets/{{ ui_service_name }}-serving-cert
+      volumes:
+        - name: "{{ ui_configmap_name }}"
+          configMap:
+            name: "{{ ui_configmap_name }}"
+        - name: {{ ui_service_name }}-serving-cert
+          secret:
+            defaultMode: 420
+            secretName: {{ ui_service_name }}-serving-cert

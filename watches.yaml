@@ -1,0 +1,7 @@
+---
+- version: v1beta1
+  group: forklift.konveyor.io
+  kind: ForkliftController
+  role: /opt/ansible/roles/forkliftcontroller
+  reconcilePeriod: 30m
+#+kubebuilder:scaffold:watch
