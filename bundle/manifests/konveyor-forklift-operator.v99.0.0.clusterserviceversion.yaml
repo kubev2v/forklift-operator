@@ -198,8 +198,9 @@ spec:
               serviceAccountName: forklift-operator
               containers:
               - args:
-                - --metrics-addr=127.0.0.1:8080
-                - --enable-leader-election
+                - --health-probe-bind-address=:6789
+                - --metrics-bind-address=127.0.0.1:8080
+                - --leader-elect
                 - --leader-election-id=forklift-operator
                 env:
                 - name: WATCH_NAMESPACE
@@ -212,6 +213,18 @@ spec:
                   value: quay.io/konveyor/forklift-ui:latest
                 - name: VALIDATION_IMAGE
                   value: quay.io/konveyor/forklift-validation:latest
+                livenessProbe:
+                  httpGet:
+                    path: /healthz
+                    port: 6789
+                  initialDelaySeconds: 15
+                  periodSeconds: 20
+                readinessProbe:
+                  httpGet:
+                    path: /readyz
+                    port: 6789
+                  initialDelaySeconds: 5
+                  periodSeconds: 10
                 image: quay.io/konveyor/forklift-operator:latest
                 imagePullPolicy: Always
                 name: forklift-operator
@@ -402,7 +415,7 @@ spec:
   - name: Konveyor Forklift Operator
     url: https://github.com/konveyor/forklift-operator
   version: 99.0.0
-  minKubeVersion: 1.20.0
+  minKubeVersion: 1.21.0
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:

@@ -3,4 +3,4 @@
 # It should be run by config/default
 resources:
 - bases/forklift.konveyor.io_forkliftcontrollers.yaml
-# +kubebuilder:scaffold:crdkustomizeresource
+#+kubebuilder:scaffold:crdkustomizeresource
