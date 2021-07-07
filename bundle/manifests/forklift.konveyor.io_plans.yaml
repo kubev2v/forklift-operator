@@ -251,6 +251,7 @@ spec:
             required:
             - map
             - provider
+            - targetNamespace
             - vms
             type: object
           status:
