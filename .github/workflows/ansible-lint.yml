@@ -1,0 +1,26 @@
+name: Ansible Lint
+
+on:
+  pull_request:
+    branches:
+    - main
+    - 'release-*.*.*'
+    paths:
+    - 'roles/**'
+    workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Ansible Lint
+        uses: ansible/ansible-lint-action@master
+        with:
+          targets: |
+            ./roles/forkliftcontroller/**/*.yml
+            ./roles/forkliftcontroller/**/*.yaml
