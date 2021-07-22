@@ -30,6 +30,7 @@
     k8s:
       state: present
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
+    when: not feature_k8s|bool
 
   - name: "Set up default Provider"
     k8s:

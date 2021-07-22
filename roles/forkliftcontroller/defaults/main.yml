@@ -3,8 +3,9 @@ app_name: "{{ lookup('env', 'APP_NAME') or 'forklift' }}"
 app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 
 # Deployment features
-feature_ui: true
+feature_ui: false
 feature_validation: true
+feature_k8s: true
 
 image_pull_policy: Always
 forklift_operator_version: "latest"
