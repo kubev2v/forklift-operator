@@ -1,6 +1,17 @@
 ---
 - block:
 
+  - name: "Obtain OCP version"
+    k8s_info:
+      kind: ClusterVersion
+      name: version
+    register: ocp_cv
+
+  - name: "Check if running on k8s cluster"
+    set_fact:
+      k8s_cluster: true
+    when: ocp_cv.resources|length == 0
+
   - name: "Setup the webhook secret"
     k8s:
       state: present
@@ -30,7 +41,7 @@
     k8s:
       state: present
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
-    when: not feature_k8s|bool
+    when: not k8s_cluster|bool
 
   - name: "Set up default Provider"
     k8s:
@@ -55,13 +66,8 @@
         state : present
         definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
-  - when: feature_ui|bool
+  - when: feature_ui|bool and not k8s_cluster|bool
     block:
-    - name: "Obtain OCP version"
-      k8s_info:
-        kind: ClusterVersion
-        name: version
-      register: ocp_cv
 
     - name: "Extract OCP version"
       set_fact:

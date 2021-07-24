@@ -98,7 +98,11 @@ spec:
         - name: API_PORT
           value: "8443"
         - name: API_TLS_ENABLED
-          value: "false"
+{% if k8s_cluster|bool %}
+          value: 'false'
+{% else %}
+          value: 'true'
+{% endif %}
         - name: API_TLS_CERTIFICATE
           value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.crt
         - name: API_TLS_KEY
@@ -144,12 +148,21 @@ spec:
           name: inventory
         - mountPath: {{ profiler_volume_path }}
           name: profiler
+        - mountPath: /var/run/secrets/{{ inventory_service_name }}-serving-cert
+          name: {{ inventory_service_name }}-serving-cert
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
+      - name: {{ inventory_service_name }}-serving-cert
+        secret:
+          defaultMode: 420
+          secretName: {{ inventory_service_name }}-serving-cert
+{% if k8s_cluster|bool %}
+          optional: true
+{% endif %}
       - name: inventory
         emptyDir: {}
       - name: profiler

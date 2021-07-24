@@ -37,8 +37,23 @@ spec:
             - name: INVENTORY_SERVICE
               value: {{ inventory_service_name }}
             - name: TLS_ENABLED
+{% if k8s_cluster|bool %}
               value: 'false'
+{% else %}
+              value: 'true'
+{% endif %}
             - name: TLS_CERT_FILE
               value: /var/run/secrets/{{ validation_service_name }}-serving-cert/tls.crt
             - name: TLS_KEY_FILE
               value: /var/run/secrets/{{ validation_service_name }}-serving-cert/tls.key
+          volumeMounts:
+            - name: {{ validation_service_name }}-serving-cert
+              mountPath: /var/run/secrets/{{ validation_service_name }}-serving-cert
+      volumes:
+        - name: {{ validation_service_name }}-serving-cert
+          secret:
+            secretName: {{ validation_service_name }}-serving-cert
+            defaultMode: 420
+{% if k8s_cluster|bool %}
+            optional: true
+{% endif %}
