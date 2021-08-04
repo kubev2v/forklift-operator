@@ -29,8 +29,10 @@ spec:
               value: /opt/app-root/src/ca.crt
             - name: FORKLIFT_OPERATOR_VERSION
               value: {{ forklift_operator_version }}
+{% if not k8s_cluster|bool %}
             - name: FORKLIFT_CLUSTER_VERSION
               value: {{ forklift_cluster_version }}
+{% endif %}
           ports:
             - containerPort: 8443
               protocol: TCP
@@ -54,3 +56,6 @@ spec:
           secret:
             defaultMode: 420
             secretName: {{ ui_service_name }}-serving-cert
+{% if k8s_cluster|bool %}
+            optional: true
+{% endif %}

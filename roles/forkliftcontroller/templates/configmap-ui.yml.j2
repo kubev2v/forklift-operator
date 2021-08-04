@@ -15,9 +15,11 @@ data:
       "clusterApi": "https://kubernetes.default.svc.cluster.local",
       "inventoryApi": "https://{{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local:8443",
       "oauth": {
+{% if not k8s_cluster|bool %}
         "clientId": "{{ ui_service_name }}",
         "redirectUrl": "https://{{ ui_route_fqdn }}/login/callback",
         "userScope": "{{ ui_oauth_user_scope }}",
         "clientSecret": "{{ ui_oauth_secret }}"
+{% endif %}
       }
     }
