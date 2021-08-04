@@ -18,6 +18,7 @@ controller_container_limits_cpu: "500m"
 controller_container_limits_memory: "800Mi"
 controller_container_requests_cpu: "100m"
 controller_container_requests_memory: "350Mi"
+controller_log_level: 3
 profiler_volume_path: "/var/cache/profiler"
 
 validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
