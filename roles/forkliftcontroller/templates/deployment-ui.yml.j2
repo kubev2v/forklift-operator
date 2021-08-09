@@ -31,10 +31,25 @@ spec:
               value: {{ forklift_operator_version }}
 {% if not k8s_cluster|bool %}
             - name: FORKLIFT_CLUSTER_VERSION
-              value: {{ forklift_cluster_version }}
+              value: "{{ forklift_cluster_version }}"
+{% endif %}
+{% if ui_tls_enabled|bool %}
+            - name: UI_TLS_ENABLED
+              value: 'true'
+            - name: UI_TLS_CERTIFICATE
+              value: "/var/run/secrets/{{ ui_tls_secret_name }}/tls.crt"
+            - name: UI_TLS_KEY
+              value: "/var/run/secrets/{{ ui_tls_secret_name }}/tls.key"
+{% else %}
+            - name: UI_TLS_ENABLED
+              value: 'false'
 {% endif %}
           ports:
+{% if ui_tls_enabled|bool %}
             - containerPort: 8443
+{% else %}
+            - containerPort: 8080
+{% endif %}
               protocol: TCP
           resources:
             limits:
@@ -46,16 +61,17 @@ spec:
           volumeMounts:
             - name: "{{ ui_configmap_name }}"
               mountPath: "{{ ui_configmap_path }}"
-            - name: {{ ui_service_name }}-serving-cert
-              mountPath: /var/run/secrets/{{ ui_service_name }}-serving-cert
+{% if ui_tls_enabled|bool %}
+            - name: "{{ ui_tls_secret_name }}"
+              mountPath: "/var/run/secrets/{{ ui_tls_secret_name }}"
+{% endif %}
       volumes:
         - name: "{{ ui_configmap_name }}"
           configMap:
             name: "{{ ui_configmap_name }}"
-        - name: {{ ui_service_name }}-serving-cert
+{% if ui_tls_enabled|bool %}
+        - name: "{{ ui_tls_secret_name }}"
           secret:
             defaultMode: 420
-            secretName: {{ ui_service_name }}-serving-cert
-{% if k8s_cluster|bool %}
-            optional: true
+            secretName: "{{ ui_tls_secret_name }}"
 {% endif %}

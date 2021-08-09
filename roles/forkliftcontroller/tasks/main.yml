@@ -66,23 +66,6 @@
         state : present
         definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
-  - when: feature_ui|bool and k8s_cluster|bool
-    block:
-    - name: "Setup UI config map"
-      k8s:
-        state: present
-        definition: "{{ lookup('template', 'configmap-ui.yml.j2') }}"
-
-    - name: "Setup UI service"
-      k8s:
-        state: present
-        definition: "{{ lookup('template', 'service-ui.yml.j2') }}"
-
-    - name: "Setup UI deployment"
-      k8s:
-        state: present
-        definition: "{{ lookup('template', 'deployment-ui.yml.j2') }}"
-
   - when: feature_ui|bool and not k8s_cluster|bool
     block:
 
@@ -170,12 +153,15 @@
             state: present
             definition: "{{ apiserver_definition }}"
 
+  - when: feature_ui|bool
+    block:
+
     - name: "Setup UI config map"
       k8s:
         state: present
         definition: "{{ lookup('template', 'configmap-ui.yml.j2') }}"
 
-    - name: "Setup UI service to generate serving cert"
+    - name: "Setup UI service"
       k8s:
         state: present
         definition: "{{ lookup('template', 'service-ui.yml.j2') }}"

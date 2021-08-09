@@ -17,7 +17,11 @@ data:
       "oauth": {
 {% if not k8s_cluster|bool %}
         "clientId": "{{ ui_service_name }}",
+{% if ui_tls_enabled|bool %}
         "redirectUrl": "https://{{ ui_route_fqdn }}/login/callback",
+{% else %}
+        "redirectUrl": "http://{{ ui_route_fqdn }}/login/callback",
+{% endif %}
         "userScope": "{{ ui_oauth_user_scope }}",
         "clientSecret": "{{ ui_oauth_secret }}"
 {% endif %}

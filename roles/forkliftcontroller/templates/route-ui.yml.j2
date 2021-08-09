@@ -13,6 +13,8 @@ spec:
   to:
     kind: Service
     name: {{ ui_service_name }}
+{% if ui_tls_enabled|bool %}
   tls:
     termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect
+{% endif %}

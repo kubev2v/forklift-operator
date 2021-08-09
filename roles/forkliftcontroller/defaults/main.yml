@@ -48,5 +48,7 @@ ui_container_limits_cpu: "100m"
 ui_container_limits_memory: "800Mi"
 ui_container_requests_cpu: "100m"
 ui_container_requests_memory: "150Mi"
+ui_tls_secret_name: "{{ ui_service_name }}-serving-cert"
+ui_tls_enabled: true
 ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
