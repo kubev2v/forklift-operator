@@ -43,10 +43,19 @@ spec:
           value: main
         - name: API_HOST
           value: {{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local
+{% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
         - name: API_TLS_ENABLED
           value: "true"
+{% else %}
+        - name: API_PORT
+          value: "8080"
+        - name: API_TLS_ENABLED
+          value: "false"
+{% endif %}
+        - name: METRICS_PORT
+          value: '8081'
         - name: SECRET_NAME
           value: webhook-server-secret
 {% if controller_log_level is defined and controller_log_level is number %}
@@ -93,22 +102,25 @@ spec:
               fieldPath: metadata.namespace
         - name: ROLE
           value: inventory
-        - name: SECRET_NAME
-          value: webhook-server-secret
+{% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
         - name: API_TLS_ENABLED
-{% if k8s_cluster|bool %}
-          value: 'false'
-{% else %}
-          value: 'true'
-{% endif %}
+          value: "true"
         - name: API_TLS_CERTIFICATE
-          value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.crt
+          value: "/var/run/secrets/{{ inventory_tls_secret_name }}/tls.crt"
         - name: API_TLS_KEY
-          value: /var/run/secrets/{{ inventory_service_name }}-serving-cert/tls.key
+          value: /var/run/secrets/{{ inventory_tls_secret_name }}/tls.key
+{% else %}
+        - name: API_PORT
+          value: "8080"
+        - name: API_TLS_ENABLED
+          value: "false"
+{% endif %}
         - name: METRICS_PORT
-          value: '8081'
+          value: '8082'
+        - name: SECRET_NAME
+          value: webhook-server-secret
 {% if feature_validation|bool %}
         - name: POLICY_AGENT_URL
           value: "https://{{ validation_service_name }}.{{ app_namespace }}.svc.cluster.local:8181"
@@ -133,9 +145,15 @@ spec:
         image: {{ controller_image_fqin }}
         imagePullPolicy: {{ image_pull_policy }}
         ports:
+{% if inventory_tls_enabled|bool %}
         - name: api
           containerPort: 8443
           protocol: TCP
+{% else %}
+        - name: api
+          containerPort: 8080
+          protocol: TCP
+{% endif %}
         resources:
           limits:
             cpu: {{ inventory_container_limits_cpu }}
@@ -148,20 +166,21 @@ spec:
           name: inventory
         - mountPath: {{ profiler_volume_path }}
           name: profiler
-        - mountPath: /var/run/secrets/{{ inventory_service_name }}-serving-cert
+{% if inventory_tls_enabled|bool %}
+        - mountPath: /var/run/secrets/{{ inventory_tls_secret_name }}
           name: {{ inventory_service_name }}-serving-cert
+{% endif %}
       terminationGracePeriodSeconds: 10
       volumes:
       - name: cert
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
-      - name: {{ inventory_service_name }}-serving-cert
+{% if inventory_tls_enabled|bool %}
+      - name: {{ inventory_tls_secret_name }}
         secret:
           defaultMode: 420
-          secretName: {{ inventory_service_name }}-serving-cert
-{% if k8s_cluster|bool %}
-          optional: true
+          secretName: {{ inventory_tls_secret_name }}
 {% endif %}
       - name: inventory
         emptyDir: {}

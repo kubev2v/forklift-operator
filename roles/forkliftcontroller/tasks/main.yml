@@ -22,7 +22,7 @@
       state : present
       definition: "{{ lookup('template', 'configmap-controller.yml.j2') }}"
 
-  - name: "Setup inventory service to generate serving cert"
+  - name: "Setup inventory service"
     k8s:
       state: present
       definition: "{{ lookup('template', 'service-inventory.yml.j2') }}"
@@ -31,11 +31,6 @@
     k8s:
       state : present
       definition: "{{ lookup('template', 'deployment-controller.yml.j2') }}"
-
-  - name: "Setup controller service"
-    k8s:
-      state : present
-      definition: "{{ lookup('template', 'service-controller.yml.j2') }}"
 
   - name: "Setup inventory route"
     k8s:
