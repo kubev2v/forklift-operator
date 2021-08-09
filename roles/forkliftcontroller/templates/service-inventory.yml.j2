@@ -14,12 +14,12 @@ metadata:
 spec:
   ports:
 {% if inventory_tls_enabled|bool %}
-  - name: port-8443
+  - name: api-https
     port: 8443
     targetPort: 8443
     protocol: TCP
 {% else %}
-  - name: port-8080
+  - name: api-http
     port: 8080
     targetPort: 8080
     protocol: TCP
