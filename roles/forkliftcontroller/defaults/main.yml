@@ -27,6 +27,8 @@ validation_service_name: "{{ app_name }}-validation"
 validation_deployment_name: "{{ validation_service_name }}"
 validation_container_name: "{{ app_name }}-validation"
 validation_policy_agent_search_interval: "120"
+validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
+validation_tls_enabled: true
 
 inventory_volume_path: "/var/cache/inventory"
 inventory_container_name: "{{ app_name }}-inventory"

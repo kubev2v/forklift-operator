@@ -121,9 +121,18 @@ spec:
           value: '8082'
         - name: SECRET_NAME
           value: webhook-server-secret
-{% if feature_validation|bool %}
+{% if feature_validation|bool and validation_tls_enabled|bool %}
         - name: POLICY_AGENT_URL
           value: "https://{{ validation_service_name }}.{{ app_namespace }}.svc.cluster.local:8181"
+        - name: POLICY_AGENT_CA
+          value: "/var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt"
+{% else %}
+        - name: POLICY_AGENT_URL
+          value: "http://{{ validation_service_name }}.{{ app_namespace }}.svc.cluster.local:8181"
+        - name: POLICY_AGENT_CA
+          value: ""
+{% endif %}
+{% if feature_validation|bool %}
         - name: POLICY_AGENT_SEARCH_INTERVAL
           value: "{{ validation_policy_agent_search_interval }}"
 {% endif %}
