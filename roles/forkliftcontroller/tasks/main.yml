@@ -12,6 +12,11 @@
       k8s_cluster: true
     when: ocp_cv.resources|length == 0
 
+  - name: "Obtain k8s cluster version"
+    set_fact:
+      k8s_cluster_version: "{{ lookup('k8s', cluster_info='version').kubernetes.gitVersion }}"
+    when: k8s_cluster|bool
+
   - name: "Setup the webhook secret"
     k8s:
       state: present
