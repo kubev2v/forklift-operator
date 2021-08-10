@@ -29,6 +29,10 @@ Installing latest is almost an identical procedure to released versions but requ
 
 **Note:** Installing _Latest_ will also include OLM channels for released versions.
 
+### Installing _latest_ on Kubernetes
+
+See [k8s.md](./docs/k8s.md) for details.
+
 ## ForkliftController CR Creation
 
 1. Visit OpenShift Web Console, navigate to _Operators => Installed Operators_.

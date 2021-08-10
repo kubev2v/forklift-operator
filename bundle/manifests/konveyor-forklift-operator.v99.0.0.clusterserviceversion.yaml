@@ -245,7 +245,7 @@ spec:
                     port: 6789
                   initialDelaySeconds: 5
                   periodSeconds: 10
-                image: quay.io/fbladilo/forklift-operator:latest
+                image: quay.io/konveyor/forklift-operator:latest
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
