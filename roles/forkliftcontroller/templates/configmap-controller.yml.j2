@@ -11,6 +11,3 @@ metadata:
   namespace: {{ app_namespace }}
 data:
   WORKING_DIR: {{ inventory_volume_path }}
-{% if cors_origins is defined %}
-  CORS_ALLOWED_ORIGINS: {{ cors_origins | join(' ') }}
-{% endif %}

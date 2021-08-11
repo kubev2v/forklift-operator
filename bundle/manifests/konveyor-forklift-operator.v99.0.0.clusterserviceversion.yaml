@@ -324,12 +324,6 @@ spec:
           verbs:
           - get
         - apiGroups:
-          - config.openshift.io
-          resources:
-          - apiservers
-          verbs:
-          - '*'
-        - apiGroups:
           - oauth.openshift.io
           resources:
           - oauthclients
