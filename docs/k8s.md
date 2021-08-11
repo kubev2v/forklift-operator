@@ -3,13 +3,20 @@
 ## Pre-requisites
 
 - **Kubernetes cluster or Minikube v1.17+**
-- **OLM**
+- **Operator Lifecycle Manager (OLM)**
 
 ### Installing OLM support
 
-We strongly suggest OLM support for Forklift deployments, in some production kubernetes clusters OLM might already be present, if not, follow official instructions in how to add it. Below is an example in how to add it to minikube.
+We strongly suggest OLM support for Forklift deployments, in some production kubernetes clusters OLM might already be present, if not, see the following examples in how to add OLM support to minikube or standard kubernetes clusters below:
 
-`minikube addons enable olm`
+#### Minikube:
+`$ minikube addons enable olm`
+
+#### Kubernetes:
+`$ kubectl apply -f https://raw.githubusercontent.com/operator-framework/operator-lifecycle-manager/master/deploy/upstream/quickstart/crds.yaml`
+`$ kubectl apply -f https://raw.githubusercontent.com/operator-framework/operator-lifecycle-manager/master/deploy/upstream/quickstart/olm.yaml`
+
+For details and official instructions in how to add OLM support to kubernetes and customize your installation see [here](https://github.com/operator-framework/operator-lifecycle-manager/blob/master/doc/install/install.md)
 
 **Note:** Please wait a few minutes for OLM support to become available if this is a new deployment.
 
@@ -70,7 +77,7 @@ metadata:
   name: forklift-controller
   namespace: konveyor-forklift
 spec:
-  feature_ui: true
+  feature_ui: false
   feature_validation: true
   inventory_tls_enabled: false
   validation_tls_enabled: false
