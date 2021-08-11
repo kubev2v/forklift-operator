@@ -6,6 +6,7 @@ app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 feature_ui: true
 feature_validation: true
 
+k8s_cluster: false
 image_pull_policy: Always
 forklift_operator_version: "latest"
 
@@ -26,6 +27,8 @@ validation_service_name: "{{ app_name }}-validation"
 validation_deployment_name: "{{ validation_service_name }}"
 validation_container_name: "{{ app_name }}-validation"
 validation_policy_agent_search_interval: "120"
+validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
+validation_tls_enabled: true
 
 inventory_volume_path: "/var/cache/inventory"
 inventory_container_name: "{{ app_name }}-inventory"
@@ -35,6 +38,8 @@ inventory_container_limits_cpu: "1000m"
 inventory_container_limits_memory: "1Gi"
 inventory_container_requests_cpu: "500m"
 inventory_container_requests_memory: "500Mi"
+inventory_tls_secret_name: "{{ inventory_service_name }}-serving-cert"
+inventory_tls_enabled: true
 
 ui_image_fqin: "{{ lookup( 'env', 'UI_IMAGE') }}"
 ui_oauth_user_scope: "user:full"
@@ -47,5 +52,7 @@ ui_container_limits_cpu: "100m"
 ui_container_limits_memory: "800Mi"
 ui_container_requests_cpu: "100m"
 ui_container_requests_memory: "150Mi"
+ui_tls_secret_name: "{{ ui_service_name }}-serving-cert"
+ui_tls_enabled: true
 ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
