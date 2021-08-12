@@ -1,20 +1,11 @@
 ---
 - block:
 
-  - name: "Obtain OCP version"
-    k8s_info:
-      kind: ClusterVersion
-      name: version
-    register: ocp_cv
-
-  - when: ocp_cv.resources|length > 0
-    name: "Extract OCP version"
+  - name: "Load cluster API groups"
     set_fact:
-      forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
-    vars:
-      query: "resources[0].status.history[?state=='Completed'].version"
+      api_groups: "{{ lookup('k8s', cluster_info='api_groups') }}"
 
-  - when: ocp_cv.resources|length == 0
+  - when: "'route.openshift.io' not in api_groups"
     block:
     - name: "Enable k8s cluster environment"
       set_fact:
@@ -50,10 +41,11 @@
       definition: "{{ lookup('template', 'route-inventory.yml.j2') }}"
     when: not k8s_cluster|bool
 
-  - name: "Set up default Provider"
+  - name: "Set up default provider"
     k8s:
       state: present
       definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
+    when: "'kubevirt.io' in api_groups"
 
   - name: "Installing the Provisioner CR"
     k8s:
@@ -111,20 +103,33 @@
           state: present
           definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
 
-      - name: "Obtain MTV UI route (timeout 60s)"
+      - name: "Obtain UI route (timeout 60s)"
         k8s_info:
           api_version: "route.openshift.io/v1"
           kind: "Route"
           namespace: "{{ app_namespace }}"
           name: "{{ ui_route_name }}"
         register: route
-        until: route.resources | length > 0
+        until: (route.resources|length) > 0
         delay: 10
         retries: 6
 
-      - name: "Get the Forklift UI FQDN from the route"
+      - name: "Extract UI FQDN from the route"
         set_fact:
           ui_route_fqdn: "{{ route.resources[0].spec.host }}"
+
+      - name: "Obtain OCP cluster version"
+        k8s_info:
+          kind: ClusterVersion
+          name: version
+        register: ocp_cv
+
+      - name: "Extract OCP cluster version"
+        set_fact:
+          forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
+        vars:
+          query: "resources[0].status.history[?state=='Completed'].version"
+        when: (ocp_cv.resources|length) > 0
 
     - name: "Setup UI config map"
       k8s:
