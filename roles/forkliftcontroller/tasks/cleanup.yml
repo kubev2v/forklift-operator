@@ -9,7 +9,7 @@
         - "service = {{ feature_label }}"
     register: results
 
-  - name: "Clean up {{ resource_kind }} labeled {{ feature_label }}"
+  - name: "Clean up {{ resource_kind }} resources labeled {{ feature_label }}"
     k8s:
       namespace: "{{ app_namespace }}"
       kind: "{{ results.resources[0].kind }}"
