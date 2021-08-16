@@ -2,13 +2,18 @@
 app_name: "{{ lookup('env', 'APP_NAME') or 'forklift' }}"
 app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 
-# Deployment features
+# Feature defaults
 feature_ui: true
 feature_validation: true
 
 k8s_cluster: false
 image_pull_policy: Always
 forklift_operator_version: "latest"
+forklift_resources:
+  - Deployment
+  - ConfigMap
+  - Service
+  - Route
 
 controller_image_fqin: "{{ lookup( 'env', 'CONTROLLER_IMAGE') }}"
 controller_configmap_name: "{{ controller_service_name }}-config"
@@ -22,14 +27,6 @@ controller_container_requests_memory: "350Mi"
 controller_log_level: 3
 profiler_volume_path: "/var/cache/profiler"
 
-validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
-validation_service_name: "{{ app_name }}-validation"
-validation_deployment_name: "{{ validation_service_name }}"
-validation_container_name: "{{ app_name }}-validation"
-validation_policy_agent_search_interval: "120"
-validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
-validation_tls_enabled: true
-
 inventory_volume_path: "/var/cache/inventory"
 inventory_container_name: "{{ app_name }}-inventory"
 inventory_service_name: "{{ app_name }}-inventory"
@@ -40,6 +37,15 @@ inventory_container_requests_cpu: "500m"
 inventory_container_requests_memory: "500Mi"
 inventory_tls_secret_name: "{{ inventory_service_name }}-serving-cert"
 inventory_tls_enabled: true
+
+validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
+validation_service_name: "{{ app_name }}-validation"
+validation_deployment_name: "{{ validation_service_name }}"
+validation_container_name: "{{ app_name }}-validation"
+validation_policy_agent_search_interval: "120"
+validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
+validation_tls_enabled: true
+validation_state: absent
 
 ui_image_fqin: "{{ lookup( 'env', 'UI_IMAGE') }}"
 ui_oauth_user_scope: "user:full"
@@ -56,3 +62,4 @@ ui_tls_secret_name: "{{ ui_service_name }}-serving-cert"
 ui_tls_enabled: true
 ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
+ui_state: absent

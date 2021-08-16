@@ -1,6 +1,16 @@
 ---
 - block:
 
+  - name: "Set UI feature state"
+    set_fact:
+      ui_state: "present"
+    when: feature_ui|bool
+
+  - name: "Set validation feature state"
+    set_fact:
+      validation_state: "present"
+    when: feature_validation|bool
+
   - name: "Load cluster API groups"
     set_fact:
       api_groups: "{{ lookup('k8s', cluster_info='api_groups') }}"
@@ -47,7 +57,7 @@
       definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
     when: "'kubevirt.io' in api_groups"
 
-  - name: "Installing the Provisioner CR"
+  - name: "Installing the provisioner CR"
     k8s:
       state: present
       definition: "{{ lookup('template', item) }}"
@@ -57,12 +67,12 @@
     block:
     - name: "Setup validation service"
       k8s:
-        state : present
+        state : "{{ validation_state }}"
         definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
     - name: "Setup validation deployment"
       k8s:
-        state : present
+        state : "{{ validation_state }}"
         definition: "{{ lookup('template', 'deployment-validation.yml.j2') }}"
 
   - when: feature_ui|bool and not k8s_cluster|bool
@@ -100,7 +110,7 @@
       block:
       - name: "Setup UI route"
         k8s:
-          state: present
+          state: "{{ ui_state }}"
           definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
 
       - name: "Obtain UI route (timeout 60s)"
@@ -133,15 +143,33 @@
 
     - name: "Setup UI config map"
       k8s:
-        state: present
+        state: "{{ ui_state }}"
         definition: "{{ lookup('template', 'configmap-ui.yml.j2') }}"
 
     - name: "Setup UI service"
       k8s:
-        state: present
+        state: "{{ ui_state }}"
         definition: "{{ lookup('template', 'service-ui.yml.j2') }}"
 
     - name: "Setup UI deployment"
       k8s:
-        state: present
+        state: "{{ ui_state }}"
         definition: "{{ lookup('template', 'deployment-ui.yml.j2') }}"
+
+  - when: not feature_ui|bool
+    name: "Cleanup {{ ui_service_name }} if disabled"
+    include_tasks: cleanup.yml
+    loop: "{{ forklift_resources }}"
+    loop_control:
+      loop_var: resource_kind
+    vars:
+      feature_label: "{{ ui_service_name }}"
+
+  - when: not feature_validation|bool
+    name: "Cleanup {{ validation_service_name }} if disabled"
+    include_tasks: cleanup.yml
+    loop: "{{ forklift_resources }}"
+    loop_control:
+      loop_var: resource_kind
+    vars:
+      feature_label: "{{ validation_service_name }}"
