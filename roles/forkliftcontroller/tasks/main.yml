@@ -102,8 +102,7 @@
         ui_oauth_secret: "{{ ui_oauthclient_status.resources[0].secret }}"
       when: (ui_oauthclient_status.resources | length) > 0
 
-  # TODO: Update logic once UI has auth support on k8s clusters
-  - when: feature_ui|bool and not k8s_cluster|bool
+  - when: feature_ui|bool
     block:
 
     - when: not k8s_cluster|bool
