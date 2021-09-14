@@ -75,8 +75,42 @@
         state : "{{ validation_state }}"
         definition: "{{ lookup('template', 'deployment-validation.yml.j2') }}"
 
+  # Non-k8s UI tasks
   - when: feature_ui|bool and not k8s_cluster|bool
     block:
+
+    - name: "Setup UI route"
+      k8s:
+        state: "{{ ui_state }}"
+        definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
+
+    - name: "Obtain UI route"
+      k8s_info:
+        api_version: "route.openshift.io/v1"
+        kind: "Route"
+        namespace: "{{ app_namespace }}"
+        name: "{{ ui_route_name }}"
+      register: route
+      until: (route.resources|length) > 0
+      delay: 10
+      retries: 6
+
+    - name: "Extract UI FQDN from the route"
+      set_fact:
+        ui_route_fqdn: "{{ route.resources[0].spec.host }}"
+
+    - name: "Obtain OCP cluster version"
+      k8s_info:
+        kind: ClusterVersion
+        name: version
+      register: ocp_cv
+
+    - name: "Extract OCP cluster version"
+      set_fact:
+        forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
+      vars:
+        query: "resources[0].status.history[?state=='Completed'].version"
+      when: (ocp_cv.resources|length) > 0
 
     - name: "Check if UI oauthclient exists already so we don't update it"
       k8s_info:
@@ -104,41 +138,6 @@
 
   - when: feature_ui|bool
     block:
-
-    - when: not k8s_cluster|bool
-      block:
-      - name: "Setup UI route"
-        k8s:
-          state: "{{ ui_state }}"
-          definition: "{{ lookup('template', 'route-ui.yml.j2') }}"
-
-      - name: "Obtain UI route (timeout 60s)"
-        k8s_info:
-          api_version: "route.openshift.io/v1"
-          kind: "Route"
-          namespace: "{{ app_namespace }}"
-          name: "{{ ui_route_name }}"
-        register: route
-        until: (route.resources|length) > 0
-        delay: 10
-        retries: 6
-
-      - name: "Extract UI FQDN from the route"
-        set_fact:
-          ui_route_fqdn: "{{ route.resources[0].spec.host }}"
-
-      - name: "Obtain OCP cluster version"
-        k8s_info:
-          kind: ClusterVersion
-          name: version
-        register: ocp_cv
-
-      - name: "Extract OCP cluster version"
-        set_fact:
-          forklift_cluster_version: "{{ ocp_cv | json_query(query) | first }}"
-        vars:
-          query: "resources[0].status.history[?state=='Completed'].version"
-        when: (ocp_cv.resources|length) > 0
 
     - name: "Setup UI config map"
       k8s:
