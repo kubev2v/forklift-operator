@@ -24,7 +24,7 @@ spec:
           image: {{ must_gather_api_image_fqin }}
           imagePullPolicy: {{ image_pull_policy }}
           ports:
-{% if inventory_tls_enabled|bool %}
+{% if must_gather_api_tls_enabled|bool %}
           - name: api
             containerPort: 8443
             protocol: TCP
@@ -39,24 +39,20 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: metadata.namespace
-            - name: METRICS_PORT
-              value: 8081
 {% if must_gather_api_tls_enabled|bool %}
-            - name: API_PORT
-              value: 8080
-            - name: TLS_ENABLED
-              value: 'true'
-            - name: TLS_CERT_FILE
-              value: /var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.crt
-            - name: TLS_KEY_FILE
-              value: /var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.key
-            - name: CA_TLS_CERTIFICATE
-              value: /var/run/secrets/kubernetes.io/serviceaccount/service-ca.crt
+            - name: PORT
+              value: "8443"
+            - name: DB_PATH
+              value: {{ must_gather_api_db_path }}
+            - name: CLEANUP_MAX_AGE
+              value: "{{ must_gather_api_cleanup_max_age }}"
 {% else %}
-            - name: API_PORT
-              value: 8443
-            - name: TLS_ENABLED
-              value: 'false'
+            - name: PORT
+              value: "8080"
+            - name: DB_PATH
+              value: {{ must_gather_api_db_path }}
+            - name: CLEANUP_MAX_AGE
+              value: "{{ must_gather_api_cleanup_max_age }}"
 {% endif %}
           volumeMounts:
 {% if must_gather_api_tls_enabled|bool %}
