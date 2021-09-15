@@ -165,10 +165,16 @@ spec:
   relatedImages:
   - name: controller
     image: quay.io/konveyor/forklift-controller:latest
+  - name: must-gather
+    image: quay.io/konveyor/forklift-must-gather:latest
+  - name: must-gather-api
+    image: quay.io/konveyor/forklift-must-gather-api:latest
   - name: ui
     image: quay.io/konveyor/forklift-ui:latest
   - name: validation
     image: quay.io/konveyor/forklift-validation:latest
+  - name: virt-v2v
+    image: quay.io/konveyor/forklift-virt-v2v:latest
   displayName: Konveyor Forklift Operator
   description: |+
     The Konveyor Forklift Operator fully manages the deployment and life cycle of Forklift on [OpenShift](https://www.openshift.com/).
@@ -181,6 +187,7 @@ spec:
     * controller, to coordinate migration processes.
     * ui, the web console to manage migrations.
     * validation, to validate migration workflows.
+    * must-gather-api, a service to generate targeted must-gather archives.
 
     ### Documentation
     Documentation can be found on our [website](https://forklift-docs.konveyor.io).
@@ -229,10 +236,16 @@ spec:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: CONTROLLER_IMAGE
                   value: quay.io/konveyor/forklift-controller:latest
+                - name: MUST_GATHER_IMAGE
+                  value: quay.io/konveyor/forklift-must-gather:latest
+                - name: MUST_GATHER_API_IMAGE
+                  value: quay.io/konveyor/forklift-must-gather-api:latest
                 - name: UI_IMAGE
                   value: quay.io/konveyor/forklift-ui:latest
                 - name: VALIDATION_IMAGE
                   value: quay.io/konveyor/forklift-validation:latest
+                - name: VIRT_V2V_IMAGE
+                  value: quay.io/konveyor/forklift-virt-v2v:latest
                 livenessProbe:
                   httpGet:
                     path: /healthz
