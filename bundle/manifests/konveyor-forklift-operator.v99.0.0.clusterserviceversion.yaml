@@ -23,6 +23,7 @@ metadata:
         "spec": {
           "feature_ui": "true",
           "feature_validation": "true"
+          "feature_must_gather_api": "true"
         }
       }
     alm-examples: |-
