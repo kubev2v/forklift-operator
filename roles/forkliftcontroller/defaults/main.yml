@@ -5,6 +5,7 @@ app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 # Feature defaults
 feature_ui: true
 feature_validation: true
+feature_must_gather_api: true
 
 k8s_cluster: false
 image_pull_policy: Always
@@ -63,3 +64,12 @@ ui_tls_enabled: true
 ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
 ui_state: absent
+
+must_gather_api_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_API_IMAGE') }}"
+must_gather_api_service_name: "{{ app_name }}-must-gather-api"
+must_gather_api_deployment_name: "{{ must_gather_api_service_name }}"
+must_gather_api_container_name: "{{ app_name }}-must-gather-api"
+must_gather_api_tls_secret_name: "{{ must_gather_api_service_name }}-serving-cert"
+must_gather_api_tls_enabled: true
+must_gather_api_state: absent
+
