@@ -15,7 +15,7 @@ spec:
     app: {{ app_name }}
     service: {{ must_gather_api_service_name }}
   ports:
-{% if inventory_tls_enabled|bool %}
+{% if must_gather_api_tls_enabled|bool %}
   - name: api-https
     port: 8443
     targetPort: 8443
@@ -26,4 +26,3 @@ spec:
     targetPort: 8080
     protocol: TCP
 {% endif %}
-

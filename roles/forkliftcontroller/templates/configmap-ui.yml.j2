@@ -18,6 +18,11 @@ data:
 {% else %}
       "inventoryApi": "http://{{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local:8080",
 {% endif %}
+{% if must_gather_api_tls_enabled|bool %}
+      "mustGatherApi": "https://{{ must_gather_api_service_name }}.{{ app_namespace }}.svc.cluster.local:8443",
+{% else %}
+      "mustGatherApi": "http://{{ must_gather_api_service_name }}.{{ app_namespace }}.svc.cluster.local:8080",
+{% endif %}
       "oauth": {
 {% if not k8s_cluster|bool %}
         "clientId": "{{ ui_service_name }}",
