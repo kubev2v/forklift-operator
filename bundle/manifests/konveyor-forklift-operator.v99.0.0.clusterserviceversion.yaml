@@ -367,6 +367,7 @@ spec:
         - apiGroups:
           - ""
           resources:
+          - pods
           - secrets
           - namespaces
           - events
@@ -420,10 +421,9 @@ spec:
           - list
           - watch
         - apiGroups:
-          - v2v.kubevirt.io
+          - kubevirt.io
           resources:
-          - resourcemappings
-          - virtualmachineimports
+          - virtualmachines
           verbs:
           - get
           - list
@@ -440,14 +440,18 @@ spec:
           - get
           - list
           - watch
+          - create
+          - update
+          - patch
+          - delete
         - apiGroups:
-          - kubevirt.io
+          - security.openshift.io
           resources:
-          - virtualmachines
+          - securitycontextconstraints
+          resourceNames:
+          - anyuid
           verbs:
-          - get
-          - list
-          - watch
+          - use
   installModes:
   - type: OwnNamespace
     supported: true
