@@ -382,6 +382,9 @@ spec:
                         - progress
                         type: object
                       type: array
+                    restorePowerState:
+                      description: Source VM power state before migration.
+                      type: string
                     started:
                       description: Started timestamp.
                       format: date-time
@@ -403,12 +406,18 @@ spec:
                           items:
                             description: Precopy durations
                             properties:
-                              end:
+                              completed:
+                                description: Completed timestamp.
                                 format: date-time
                                 type: string
-                              start:
+                              snapshot:
+                                type: string
+                              started:
+                                description: Started timestamp.
                                 format: date-time
                                 type: string
+                            required:
+                            - snapshot
                             type: object
                           type: array
                         successes:
@@ -421,6 +430,7 @@ spec:
                   required:
                   - phase
                   - pipeline
+                  - restorePowerState
                   type: object
                 type: array
             type: object
