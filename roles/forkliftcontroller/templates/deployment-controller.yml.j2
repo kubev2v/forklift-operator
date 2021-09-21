@@ -38,6 +38,8 @@ spec:
           value: main
         - name: API_HOST
           value: {{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local
+        - name: KUBEVIRT_CLIENT_GO_SCHEME_REGISTRATION_VERSION
+          value: "v1"
 {% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
@@ -97,6 +99,8 @@ spec:
               fieldPath: metadata.namespace
         - name: ROLE
           value: inventory
+        - name: KUBEVIRT_CLIENT_GO_SCHEME_REGISTRATION_VERSION
+          value: "v1"
 {% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
