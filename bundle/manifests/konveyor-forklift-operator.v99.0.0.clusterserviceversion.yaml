@@ -436,6 +436,7 @@ spec:
           - cdi.kubevirt.io
           resources:
           - datavolumes
+          - datavolumes/finalizers
           verbs:
           - get
           - list
