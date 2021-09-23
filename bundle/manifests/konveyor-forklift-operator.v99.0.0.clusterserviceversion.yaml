@@ -37,7 +37,8 @@ metadata:
           },
           "spec": {
             "feature_ui": "true",
-            "feature_validation": "true"
+            "feature_validation": "true",
+            "feature_must_gather_api": "true"
           }
         },
         {
@@ -51,6 +52,26 @@ metadata:
              "plan": {
                 "name": "example-plan",
                 "namespace": "konveyor-forklift"
+             }
+          }
+        },
+        {
+          "apiVersion": "forklift.konveyor.io/v1beta1",
+          "kind": "Plan",
+          "metadata": {
+            "name": "example-plan",
+            "namespace": "konveyor-forklift"
+          },
+          "spec": {
+             "provider": {
+                "source": {
+                   "namespace": "",
+                   "name": ""
+                },
+                "destination": {
+                   "namespace": "",
+                   "name": ""
+                }
              }
           }
         },
@@ -466,9 +487,9 @@ spec:
   maintainers:
   - name: Red Hat
     email: openshift-operators@redhat.com
-  maturity: beta
+  maturity: stable
   provider:
-    name: Red Hat
+    name: Red Hat, Inc
   links:
   - name: Konveyor Forklift Documentation
     url: https://forklift-docs.konveyor.io
