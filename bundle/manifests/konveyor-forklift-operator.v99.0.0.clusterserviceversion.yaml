@@ -424,6 +424,7 @@ spec:
           - kubevirt.io
           resources:
           - virtualmachines
+          - virtualmachines/finalizers
           verbs:
           - get
           - list
