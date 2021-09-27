@@ -40,6 +40,8 @@ spec:
           value: {{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local
         - name: KUBEVIRT_CLIENT_GO_SCHEME_REGISTRATION_VERSION
           value: "v1"
+        - name: VIRT_V2V_IMAGE
+          value: {{ virt_v2v_image_fqin }}
 {% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
