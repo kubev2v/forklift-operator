@@ -42,15 +42,23 @@ spec:
 {% if must_gather_api_tls_enabled|bool %}
             - name: PORT
               value: "8443"
+            - name: API_TLS_ENABLED
+              value: "true"
+            - name: API_TLS_CERTIFICATE
+              value: "/var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.crt"
+            - name: API_TLS_KEY
+              value: "/var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.key"
             - name: DB_PATH
-              value: {{ must_gather_api_db_path }}
+              value: "{{ must_gather_api_db_path }}"
             - name: CLEANUP_MAX_AGE
               value: "{{ must_gather_api_cleanup_max_age }}"
 {% else %}
             - name: PORT
               value: "8080"
+            - API_TLS_ENABLED
+              value: "false"
             - name: DB_PATH
-              value: {{ must_gather_api_db_path }}
+              value: "{{ must_gather_api_db_path }}"
             - name: CLEANUP_MAX_AGE
               value: "{{ must_gather_api_cleanup_max_age }}"
 {% endif %}
