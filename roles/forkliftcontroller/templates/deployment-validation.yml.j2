@@ -48,20 +48,16 @@ spec:
               value: 'false'
 {% endif %}
           volumeMounts:
-{% if validation_allow_user_supplied_rules|bool %}
             - name: {{ validation_extra_volume_name }}
               mountPath: {{ validation_extra_volume_mountpath }}
-{% endif %}
 {% if validation_tls_enabled|bool %}
             - name: {{ validation_tls_secret_name }}
               mountPath: /var/run/secrets/{{ validation_tls_secret_name }}
 {% endif %}
       volumes:
-{% if validation_allow_user_supplied_rules|bool %}
         - name: {{ validation_extra_volume_name }}
           configMap:
             name: {{ validation_configmap_name }}
-{% endif %}
 {% if validation_tls_enabled|bool %}
         - name: {{ validation_tls_secret_name }}
           secret:
