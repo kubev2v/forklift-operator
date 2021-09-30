@@ -8,18 +8,3 @@ metadata:
     app: {{ app_name }}
     service: {{ validation_service_name }}
 data:
-  example_vmware_multiple_disks.rego: |-
-    package io.konveyor.forklift.vmware    
-
-    has_multiple_disks {
-        count(input.disks) > 1
-    }    
-
-    concerns[flag] {
-        has_multiple_disks
-        flag := {
-            "category": "Information",
-            "label": "Multiple disks detected",
-            "assessment": "Example user-supplied extra validation rule - multiple disks have been detected on this VM."
-        }
-    }
