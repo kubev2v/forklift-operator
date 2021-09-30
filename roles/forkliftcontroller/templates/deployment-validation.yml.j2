@@ -61,7 +61,7 @@ spec:
         - name: {{ validation_extra_volume_name }}
           configMap:
             name: {{ validation_configmap_name }}
-{% endif %}}
+{% endif %}
 {% if validation_tls_enabled|bool %}
         - name: {{ validation_tls_secret_name }}
           secret:
