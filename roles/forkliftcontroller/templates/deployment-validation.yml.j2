@@ -26,6 +26,13 @@ spec:
           ports:
             - name: opa
               containerPort: 8181
+          resources:
+            limits:
+              cpu: {{ validation_container_limits_cpu }}
+              memory: {{ validation_container_limits_memory }}
+            requests:
+              cpu: {{ validation_container_requests_cpu }}
+              memory: {{ validation_container_requests_memory }}
           env:
             - name: POD_NAMESPACE
               valueFrom:
