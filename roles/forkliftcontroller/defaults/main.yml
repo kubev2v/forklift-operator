@@ -40,9 +40,12 @@ inventory_tls_secret_name: "{{ inventory_service_name }}-serving-cert"
 inventory_tls_enabled: true
 
 validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
+validation_configmap_name: "{{ validation_service_name }}-config"
 validation_service_name: "{{ app_name }}-validation"
 validation_deployment_name: "{{ validation_service_name }}"
 validation_container_name: "{{ app_name }}-validation"
+validation_extra_volume_name: "validation-extra-rules"
+validation_extra_volume_mountpath: "/usr/share/opa/policies/extra"
 validation_policy_agent_search_interval: "120"
 validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
 validation_tls_enabled: true
