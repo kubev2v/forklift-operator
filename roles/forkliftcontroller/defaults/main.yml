@@ -47,6 +47,10 @@ validation_container_name: "{{ app_name }}-validation"
 validation_extra_volume_name: "validation-extra-rules"
 validation_extra_volume_mountpath: "/usr/share/opa/policies/extra"
 validation_policy_agent_search_interval: "120"
+validation_container_limits_cpu: "1000m"
+validation_container_limits_memory: "300Mi"
+validation_container_requests_cpu: "400m"
+validation_container_requests_memory: "50Mi"
 validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
 validation_tls_enabled: true
 validation_state: absent
