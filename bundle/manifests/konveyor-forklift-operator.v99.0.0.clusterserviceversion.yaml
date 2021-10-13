@@ -202,14 +202,18 @@ spec:
     The Konveyor Forklift Operator fully manages the deployment and life cycle of Forklift on [OpenShift](https://www.openshift.com/).
 
     ### Install
-    After you have installed the Operator, you can install components by creating the required ForkliftController CR.
+    Once you have successfully installed the Operator, proceed to deploy components by creating the required ForkliftController CR.
 
     By default, the Operator installs the following components on a target cluster:
 
-    * controller, to coordinate migration processes.
-    * ui, the web console to manage migrations.
-    * validation, to validate migration workflows.
-    * must-gather-api, a service to generate targeted must-gather archives.
+    * Controller, to coordinate migration processes.
+    * UI, the web console to manage migrations.
+    * Validation, a service to validate migration workflows.
+    * Must-gather-api, a service to generate targeted must-gather archives.
+
+    ### Compatibility
+    Konveyor Forklift 2.1 is supported in OpenShift 4.8
+    Konveyor Forklift 2.2 is supported in OpenShift 4.9
 
     ### Documentation
     Documentation can be found on our [website](https://forklift-docs.konveyor.io).
@@ -496,7 +500,7 @@ spec:
   - name: Konveyor Forklift Operator
     url: https://github.com/konveyor/forklift-operator
   version: 99.0.0
-  minKubeVersion: 1.21.0
+  minKubeVersion: 1.22.0
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:
