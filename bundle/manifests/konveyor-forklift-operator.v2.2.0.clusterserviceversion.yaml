@@ -1,15 +1,15 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: konveyor-forklift-operator.v99.0.0
+  name: konveyor-forklift-operator.v2.2.0
   namespace: konveyor-forklift
   annotations:
-    olm.skipRange: '>=0.0.0 <99.0.0'
+    olm.skipRange: '>=0.0.0 <2.2.0'
     capabilities: Seamless Upgrades
     description: >-
       Facilitates migration of VM workloads to OpenShift Virtualization
     categories: 'Modernization & Migration'
-    containerImage: quay.io/konveyor/forklift-operator:latest
+    containerImage: quay.io/konveyor/forklift-operator:release-v2.2.0
     createdAt: 2020-06-16T11:21:00Z
     repository: https://github.com/konveyor/forklift-operator
     operatorframework.io/initialization-resource: |-
@@ -186,17 +186,17 @@ metadata:
 spec:
   relatedImages:
   - name: controller
-    image: quay.io/konveyor/forklift-controller:latest
+    image: quay.io/konveyor/forklift-controller:release-v2.2.0
   - name: must-gather
-    image: quay.io/konveyor/forklift-must-gather:latest
+    image: quay.io/konveyor/forklift-must-gather:release-v2.2.0
   - name: must-gather-api
-    image: quay.io/konveyor/forklift-must-gather-api:latest
+    image: quay.io/konveyor/forklift-must-gather-api:release-v2.2.0
   - name: ui
-    image: quay.io/konveyor/forklift-ui:latest
+    image: quay.io/konveyor/forklift-ui:release-v2.2.0
   - name: validation
-    image: quay.io/konveyor/forklift-validation:latest
+    image: quay.io/konveyor/forklift-validation:release-v2.2.0
   - name: virt-v2v
-    image: quay.io/konveyor/forklift-virt-v2v:latest
+    image: quay.io/konveyor/forklift-virt-v2v:release-v2.2.0
   displayName: Konveyor Forklift Operator
   description: |+
     The Konveyor Forklift Operator fully manages the deployment and life cycle of Forklift on [OpenShift](https://www.openshift.com/).
@@ -261,17 +261,17 @@ spec:
                     fieldRef:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: CONTROLLER_IMAGE
-                  value: quay.io/konveyor/forklift-controller:latest
+                  value: quay.io/konveyor/forklift-controller:release-v2.2.0
                 - name: MUST_GATHER_IMAGE
-                  value: quay.io/konveyor/forklift-must-gather:latest
+                  value: quay.io/konveyor/forklift-must-gather:release-v2.2.0
                 - name: MUST_GATHER_API_IMAGE
-                  value: quay.io/konveyor/forklift-must-gather-api:latest
+                  value: quay.io/konveyor/forklift-must-gather-api:release-v2.2.0
                 - name: UI_IMAGE
-                  value: quay.io/konveyor/forklift-ui:latest
+                  value: quay.io/konveyor/forklift-ui:release-v2.2.0
                 - name: VALIDATION_IMAGE
-                  value: quay.io/konveyor/forklift-validation:latest
+                  value: quay.io/konveyor/forklift-validation:release-v2.2.0
                 - name: VIRT_V2V_IMAGE
-                  value: quay.io/konveyor/forklift-virt-v2v:latest
+                  value: quay.io/konveyor/forklift-virt-v2v:release-v2.2.0
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -284,7 +284,7 @@ spec:
                     port: 6789
                   initialDelaySeconds: 5
                   periodSeconds: 10
-                image: quay.io/konveyor/forklift-operator:latest
+                image: quay.io/konveyor/forklift-operator:release-v2.2.0
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
@@ -499,7 +499,7 @@ spec:
     url: https://forklift-docs.konveyor.io
   - name: Konveyor Forklift Operator
     url: https://github.com/konveyor/forklift-operator
-  version: 99.0.0
+  version: 2.2.0
   minKubeVersion: 1.22.0
   apiservicedefinitions: {}
   customresourcedefinitions:

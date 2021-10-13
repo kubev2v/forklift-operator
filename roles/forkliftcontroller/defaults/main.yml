@@ -9,7 +9,7 @@ feature_must_gather_api: true
 
 k8s_cluster: false
 image_pull_policy: Always
-forklift_operator_version: "latest"
+forklift_operator_version: "2.2.0"
 forklift_resources:
   - Deployment
   - ConfigMap
