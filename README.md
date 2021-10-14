@@ -1,6 +1,8 @@
 # Konveyor Forklift Operator
 
-Konveyor Forklift Operator installs a suite of migration tools that facilitate the migration of VM workloads to OpenShift Virtualization.
+[![Operator Repository on Quay](https://quay.io/repository/konveyor/forklift-operator/status "Operator Repository on Quay")](https://quay.io/repository/konveyor/forklift-operator) [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+Konveyor Forklift Operator installs a suite of migration tools that facilitate the migration of VM workloads to [OpenShift Virtualization](https://cloud.redhat.com/learn/topics/virtualization/).
 
 ## Prerequisites
 
@@ -8,7 +10,7 @@ Konveyor Forklift Operator installs a suite of migration tools that facilitate t
 
 ## Konveyor Forklift Operator Installation
 
-Konveyor Forklift Operator is installable on OpenShift 4 via OperatorHub.
+Konveyor Forklift Operator is installable on OpenShift 4 via [OperatorHub](https://operatorhub.io/).
 
 ### Installing _released versions_
 

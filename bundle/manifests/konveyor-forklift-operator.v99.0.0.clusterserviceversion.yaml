@@ -213,6 +213,7 @@ spec:
 
     ### Compatibility
     Konveyor Forklift 2.1 is supported in OpenShift 4.8
+
     Konveyor Forklift 2.2 is supported in OpenShift 4.9
 
     ### Documentation
