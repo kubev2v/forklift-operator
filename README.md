@@ -6,7 +6,8 @@ Konveyor Forklift Operator installs a suite of migration tools that facilitate t
 
 ## Prerequisites
 
-* __OCP 4.7+__
+* __OpenShift 4.7+__
+* __OpenShift Virtualization 4.7+__
 
 ## Konveyor Forklift Operator Installation
 
