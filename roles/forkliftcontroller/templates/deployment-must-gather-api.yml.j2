@@ -62,6 +62,13 @@ spec:
             - name: CLEANUP_MAX_AGE
               value: "{{ must_gather_api_cleanup_max_age }}"
 {% endif %}
+          resources:
+            limits:
+              cpu: {{ must_gather_api_container_limits_cpu }}
+              memory: {{ must_gather_api_container_limits_memory }}
+            requests:
+              cpu: {{ must_gather_api_container_requests_cpu }}
+              memory: {{ must_gather_api_container_requests_memory }}
           volumeMounts:
 {% if must_gather_api_tls_enabled|bool %}
             - name: {{ must_gather_api_tls_secret_name }}
