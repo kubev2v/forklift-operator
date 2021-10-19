@@ -479,6 +479,13 @@ spec:
           - anyuid
           verbs:
           - use
+        - apiGroups:
+          - template.openshift.io
+          resources:
+          - templates
+          verbs:
+          - get
+          - list
   installModes:
   - type: OwnNamespace
     supported: true
