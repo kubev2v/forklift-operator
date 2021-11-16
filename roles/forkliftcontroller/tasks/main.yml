@@ -49,6 +49,7 @@
     k8s:
       state : present
       definition: "{{ lookup('template', 'deployment-controller.yml.j2') }}"
+      merge_type: "merge"
 
   - name: "Setup inventory route"
     k8s:
