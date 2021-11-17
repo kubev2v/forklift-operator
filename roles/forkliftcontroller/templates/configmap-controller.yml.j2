@@ -11,3 +11,6 @@ metadata:
   namespace: {{ app_namespace }}
 data:
   WORKING_DIR: {{ inventory_volume_path }}
+{% if controller_precopy_interval is number %}
+  PRECOPY_INTERVAL: "{{ controller_precopy_interval }}"
+{% endif %}
