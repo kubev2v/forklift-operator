@@ -61,6 +61,10 @@ spec:
         - name: LOG_LEVEL
           value: "{{ controller_log_level }}"
 {% endif %}
+{% if controller_precopy_interval is number %}
+        - name: PRECOPY_INTERVAL
+          value: "{{ controller_precopy_interval }}"
+{% endif %}
 {% if controller_profile_kind is defined and controller_profile_path is defined and controller_profile_duration is defined %}
         - name: PROFILE_KIND
           value: "{{ controller_profile_kind }}"
