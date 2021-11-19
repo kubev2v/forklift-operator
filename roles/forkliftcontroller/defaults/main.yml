@@ -6,6 +6,7 @@ app_namespace: "{{ lookup( 'env', 'WATCH_NAMESPACE') or 'konveyor-forklift' }}"
 feature_ui: true
 feature_validation: true
 feature_must_gather_api: true
+feature_vsphere_incremental_backup: true
 
 k8s_cluster: false
 image_pull_policy: Always
