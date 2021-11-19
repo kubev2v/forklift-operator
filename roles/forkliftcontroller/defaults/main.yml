@@ -27,6 +27,7 @@ controller_container_requests_cpu: "100m"
 controller_container_requests_memory: "350Mi"
 controller_log_level: 3
 controller_precopy_interval: 60
+controller_vsphere_incremental_backup: true
 profiler_volume_path: "/var/cache/profiler"
 
 inventory_volume_path: "/var/cache/inventory"
