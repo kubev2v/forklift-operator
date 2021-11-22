@@ -65,10 +65,6 @@ spec:
         - name: PRECOPY_INTERVAL
           value: "{{ controller_precopy_interval }}"
 {% endif %}
-{% if controller_vsphere_incremental_backup|bool %}
-        - name: FEATURE_VSPHERE_INCREMENTAL_BACKUP
-          value: "true"
-{% endif %}
 {% if controller_profile_kind is defined and controller_profile_path is defined and controller_profile_duration is defined %}
         - name: PROFILE_KIND
           value: "{{ controller_profile_kind }}"
