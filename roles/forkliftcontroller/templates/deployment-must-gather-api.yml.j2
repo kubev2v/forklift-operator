@@ -48,20 +48,18 @@ spec:
               value: "/var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.crt"
             - name: API_TLS_KEY
               value: "/var/run/secrets/{{ must_gather_api_tls_secret_name }}/tls.key"
-            - name: DB_PATH
-              value: "{{ must_gather_api_db_path }}"
-            - name: CLEANUP_MAX_AGE
-              value: "{{ must_gather_api_cleanup_max_age }}"
 {% else %}
             - name: PORT
               value: "8080"
             - API_TLS_ENABLED
               value: "false"
+{% endif %}
             - name: DB_PATH
               value: "{{ must_gather_api_db_path }}"
             - name: CLEANUP_MAX_AGE
               value: "{{ must_gather_api_cleanup_max_age }}"
-{% endif %}
+            - name: DEFAULT_IMAGE
+              value: "{{ must_gather_image_fqin }}"
           volumeMounts:
 {% if must_gather_api_tls_enabled|bool %}
             - name: {{ must_gather_api_tls_secret_name }}
