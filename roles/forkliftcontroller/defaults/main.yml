@@ -83,4 +83,5 @@ must_gather_api_db_path: "/tmp/gatherings.db"
 must_gather_api_cleanup_max_age: "-1"
 must_gather_api_state: absent
 
+must_gather_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_IMAGE') }}"
 virt_v2v_image_fqin: "{{ lookup( 'env', 'VIRT_V2V_IMAGE') }}"
