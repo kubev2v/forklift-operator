@@ -60,6 +60,10 @@ spec:
               value: "{{ must_gather_api_cleanup_max_age }}"
             - name: MUST_GATHER_IMAGE
               value: "{{ must_gather_image_fqin }}"
+{% if must_gather_api_debug|bool %}
+            - name: DEBUG
+              value: "true"
+{% endif %}
           resources:
             limits:
               cpu: {{ must_gather_api_container_limits_cpu }}
