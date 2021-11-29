@@ -35,16 +35,7 @@
       state: present
       definition: "{{ lookup('template', 'secret-webhook-server-secret.yml.j2') }}"
 
-  - name: "Check if controller configMap exists already so we don't update it"
-    k8s_info:
-      api_version: v1
-      kind: ConfigMap
-      name: "{{ controller_configmap_name }}"
-      namespace: "{{ app_namespace }}"
-    register: controller_configmap_status
-
-  - when: (controller_configmap_status.resources | length) == 0
-    name: "Setup controller config map"
+  - name: "Setup controller config map"
     k8s:
       state : present
       definition: "{{ lookup('template', 'configmap-controller.yml.j2') }}"
@@ -85,16 +76,7 @@
         state: "{{ validation_state }}"
         definition: "{{ lookup('template', 'service-validation.yml.j2') }}"
 
-    - name: "Check if validation service configMap exists already so we don't update it"
-      k8s_info:
-        api_version: v1
-        kind: ConfigMap
-        name: "{{ validation_configmap_name }}"
-        namespace: "{{ app_namespace }}"
-      register: validation_configmap_status
-
-    - when: (validation_configmap_status.resources | length) == 0
-      name: "Add validation configMap"
+    - name: "Setup validation config map"
       k8s:
         state: "{{ validation_state }}"
         definition: "{{ lookup('template', 'configmap-validation.yml.j2') }}"
