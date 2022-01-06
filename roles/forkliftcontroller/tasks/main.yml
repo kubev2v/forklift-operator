@@ -63,12 +63,6 @@
       definition: "{{ lookup('template', 'provider-host.yml.j2') }}"
     when: "'kubevirt.io' in api_groups"
 
-  - name: "Installing the provisioner CR"
-    k8s:
-      state: present
-      definition: "{{ lookup('template', item) }}"
-    with_fileglob: "templates/provisioner-*.j2"
-
   - when: feature_validation|bool
     block:
     - name: "Setup validation service"

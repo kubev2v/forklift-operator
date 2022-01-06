@@ -177,8 +177,7 @@ metadata:
               "image": "quay.io/konveyor/hook-runner",
               "playbook": "<base64-encoded-playbook>"
            }
-        },
-        {"kind":"Provisioner","apiVersion":"forklift.konveyor.io/v1beta1","metadata":{"name":"cinder","namespace":"konveyor-forklift"},"spec":{"name":"kubernetes.io/cinder","volumeModes":[{"name":"Block","priority":0,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]},{"name":"Filesystem","priority":1,"accessModes":[{"name":"ReadWriteOnce","priority":0},{"name":"ReadWriteMany","priority":1}]}]}}
+        }
       ]
     certified: "false"
     support: Red Hat
@@ -547,11 +546,6 @@ spec:
       kind: StorageMap
       displayName: StorageMap
       description: VM storage map
-    - name: provisioners.forklift.konveyor.io
-      version: v1beta1
-      kind: Provisioner
-      displayName: Provisioner
-      description: Storage Provisioner Capabilities
     - name: hooks.forklift.konveyor.io
       version: v1beta1
       kind: Hook
