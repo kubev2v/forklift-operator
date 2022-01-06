@@ -68,6 +68,11 @@ spec:
             - name: "{{ ui_tls_secret_name }}"
               mountPath: "/var/run/secrets/{{ ui_tls_secret_name }}"
 {% endif %}
+{% if trusted_ca_enabled|bool %}
+            - name: trusted-ca
+              mountPath: /etc/pki/ca-trust/extracted/pem
+              readOnly: true
+{% endif %}
       volumes:
         - name: "{{ ui_configmap_name }}"
           configMap:
@@ -77,4 +82,12 @@ spec:
           secret:
             defaultMode: 420
             secretName: "{{ ui_tls_secret_name }}"
+{% endif %}
+{% if trusted_ca_enabled|bool %}
+        - name: trusted-ca
+          configMap:
+            name: trusted-ca
+            items:
+              - key: ca-bundle.crt
+                path: tls-ca-bundle.pem
 {% endif %}
