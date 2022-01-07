@@ -38,7 +38,7 @@
 
     - when: proxy_cluster.spec.trustedCA.name|length > 0
       block:
-      - name: "Enable trusted_ca environment"
+      - name: "Enable trusted CA environment"
         set_fact:
           trusted_ca_enabled: true
 
