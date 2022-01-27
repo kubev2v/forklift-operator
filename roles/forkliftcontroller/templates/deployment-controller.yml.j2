@@ -69,6 +69,10 @@ spec:
         - name: FEATURE_VSPHERE_INCREMENTAL_BACKUP
           value: "true"
 {% endif %}
+{% if controller_ovirt_warm_migration|bool %}
+        - name: FEATURE_OVIRT_WARM_MIGRATION
+          value: "true"
+{% endif %}
 {% if controller_profile_kind is defined and controller_profile_path is defined and controller_profile_duration is defined %}
         - name: PROFILE_KIND
           value: "{{ controller_profile_kind }}"
