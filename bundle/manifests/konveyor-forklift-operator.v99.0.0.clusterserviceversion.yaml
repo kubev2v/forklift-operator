@@ -215,6 +215,8 @@ spec:
 
     Konveyor Forklift 2.2 is supported in OpenShift 4.9
 
+    Konveyor Forklift 2.3 is supported in OpenShift 4.10
+
     ### Documentation
     Documentation can be found on our [website](https://forklift-docs.konveyor.io).
 
@@ -509,7 +511,7 @@ spec:
   - name: Konveyor Forklift Operator
     url: https://github.com/konveyor/forklift-operator
   version: 99.0.0
-  minKubeVersion: 1.22.0
+  minKubeVersion: 1.23.0
   apiservicedefinitions: {}
   customresourcedefinitions:
     owned:

@@ -18,6 +18,7 @@ Forklift release | OpenShift Virtualization release | OpenShift release
 v2.0.0 | v4.7+ | ```v4.7+```
 v2.1.0 | v4.8+ | ```v4.8+```
 v2.2.0 | v4.9+ | ```v4.9+```
+v2.3.0 | v4.10+ | ```v4.10+```
 
 **Note:** Please keep in mind Forklift Operator will not deploy in unsupported configurations.
 
