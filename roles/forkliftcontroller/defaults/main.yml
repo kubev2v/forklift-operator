@@ -16,7 +16,7 @@ forklift_resources:
   - Service
   - Route
 
-controller_image_fqin: "{{ lookup( 'env', 'CONTROLLER_IMAGE') }}"
+controller_image_fqin: "{{ lookup( 'env', 'CONTROLLER_IMAGE') or lookup( 'env', 'RELATED_IMAGE_CONTROLLER') }}"
 controller_configmap_name: "{{ controller_service_name }}-config"
 controller_service_name: "{{ app_name }}-controller"
 controller_deployment_name: "{{ controller_service_name }}"
@@ -42,7 +42,7 @@ inventory_container_requests_memory: "500Mi"
 inventory_tls_secret_name: "{{ inventory_service_name }}-serving-cert"
 inventory_tls_enabled: true
 
-validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') }}"
+validation_image_fqin: "{{ lookup( 'env', 'VALIDATION_IMAGE') or lookup( 'env', 'RELATED_IMAGE_VALIDATION') }}"
 validation_configmap_name: "{{ validation_service_name }}-config"
 validation_service_name: "{{ app_name }}-validation"
 validation_deployment_name: "{{ validation_service_name }}"
@@ -58,7 +58,7 @@ validation_tls_secret_name: "{{ validation_service_name }}-serving-cert"
 validation_tls_enabled: true
 validation_state: absent
 
-ui_image_fqin: "{{ lookup( 'env', 'UI_IMAGE') }}"
+ui_image_fqin: "{{ lookup( 'env', 'UI_IMAGE') or lookup( 'env', 'RELATED_IMAGE_UI') }}"
 ui_oauth_user_scope: "user:full"
 ui_configmap_path: "/etc/forklift-ui"
 ui_configmap_name: "{{ ui_service_name }}-config"
@@ -75,7 +75,7 @@ ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
 ui_state: absent
 
-must_gather_api_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_API_IMAGE') }}"
+must_gather_api_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_API_IMAGE') or lookup( 'env', 'RELATED_IMAGE_MUST_GATHER_API') }}"
 must_gather_api_service_name: "{{ app_name }}-must-gather-api"
 must_gather_api_deployment_name: "{{ must_gather_api_service_name }}"
 must_gather_api_container_name: "{{ app_name }}-must-gather-api"
@@ -90,5 +90,5 @@ must_gather_api_cleanup_max_age: "-1"
 must_gather_api_debug: false
 must_gather_api_state: absent
 
-must_gather_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_IMAGE') }}"
-virt_v2v_image_fqin: "{{ lookup( 'env', 'VIRT_V2V_IMAGE') }}"
+must_gather_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_IMAGE') or lookup( 'env', 'RELATED_IMAGE_MUST_GATHER') }}"
+virt_v2v_image_fqin: "{{ lookup( 'env', 'VIRT_V2V_IMAGE') or lookup( 'env', 'RELATED_IMAGE_VIRT_V2V') }}"
