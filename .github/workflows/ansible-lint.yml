@@ -24,3 +24,5 @@ jobs:
           targets: |
             ./roles/forkliftcontroller/**/*.yml
             ./roles/forkliftcontroller/**/*.yaml
+          override-deps: |
+            ansible-lint==5.3.2
