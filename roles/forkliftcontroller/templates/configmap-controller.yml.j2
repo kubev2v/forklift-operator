@@ -14,3 +14,6 @@ data:
 {% if controller_precopy_interval is number %}
   PRECOPY_INTERVAL: "{{ controller_precopy_interval }}"
 {% endif %}
+{% if controller_max_vm_inflight is number %}
+  MAX_VM_INFLIGHT: "{{ controller_max_vm_inflight }}"
+{% endif %}
