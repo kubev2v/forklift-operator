@@ -65,6 +65,10 @@ spec:
         - name: PRECOPY_INTERVAL
           value: "{{ controller_precopy_interval }}"
 {% endif %}
+{% if controller_max_vm_inflight is number %}
+        - name: MAX_VM_INFLIGHT
+          value: "{{ controller_max_vm_inflight }}"
+{% endif %}
 {% if controller_vsphere_incremental_backup|bool %}
         - name: FEATURE_VSPHERE_INCREMENTAL_BACKUP
           value: "true"
