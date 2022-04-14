@@ -26,7 +26,7 @@ spec:
             - name: META_FILE
               value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
             - name: NODE_EXTRA_CA_CERTS
-              value: /opt/app-root/src/ca.crt
+              value: {{ ui_node_extra_ca_certs }}
             - name: FORKLIFT_OPERATOR_VERSION
               value: {{ forklift_operator_version }}
 {% if k8s_cluster|bool %}

@@ -74,6 +74,7 @@ ui_tls_secret_name: "{{ ui_service_name }}-serving-cert"
 ui_tls_enabled: true
 ui_route_name: "virt"
 ui_meta_file_name: "meta.json"
+ui_node_extra_ca_certs: "/opt/app-root/src/ca.crt"
 ui_state: absent
 
 must_gather_api_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_API_IMAGE') or lookup( 'env', 'RELATED_IMAGE_MUST_GATHER_API') }}"
