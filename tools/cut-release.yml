@@ -2,7 +2,9 @@
   vars:
     repo_root: "{{ playbook_dir }}/../"
     operator_name: "konveyor-forklift-operator"
+    tag_to_replace: "release-v2.3.0"
     release: ""
+    csv_location: "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v2.3.1.clusterserviceversion.yaml"
   tasks:
   - assert:
       that:
@@ -16,27 +18,33 @@
 
   - name: "Replace operator tags in CSV"
     replace:
-      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
-      regexp: ':latest'
+      path:  "{{ csv_location }}"
+      regexp: ':{{ tag_to_replace }}'
       replace: ":release-v{{ release }}"
 
   - name: "Replace operand in CSV"
     replace:
-      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
-      regexp: 'value: latest'
+      path:  "{{ csv_location }}"
+      regexp: 'value: {{ tag_to_replace }}'
       replace: "value: release-v{{ release }}"
 
   - name: "Fix the version in the CSV"
     replace:
-      path:  "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml"
-      regexp: '99\.0\.0'
+      path:  "{{ csv_location }}"
+      regexp: '2\.3\.0'
       replace: "{{ release }}"
+
+  - name: "Check CSV already renamed"
+    stat:
+      path: "{{ repo_root }}/bundle/manifests/{{ operator_name }}.v{{ release }}.clusterserviceversion.yaml"
+    register: csv
 
   - name: "Rename CSV"
     shell: |
            git mv \
-           {{ repo_root }}/bundle/manifests/{{ operator_name }}.v99.0.0.clusterserviceversion.yaml \
+           {{ csv_location }} \
            {{ repo_root }}/bundle/manifests/{{ operator_name }}.v{{ release }}.clusterserviceversion.yaml
+    when: not csv.stat.exists
 
   - name: "Replace default channel in annotations"
     replace:
