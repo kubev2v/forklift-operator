@@ -10,8 +10,8 @@ metadata:
   name: konveyor-forklift
   namespace: konveyor-forklift
 spec:
-  displayName: Konveyor Forklift Operator
-  publisher: Red Hat
+  displayName: Forklift Operator
+  publisher: Konveyor
   sourceType: grpc
   image: quay.io/konveyor/forklift-operator-index:latest
 ---
