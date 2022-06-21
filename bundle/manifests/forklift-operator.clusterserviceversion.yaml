@@ -1,7 +1,7 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: konveyor-forklift-operator.v99.0.0
+  name: forklift-operator.v99.0.0
   namespace: konveyor-forklift
   annotations:
     olm.skipRange: '>=0.0.0 <99.0.0'
@@ -10,7 +10,7 @@ metadata:
       Facilitates migration of VM workloads to OpenShift Virtualization
     categories: 'Modernization & Migration'
     containerImage: quay.io/konveyor/forklift-operator:latest
-    createdAt: 2020-06-16T11:21:00Z
+    createdAt: 2022-06-09T11:21:00Z
     repository: https://github.com/konveyor/forklift-operator
     operatorframework.io/initialization-resource: |-
       {
@@ -180,7 +180,7 @@ metadata:
         }
       ]
     certified: "false"
-    support: Red Hat
+    support: https://github.com/konveyor/forklift-operator/issues
     operatorframework.io/suggested-namespace: konveyor-forklift
 spec:
   relatedImages:
@@ -196,9 +196,9 @@ spec:
     image: quay.io/konveyor/forklift-validation:latest
   - name: virt-v2v
     image: quay.io/konveyor/forklift-virt-v2v:latest
-  displayName: Konveyor Forklift Operator
+  displayName: Forklift Operator
   description: |+
-    The Konveyor Forklift Operator fully manages the deployment and life cycle of Forklift on [OpenShift](https://www.openshift.com/).
+    The Forklift Operator fully manages the deployment and life cycle of Forklift on [OpenShift](https://www.openshift.com/).
 
     ### Install
     Once you have successfully installed the Operator, proceed to deploy components by creating the required ForkliftController CR.
@@ -211,11 +211,9 @@ spec:
     * Must-gather-api, a service to generate targeted must-gather archives.
 
     ### Compatibility
-    Konveyor Forklift 2.1 is supported in OpenShift 4.8
+    Forklift 2.2 is supported in OpenShift 4.9
 
-    Konveyor Forklift 2.2 is supported in OpenShift 4.9
-
-    Konveyor Forklift 2.3 is supported in OpenShift 4.10
+    Forklift 2.3 is supported in OpenShift 4.10
 
     ### Documentation
     Documentation can be found on our [website](https://forklift-docs.konveyor.io).
@@ -500,15 +498,15 @@ spec:
   - type: AllNamespaces
     supported: false
   maintainers:
-  - name: Red Hat
-    email: openshift-operators@redhat.com
+  - name: Forklift by Konveyor Community
+    email: forklift-dev@googlegroups.com
   maturity: stable
   provider:
-    name: Red Hat, Inc
+    name: Konveyor
   links:
-  - name: Konveyor Forklift Documentation
+  - name: Forklift Documentation
     url: https://forklift-docs.konveyor.io
-  - name: Konveyor Forklift Operator
+  - name: Forklift Operator
     url: https://github.com/konveyor/forklift-operator
   version: 99.0.0
   minKubeVersion: 1.23.0
