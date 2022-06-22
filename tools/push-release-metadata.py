@@ -13,7 +13,7 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('--old-version', dest='old_version', required=True, type=str, help='Old index image version tag, version must follow semver format (i.e 2.0.0)')
 parser.add_argument('--new-version', dest='new_version', required=True, type=str, help='New index image version tag, version must follow semver format (i.e 2.0.0)')
-parser.add_argument('--release-prefix', dest='release_prefix', default='v', type=str, help='release_prefix is the scheme used for branching project (i.e release-v), default is v')
+parser.add_argument('--release-prefix', dest='release_prefix', default='release-v', type=str, help='release_prefix is the scheme used for branching project (i.e release-v), default is release-v')
 parser.add_argument('--quay-org', dest='quay_org', default='quay.io/konveyor', type=str, help='Quay organization for this project, default is quay.io/konveyor')
 parser.add_argument('--quay-bundle-repo', dest='quay_bundle_repo', default='forklift-operator-bundle', type=str, help='Quay repo which holds bundleimages for this project, default is forklift-operator-bundle')
 parser.add_argument('--quay-index-repo', dest='quay_index_repo', default='forklift-operator-index', type=str, help='Quay repo which holds index images for this project, default is forklift-operator-index')
