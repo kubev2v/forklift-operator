@@ -17,10 +17,10 @@ The Konveyor Forklift new release procedure consist of a few steps summarized be
 ## Konveyor Forklift Stable
 We use semantic versioning convention (semver) for stable releases, release branches should be in the form of release-v<semver>
 
-1. Create a new release branch, for example `release-v2.0.0`
+1. Create a new release branch, for example `release-v2.3.0`
 1. Create a PR for the new release branch
-   1. Run `ansible-playbook tools/cut-release.yml -e "release=2.0.0"`
+   1. Run `tools/cut-release.py --version 2.3.0 --project-path .`
    1. Review changes, commmit, and submit the PR for review
 1. Once the release PR is ready and merged, add it to the index image and push to quay.io
-   1. `ansible-playbook tools/push-release-metadata.yml -e new_release=2.0.0 -e old_release=2.0.0-beta.0`
+   1. `tools/push-release-metadata.py --old-version 2.2.0 --new-version 2.3.0`
    1. Create or refresh existing konveyor-forklift catalog source and validate `oc create -f forklift-operator-catalog.yaml`

@@ -505,7 +505,7 @@ spec:
     name: Konveyor
   links:
   - name: Forklift Documentation
-    url: https://forklift-docs.konveyor.io
+    url: https://konveyor.github.io/forklift
   - name: Forklift Operator
     url: https://github.com/konveyor/forklift-operator
   version: 99.0.0
