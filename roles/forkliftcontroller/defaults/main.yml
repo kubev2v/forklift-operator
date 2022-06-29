@@ -8,6 +8,7 @@ feature_validation: true
 feature_must_gather_api: true
 
 k8s_cluster: false
+minikube_setup: false
 image_pull_policy: Always
 forklift_operator_version: "latest"
 forklift_resources:

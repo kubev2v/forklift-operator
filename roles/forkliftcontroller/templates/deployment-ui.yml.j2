@@ -23,6 +23,10 @@ spec:
           image: "{{ ui_image_fqin }}"
           imagePullPolicy: "{{ image_pull_policy }}"
           env:
+{% if minikube_setup|bool %}
+            - name: NO_AUTH
+              value: 'true'
+{% endif %}
             - name: META_FILE
               value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
             - name: NODE_EXTRA_CA_CERTS
