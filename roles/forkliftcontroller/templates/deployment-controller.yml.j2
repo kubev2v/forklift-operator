@@ -42,6 +42,8 @@ spec:
           value: "v1"
         - name: VIRT_V2V_IMAGE
           value: {{ virt_v2v_image_fqin }}
+        - name: AUTH_REQUIRED
+          value: {{ feature_auth_required|bool }}
 {% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"

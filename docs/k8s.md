@@ -54,7 +54,7 @@ metadata:
   namespace: konveyor-forklift
 spec:
   feature_ui: true
-  minikube_setup: true
+  feature_auth_required: false
   feature_validation: true
   inventory_tls_enabled: false
   validation_tls_enabled: false
