@@ -1,7 +1,0 @@
-apiVersion: forklift.konveyor.io/v1beta1
-kind: ForkliftController
-metadata:
-  name: forkliftcontroller-sample
-spec:
-  # Add fields here
-  foo: bar
