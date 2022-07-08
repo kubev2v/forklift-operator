@@ -1,5 +1,5 @@
 #!/bin/bash
-# Cleanup Tackle in kubernetes and ocp, a valid user session to cluster is required.
+# Cleanup Forklift in kubernetes and ocp, a valid user session to cluster is required.
 
 OC_BINARY=`which oc`
 KUBE_BINARY=`which kubectl`
