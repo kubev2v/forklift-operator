@@ -293,6 +293,8 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
+                - name: ANSIBLE_GATHERING
+                  value: explicit
                 - name: CONTROLLER_IMAGE
                   value: quay.io/konveyor/forklift-controller:{{ tag }}
                 - name: MUST_GATHER_IMAGE
