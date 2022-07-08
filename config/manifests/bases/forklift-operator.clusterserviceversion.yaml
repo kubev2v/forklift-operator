@@ -1,0 +1,45 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: forklift-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: The Forklift Operator fully manages the deployment and life cycle of
+    Forklift on [OpenShift](https://www.openshift.com/).
+  displayName: Forklift Operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - forklift
+  - migration
+  - konveyor
+  links:
+  - name: Forklift Operator
+    url: https://forklift-operator.domain
+  maintainers:
+  - email: forklift-dev@googlegroups.com
+    name: Forklift by Konveyor Community
+  maturity: alpha
+  provider:
+    name: Konveyor
+    url: https://www.konveyor.io
+  version: 0.0.0

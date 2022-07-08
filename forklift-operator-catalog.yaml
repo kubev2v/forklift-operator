@@ -8,6 +8,3 @@ spec:
   publisher: Konveyor
   sourceType: grpc
   image: quay.io/konveyor/forklift-operator-index:latest
-  updateStrategy:
-    registryPoll:
-      interval: 10m

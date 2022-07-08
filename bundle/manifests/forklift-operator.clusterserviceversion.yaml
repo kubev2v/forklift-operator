@@ -1,8 +1,8 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: ClusterServiceVersion
 metadata:
-  name: forklift-operator.v{{ version }}
-  namespace: {{ namespace }}
+  name: forklift-operator.v99.0.0
+  namespace: konveyor-forklift
   annotations:
     capabilities: Seamless Upgrades
     description: >-
@@ -11,16 +11,16 @@ metadata:
     support: https://github.com/konveyor/forklift-operator/issues
     repository: https://github.com/konveyor/forklift-operator
     certified: "false"
-    containerImage: quay.io/konveyor/forklift-operator:{{ tag }}
-    createdAt: {{ date }}
-    olm.skipRange: '>=0.0.0 <{{ version }}'
+    containerImage: quay.io/konveyor/forklift-operator:latest
+    createdAt: 2022-07-08T17:51:11Z
+    olm.skipRange: '>=0.0.0 <99.0.0'
     operatorframework.io/initialization-resource: |-
       {
         "apiVersion": "forklift.konveyor.io/v1beta1",
         "kind": "ForkliftController",
         "metadata": {
           "name": "forklift-controller",
-          "namespace": "{{ namespace }}"
+          "namespace": "konveyor-forklift"
         },
         "spec": {
           "feature_ui": "true",
@@ -35,7 +35,7 @@ metadata:
           "kind": "ForkliftController",
           "metadata": {
             "name": "forklift-controller",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {
             "feature_ui": "true",
@@ -48,12 +48,12 @@ metadata:
           "kind": "Migration",
           "metadata": {
             "name": "example-migration",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {
              "plan": {
                 "name": "example-plan",
-                "namespace": "{{ namespace }}"
+                "namespace": "konveyor-forklift"
              }
           }
         },
@@ -62,7 +62,7 @@ metadata:
           "kind": "Plan",
           "metadata": {
             "name": "example-plan",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {
              "provider": {
@@ -82,7 +82,7 @@ metadata:
           "kind": "Plan",
           "metadata": {
             "name": "example-plan",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {}
         },
@@ -91,7 +91,7 @@ metadata:
           "kind": "Provider",
           "metadata": {
             "name": "example-provider",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {
              "type": "vmware",
@@ -107,7 +107,7 @@ metadata:
           "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
             "name": "example-host",
-            "namespace": "{{ namespace }}"
+            "namespace": "konveyor-forklift"
           },
           "spec": {
              "provider": {
@@ -123,7 +123,7 @@ metadata:
           "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
              "name": "example-networkmap",
-             "namespace": "{{ namespace }}"
+             "namespace": "konveyor-forklift"
           },
           "spec": {
              "provider": {
@@ -149,7 +149,7 @@ metadata:
           "apiVersion": "forklift.konveyor.io/v1beta1",
           "metadata": {
              "name": "example-storagemap",
-             "namespace": "{{ namespace }}"
+             "namespace": "konveyor-forklift"
           },
           "spec": {
              "provider": {
@@ -173,7 +173,7 @@ metadata:
            "apiVersion": "forklift.konveyor.io/v1beta1",
            "metadata": {
               "name": "example-hook",
-              "namespace": "{{ namespace }}"
+              "namespace": "konveyor-forklift"
            },
            "spec": {
               "image": "quay.io/konveyor/hook-runner",
@@ -181,7 +181,7 @@ metadata:
            }
         }
       ]
-    operatorframework.io/suggested-namespace: {{ namespace }}
+    operatorframework.io/suggested-namespace: konveyor-forklift
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions:
@@ -294,17 +294,17 @@ spec:
                     fieldRef:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: CONTROLLER_IMAGE
-                  value: quay.io/konveyor/forklift-controller:{{ tag }}
+                  value: quay.io/konveyor/forklift-controller:latest
                 - name: MUST_GATHER_IMAGE
-                  value: quay.io/konveyor/forklift-must-gather:{{ tag }}
+                  value: quay.io/konveyor/forklift-must-gather:latest
                 - name: MUST_GATHER_API_IMAGE
-                  value: quay.io/konveyor/forklift-must-gather-api:{{ tag }}
+                  value: quay.io/konveyor/forklift-must-gather-api:latest
                 - name: UI_IMAGE
-                  value: quay.io/konveyor/forklift-ui:{{ tag }}
+                  value: quay.io/konveyor/forklift-ui:latest
                 - name: VALIDATION_IMAGE
-                  value: quay.io/konveyor/forklift-validation:{{ tag }}
+                  value: quay.io/konveyor/forklift-validation:latest
                 - name: VIRT_V2V_IMAGE
-                  value: quay.io/konveyor/forklift-virt-v2v:{{ tag }}
+                  value: quay.io/konveyor/forklift-virt-v2v:latest
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -317,7 +317,7 @@ spec:
                     port: 6789
                   initialDelaySeconds: 5
                   periodSeconds: 10
-                image: quay.io/konveyor/forklift-operator:{{ tag }}
+                image: quay.io/konveyor/forklift-operator:latest
                 imagePullPolicy: Always
                 name: forklift-operator
                 resources: {}
@@ -557,16 +557,16 @@ spec:
     url: https://github.com/konveyor/forklift-operator
   relatedImages:
   - name: controller
-    image: quay.io/konveyor/forklift-controller:{{ tag }}
+    image: quay.io/konveyor/forklift-controller:latest
   - name: must-gather
-    image: quay.io/konveyor/forklift-must-gather:{{ tag }}
+    image: quay.io/konveyor/forklift-must-gather:latest
   - name: must-gather-api
-    image: quay.io/konveyor/forklift-must-gather-api:{{ tag }}
+    image: quay.io/konveyor/forklift-must-gather-api:latest
   - name: ui
-    image: quay.io/konveyor/forklift-ui:{{ tag }}
+    image: quay.io/konveyor/forklift-ui:latest
   - name: validation
-    image: quay.io/konveyor/forklift-validation:{{ tag }}
+    image: quay.io/konveyor/forklift-validation:latest
   - name: virt-v2v
-    image: quay.io/konveyor/forklift-virt-v2v:{{ tag }}
-  version: {{ version }}
+    image: quay.io/konveyor/forklift-virt-v2v:latest
+  version: 99.0.0
   minKubeVersion: 1.23.0
