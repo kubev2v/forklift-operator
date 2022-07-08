@@ -43,3 +43,21 @@ spec:
   ui_tls_enabled: false
 EOF
 ```
+
+### Creating a _ForkliftController_ CR (SSL/TLS disabled) on minikube with UI
+```
+$ cat << EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: ForkliftController
+metadata:
+  name: forklift-controller
+  namespace: konveyor-forklift
+spec:
+  feature_ui: true
+  feature_auth_required: false
+  feature_validation: true
+  inventory_tls_enabled: false
+  validation_tls_enabled: false
+  ui_tls_enabled: false
+EOF
+```

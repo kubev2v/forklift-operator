@@ -23,6 +23,8 @@ spec:
           image: "{{ ui_image_fqin }}"
           imagePullPolicy: "{{ image_pull_policy }}"
           env:
+            - name: AUTH_REQUIRED
+              value: '{{ feature_auth_required|lower }}'
             - name: META_FILE
               value: {{ ui_configmap_path }}/{{ ui_meta_file_name }}
             - name: NODE_EXTRA_CA_CERTS
