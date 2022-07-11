@@ -1,7 +1,7 @@
 ---
+# Use the 'create api' subcommand to add watches to this file.
 - version: v1beta1
   group: forklift.konveyor.io
   kind: ForkliftController
-  role: /opt/ansible/roles/forkliftcontroller
-  reconcilePeriod: 30m
+  role: forkliftcontroller
 #+kubebuilder:scaffold:watch

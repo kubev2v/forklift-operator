@@ -25,7 +25,7 @@ For details and official instructions in how to add OLM support to kubernetes an
 
 Deploy Forklift using manifest:
 
-`$ kubectl apply -f https://raw.githubusercontent.com/konveyor/forklift-operator/main/forklift-k8s.yml`
+`$ kubectl apply -f https://raw.githubusercontent.com/konveyor/forklift-operator/main/forklift-k8s.yaml`
 
 ### Creating a _ForkliftController_ CR (SSL/TLS disabled)
 ```

@@ -9,9 +9,9 @@ metadata:
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
-  description: The Konveyor Forklift Operator fully manages the deployment and life
-    cycle of Forklift on OpenShift.
-  displayName: Konveyor Forklift Operator
+  description: The Forklift Operator fully manages the deployment and life cycle of
+    Forklift on [OpenShift](https://www.openshift.com/).
+  displayName: Forklift Operator
   icon:
   - base64data: ""
     mediatype: ""
@@ -29,12 +29,17 @@ spec:
   - supported: true
     type: AllNamespaces
   keywords:
+  - forklift
   - migration
+  - konveyor
   links:
   - name: Forklift Operator
     url: https://forklift-operator.domain
+  maintainers:
+  - email: forklift-dev@googlegroups.com
+    name: Forklift by Konveyor Community
   maturity: alpha
   provider:
-    name: Red Hat
-    url: https://github.com/konveyor/forklift-operator
+    name: Konveyor
+    url: https://www.konveyor.io
   version: 0.0.0
