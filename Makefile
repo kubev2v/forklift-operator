@@ -51,10 +51,10 @@ endif
 # Image URL to use all building/pushing image targets
 IMG ?= forklift-operator:latest
 
-ifeq (, $(shell which podman))
-    DOCKER_CMD = docker
-else
+ifeq (, $(shell which docker))
     DOCKER_CMD = podman
+else
+    DOCKER_CMD = docker
 endif
 
 .PHONY: all
