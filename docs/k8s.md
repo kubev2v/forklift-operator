@@ -40,6 +40,7 @@ spec:
   feature_validation: true
   inventory_tls_enabled: false
   validation_tls_enabled: false
+  must_gather_api_tls_enabled: false
   ui_tls_enabled: false
 EOF
 ```
@@ -58,6 +59,7 @@ spec:
   feature_validation: true
   inventory_tls_enabled: false
   validation_tls_enabled: false
+  must_gather_api_tls_enabled: false
   ui_tls_enabled: false
 EOF
 ```
