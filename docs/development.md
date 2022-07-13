@@ -1,4 +1,4 @@
-# development.md
+# Purpose
 
 The following guide attempts to aid developers in working and testing Forklift operator changes using a Deployment. This is most time consuming option to test operators but also the safest. To learn more about testing an operator locally without a deployment see [here](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/#1-run-locally-outside-the-cluster).
 
