@@ -60,6 +60,10 @@ Custom settings can be applied by editing the `ForkliftController` CR.
 
 `oc edit forkliftcontroller -n konveyor-forklift`
 
+## Development
+
+See [development.md](docs/development.md) for details.
+
 ## Forklift Documentation
 
 See the [Forklift Documentation](https://konveyor.github.io/forklift/) for detailed installation instructions as well as how to use Forklift.
