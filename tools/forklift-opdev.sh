@@ -1,10 +1,6 @@
 #!/bin/bash
 
 PROJECT_ROOT="../"
-OPM_BIN=`which opm`
-OP_SDK_BIN=`which operator-sdk`
-DOCKER_BIN=`which docker`
-OC_BIN=`which oc`
 REQ_BINS="opm oc docker podman operator-sdk"
 OPERATOR_REPO="forklift-operator"
 BUNDLE_REPO="forklift-operator-bundle"
