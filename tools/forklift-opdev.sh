@@ -1,11 +1,17 @@
 #!/bin/bash
+# Quay.io repo names must match what is provisioned by user
+# PROJECT_ROOT assumes running script from tools repo subdir
+# CSV_PATH is relative to PROJECT_ROOT
+# All objects are created inside the konveyor-forklift namespace for OCP and k8s clusters
 
 PROJECT_ROOT="../"
+CSV_PATH="bundle/manifests/forklift-operator.clusterserviceversion.yaml"
 REQ_BINS="opm oc docker podman operator-sdk"
 OPERATOR_REPO="forklift-operator"
 BUNDLE_REPO="forklift-operator-bundle"
 INDEX_REPO="forklift-operator-index"
 CATALOG_NS="openshift-marketplace"
+FORKLIFT_NS="konveyor-forklift"
 TAG="latest"
 NAME="Forklift"
 
@@ -85,6 +91,16 @@ fi
 
 echo "All requirements Ok"
 
+# Check if we are running on k8s or OCP clusters
+
+oc get apiservices v1.route.openshift.io 1>/dev/null
+
+if [ $? -ne 0 ]; then
+	CLI_BIN=kubectl
+else
+	CLI_BIN=oc
+fi
+
 # CWD is project root
 pushd ${PROJECT_ROOT} 1>/dev/null
 
@@ -101,8 +117,8 @@ if [ ! -z ${RUN_BUNDLE} ]; then
 	echo
 	echo "##### Building and pushing Bundle #####"
 	echo
-	# Must patch bundle CSV with target custom operator image first
-	sed -i "s/quay.io\/konveyor\/forklift-operator:latest/quay.io\/${QUAY_NS}\/forklift-operator:latest/" bundle/manifests/forklift-operator.clusterserviceversion.yaml
+	# Must patch bundle CSV with target custom operator image first, assumes main branch latest tag
+	sed -i "s/quay.io\/konveyor\/forklift-operator:latest/quay.io\/${QUAY_NS}\/forklift-operator:${TAG}/" ${CSV_PATH}
 	operator-sdk bundle validate ./bundle && make bundle-build bundle-push BUNDLE_IMG=quay.io/${QUAY_NS}/${BUNDLE_REPO}:${TAG}
 fi
 
@@ -117,13 +133,13 @@ if [ ! -z  ${RUN_CATALOG} ]; then
 	echo
 	echo "##### Creating custom Catalog #####"
 	echo
-        oc create namespace konveyor-forklift
-	cat << EOF | oc apply -f -
+        ${CLI_BIN} create namespace ${FORKLIFT_NS}
+	cat << EOF | ${CLI_BIN} apply -f -
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
   name: konveyor-forklift
-  namespace: konveyor-forklift
+  namespace: ${FORKLIFT_NS}
 spec:
   displayName: Forklift Development
   publisher: Konveyor
@@ -136,5 +152,5 @@ if [ ! -z ${RUN_DEPLOYMENT} ]; then
 	echo
 	echo "##### Deploying Forklift #####"
 	echo
-	oc apply -f forklift-k8s-dev.yaml
+	${CLI_BIN} apply -f forklift-k8s-dev.yaml
 fi
