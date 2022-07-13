@@ -1,6 +1,6 @@
 # development.md
 
-The following guide attempts to aid developers in working and testing Forklift operator changes.
+The following guide attempts to aid developers in working and testing Forklift operator changes using a Deployment. This is most time consuming option to test operators but also the safest. To learn more about testing an operator locally without a deployment see [here](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/#1-run-locally-outside-the-cluster).
 
 ## Development environment setup
 
@@ -12,17 +12,17 @@ Before you begin, the following tools need to be installed in your dev system:
 * [__OPM__](https://github.com/operator-framework/operator-registry/)
 * __Podman__ and __Docker__
 
-At a very minimum you will need three Quay repos to host images related to operator development:
+At a very minimum you will need three Quay repos to serve images related to operator development:
 
-* forklift-operator repo , stores dev operator images
-* forklift-operator-bundle repo , stores operator dev bundle images
-* forklift-operator-index repo , stores index images and serves custom catalogs
+* forklift-operator repo , stores operator images (ansible operator itself)
+* forklift-operator-bundle repo , stores operator bundle images (operator versions)
+* forklift-operator-index repo , stores index images and serves custom catalogs (index of versions)
 
 These repos must be publicly accessible and you must have enough permissions to push images with your Quay credentials. In most cases, your own organization (username) in Quay (i.e quay.io/<username>/<repo-name>) is sufficient and recommended.
 
 ## Opdev script
 
-The opdev script automates the process of building and publishing operator development builds. It simplifies the most common tasks that would be otherwise manually done using operator-sdk and rest of tooling needed to build and publish operators for testing purposes. It can also deploy a development Forklift instance if desired.
+The opdev helper script automates the process of building and publishing operator development builds. It simplifies the most common tasks that would be otherwise manually done using operator-sdk and rest of tooling needed to build and publish operators for testing purposes. Optionally, it can also deploy a development Forklift instance if desired.
 
 Usage:
 
@@ -40,16 +40,16 @@ Valid arguments for forklift-opdev.sh:
 
 ```
 
-The opdev script is resides in the tools directory of the operator repo. The only required option is -n , which is your Quay organization that hosts your operator development repos. You must be logged in to your cluster (as admin) and quay account prior attempting to run.
+The [opdev script](../tools/forklift-opdev.sh) resides in the tools directory of the operator repo. The only required option is -n , which is your Quay organization that hosts your operator development repos. You must be logged in to your cluster (as admin) and quay account prior attempting to run.
 
-If you need more details regarding these procedures please the [Operator SDK ansible tutorial](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/).
+If you need more details regarding these operator procedures please the [Operator SDK ansible tutorial](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/).
 
 ## Development flow
 
 The usual dev order flow for operator is as follows:
 
-* Create and make changes to your operator branch
-* Run opdev script to build and publish your changes
+* Create and make changes in your operator branch
+* Build and push your changes to your Quay org
 * Deploy from a custom catalogsource and validate changes
 * Commit changes and submit PR to forklift-operator repo
 
@@ -65,7 +65,7 @@ The usual dev order flow for operator is as follows:
 
 ## Build and push all
 
-This is recommended as a first time run using opdev, as it will initialize all repos and also will create a custom catalog source 
+This is recommended as a first time run, as it will populate all repos and also will create a custom CatalogSource in your cluster
 
 ```
 ./forklift-opdev.sh -n <your-quay-org> -obic
@@ -73,11 +73,15 @@ This is recommended as a first time run using opdev, as it will initialize all r
 
 ## Build and push a development operator container image
 
+This example only builds and pushes an operator image, if changes were only made to the ansible roles, this is the option that makes the most sense.
+
 ```
 ./forklift-opdev.sh -n <your-quay-org> -o
 ```
 
 ## Build and push a development operator bundle and index image
+
+This is useful when only OLM metadata changes have taken place, bundle and index images are built and also a CatalogSource is created. In addition, the ClusterServiceVersion (CSV) is modified to use the custom operator development image prior building the bundle.
 
 ```
 ./forklift-opdev.sh -n <your-quay-org> -bic
@@ -85,7 +89,7 @@ This is recommended as a first time run using opdev, as it will initialize all r
 
 ## Testing a development operator using a deployment
 
-First, ensure the existance and health of the catalog:
+Before continuing, ensure the existance and health of the CatalogSource:
 
 ```
 oc -n konveyor-forklift get catalogsource
@@ -93,7 +97,11 @@ NAME                DISPLAY                TYPE   PUBLISHER   AGE
 konveyor-forklift   Forklift Development   grpc   Konveyor    3m29s
 ```
 
-### Deploy
+The index image used by CatalogSource includes the bundle created for this development build.
+
+### Deploy a development operator
+
+The deploy option will create a few resources necessary to install Forklift using OLM such as ensuring an OperatorGroup and Subscription are in place (by default all objects are created in the konveyor-forklift namespace).
 
 ```
 ./forklift-opdev.sh -n <your-quay-org> -d
@@ -109,9 +117,11 @@ forklift-operator-5979d986b7-4lj5h                                1/1     Runnin
 konveyor-forklift-fzztn                                           1/1     Running     0          5m52s
 ```
 
+The operator pod can be inspected further by ensuring the correct image is being pulled and there are other warnings or errors in logs.
+
 ### Create a _ForkliftController_ CR
 
-Please customize the CR spec as needed, example:
+Create and customize the CR spec as needed, example:
 
 ```
 cat << EOF | oc apply -f -
@@ -159,4 +169,4 @@ Status:
 Events:                    <none>
 ```
 
-Any errors encountered during reconcile will be reported, for further info the operator pod logs can be inspected.
+Any errors encountered during reconcile will be reported, for further info, the operator pod logs can be inspected.
