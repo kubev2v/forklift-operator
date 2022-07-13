@@ -12,17 +12,17 @@ Before you begin, the following tools need to be installed in your dev system:
 * [__OPM__](https://github.com/operator-framework/operator-registry/)
 * __Podman__ and __Docker__
 
-At a very minimum you will need three Quay repos to serve images related to operator development:
+Also, at a very minimum you will need **three Quay repos** to serve and store images related to operator development:
 
-* forklift-operator repo , stores operator images (ansible operator itself)
-* forklift-operator-bundle repo , stores operator bundle images (operator versions)
-* forklift-operator-index repo , stores index images and serves custom catalogs (index of versions)
+* forklift-operator repo , operator images (ansible operator itself)
+* forklift-operator-bundle repo , operator bundle images (operator versions)
+* forklift-operator-index repo , index images (index of operator versions)
 
-These repos must be publicly accessible and you must have enough permissions to push images with your Quay credentials. In most cases, your own organization (username) in Quay (i.e quay.io/<username>/<repo-name>) is sufficient and recommended.
+These repos must be publicly accessible and you must have enough permissions to push images with your Quay credentials. In most cases, your own organization (Quay username) in Quay is used (i.e quay.io/<username>/<repo-name>). This is the recommended setup for development.
 
 ## Opdev script
 
-The opdev helper script automates the process of building and publishing operator development builds. It simplifies the most common tasks that would be otherwise manually done using operator-sdk and rest of tooling needed to build and publish operators for testing purposes. Optionally, it can also deploy a development Forklift instance if desired.
+The opdev helper script automates the process of building, publishing and installing operator development builds. It simplifies the most common tasks that would be otherwise manually done using operator-sdk and rest of tooling needed to build and publish operators for testing purposes.
 
 Usage:
 
@@ -42,7 +42,7 @@ Valid arguments for forklift-opdev.sh:
 
 The [opdev script](../tools/forklift-opdev.sh) resides in the tools directory of the operator repo. The only required option is -n , which is your Quay organization that hosts your operator development repos. You must be logged in to your cluster (as admin) and quay account prior attempting to run.
 
-If you need more details regarding these operator procedures please the [Operator SDK ansible tutorial](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/).
+If you want more in-depth details regarding these operator procedures please check the [Operator SDK ansible tutorial](https://sdk.operatorframework.io/docs/building-operators/ansible/tutorial/).
 
 ## Development flow
 
@@ -50,10 +50,10 @@ The usual dev order flow for operator is as follows:
 
 * Create and make changes in your operator branch
 * Build and push your changes to your Quay org
-* Deploy from a custom catalogsource and validate changes
+* Deploy from a development catalogsource and validate changes
 * Commit changes and submit PR to forklift-operator repo
 
-**Note**: Please use forks when submitting your PR, we want to avoid rogue branches in base repo
+**Note**: Please use forks when submitting your PR, we want to avoid rogue branches in base repo.
 
 ## How do I push and test my Forklift operator changes?
 
@@ -65,7 +65,7 @@ The usual dev order flow for operator is as follows:
 
 ## Build and push all
 
-This is recommended as a first time run, as it will populate all repos and also will create a custom CatalogSource in your cluster
+This is recommended as a first time run, as it will populate all dev repos and also will create a custom CatalogSource in your cluster
 
 ```
 ./forklift-opdev.sh -n <your-quay-org> -obic
@@ -170,3 +170,13 @@ Events:                    <none>
 ```
 
 Any errors encountered during reconcile will be reported, for further info, the operator pod logs can be inspected.
+
+## Cleanup Forklift
+
+Use the [Forklift cleanup script]((../tools/forklift-cleanup.sh) which is supplied with operator, it will ensure all resources are properly deleted.
+
+Example for OpenShift clusters:
+
+```
+./forklift-cleanup.sh -o
+```
