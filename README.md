@@ -7,7 +7,7 @@ Forklift Operator installs a suite of migration tools that facilitate the migrat
 ## Prerequisites
 
 * [__OpenShift 4.9+__](https://www.openshift.com/) or [__k8s v1.22+__](https://kubernetes.io/)
-* [__OpenShift Virtualization 4.9+__](https://www.redhat.com/en/technologies/cloud-computing/openshift/) or [KubeVirt](https://kubevirt.io/)
+* [__OpenShift Virtualization 4.9+__](https://www.redhat.com/en/technologies/cloud-computing/openshift/) or [__KubeVirt__](https://kubevirt.io/)
 * [__Operator Lifecycle Manager (OLM) support__](https://olm.operatorframework.io/)
 
 ## Compatibility
@@ -27,7 +27,7 @@ The operator will install all the necessary components which Forklift needs to o
 
 * [Forklift UI](https://github.com/konveyor/forklift-ui), The Forklift UI is based on [Patternfly 4](https://www.patternfly.org/v4).
 * [Forklift Controller](https://github.com/konveyor/forklift-controller), The Forklift Controller orchestrates the migration.
-* [Forklift Validation](https://github.com/konveyor/forklift-validation), The Forklift Validation service checks the VMs for possible issues before migration. Based on [Open Policy Agent](https://www.openpolicyagent.org).
+* [Forklift Validation](https://github.com/konveyor/forklift-validation), The Forklift Validation service checks the VMs for possible issues before migration. This service is based on [Open Policy Agent](https://www.openpolicyagent.org).
 * [Forklift Must Gather](https://github.com/konveyor/forklift-must-gather), Support tool for gathering information about the Forklift environment.
 
 ## Development
