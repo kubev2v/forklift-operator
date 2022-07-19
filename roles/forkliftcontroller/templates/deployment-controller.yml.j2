@@ -117,6 +117,8 @@ spec:
               fieldPath: metadata.namespace
         - name: ROLE
           value: inventory
+        - name: API_HOST
+          value: {{ inventory_service_name }}.{{ app_namespace }}.svc.cluster.local
         - name: KUBEVIRT_CLIENT_GO_SCHEME_REGISTRATION_VERSION
           value: "v1"
         - name: AUTH_REQUIRED
