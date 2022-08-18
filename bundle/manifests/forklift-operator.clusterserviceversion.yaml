@@ -448,6 +448,7 @@ spec:
           - namespaces
           - events
           - configmaps
+          - persistentvolumes
           - persistentvolumeclaims
           verbs:
           - get
