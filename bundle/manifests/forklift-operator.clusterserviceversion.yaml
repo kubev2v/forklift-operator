@@ -432,6 +432,18 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - admissionregistration.k8s.io
+          resources:
+          - validatingwebhookconfigurations
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
       - serviceAccountName: forklift-controller
         rules:
         - apiGroups:

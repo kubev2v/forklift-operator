@@ -107,6 +107,8 @@ spec:
           readOnly: true
         - mountPath: {{ profiler_volume_path }}
           name: profiler
+        - mountPath: /var/run/secrets/{{ admission_webhook_tls_secret_name }}
+          name: {{ admission_webhook_tls_secret_name }}
       - name: inventory
         command:
         - /usr/local/bin/manager
@@ -196,7 +198,7 @@ spec:
           name: profiler
 {% if inventory_tls_enabled|bool %}
         - mountPath: /var/run/secrets/{{ inventory_tls_secret_name }}
-          name: {{ inventory_service_name }}-serving-cert
+          name: {{ inventory_tls_secret_name }}
 {% endif %}
       terminationGracePeriodSeconds: 10
       volumes:
@@ -204,6 +206,10 @@ spec:
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
+      - name: {{ admission_webhook_tls_secret_name }}
+        secret:
+          defaultMode: 420
+          secretName: {{ admission_webhook_tls_secret_name }}
 {% if inventory_tls_enabled|bool %}
       - name: {{ inventory_tls_secret_name }}
         secret:

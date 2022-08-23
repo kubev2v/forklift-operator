@@ -95,3 +95,6 @@ must_gather_api_state: absent
 
 must_gather_image_fqin: "{{ lookup( 'env', 'MUST_GATHER_IMAGE') or lookup( 'env', 'RELATED_IMAGE_MUST_GATHER') }}"
 virt_v2v_image_fqin: "{{ lookup( 'env', 'VIRT_V2V_IMAGE') or lookup( 'env', 'RELATED_IMAGE_VIRT_V2V') }}"
+
+admission_webhook_service_name: "{{ app_name }}-admission-webhook"
+admission_webhook_tls_secret_name: "{{ admission_webhook_service_name }}-serving-cert"
