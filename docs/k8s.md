@@ -69,6 +69,7 @@ spec:
   validation_tls_enabled: false
   must_gather_api_tls_enabled: false
   ui_tls_enabled: false
+  admission_webhook: false
 EOF
 ```
 
@@ -88,5 +89,6 @@ spec:
   validation_tls_enabled: false
   must_gather_api_tls_enabled: false
   ui_tls_enabled: false
+  admission_webhook: false
 EOF
 ```

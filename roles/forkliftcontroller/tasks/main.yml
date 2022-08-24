@@ -62,15 +62,18 @@
       state: present
       definition: "{{ lookup('template', 'service-inventory.yml.j2') }}"
 
-  - name: "Setup the admission webhook service"
-    k8s:
-      state: present
-      definition: "{{ lookup('template', 'service-admission-webhook.yml.j2') }}"
+  - name: "Setup admission webhook"
+    when: admission_webhook|bool
+    block:
+      - name: "Setup the admission webhook service"
+        k8s:
+          state: present
+          definition: "{{ lookup('template', 'service-admission-webhook.yml.j2') }}"
 
-  - name: "Setup the admission webhook"
-    k8s:
-      state: present
-      definition: "{{ lookup('template', 'admission-webhook-secrets.yml.j2') }}"
+      - name: "Setup the admission webhook for providers' secrets"
+        k8s:
+          state: present
+          definition: "{{ lookup('template', 'admission-webhook-providers-secrets.yml.j2') }}"
 
   - name: "Setup controller deployment"
     k8s:

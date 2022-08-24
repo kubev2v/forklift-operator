@@ -43,7 +43,7 @@ spec:
         - name: VIRT_V2V_IMAGE
           value: {{ virt_v2v_image_fqin }}
         - name: ADMISSION_WEBHOOK_ENABLED
-          value: "true"
+          value: "{{ admission_webhook }}"
 {% if inventory_tls_enabled|bool %}
         - name: API_PORT
           value: "8443"
@@ -109,8 +109,10 @@ spec:
           readOnly: true
         - mountPath: {{ profiler_volume_path }}
           name: profiler
+{% if admission_webhook|bool %}
         - mountPath: /var/run/secrets/{{ admission_webhook_tls_secret_name }}
           name: {{ admission_webhook_tls_secret_name }}
+{% endif %}
       - name: inventory
         command:
         - /usr/local/bin/manager
@@ -208,10 +210,12 @@ spec:
         secret:
           defaultMode: 420
           secretName: webhook-server-secret
+{% if admission_webhook|bool %}
       - name: {{ admission_webhook_tls_secret_name }}
         secret:
           defaultMode: 420
           secretName: {{ admission_webhook_tls_secret_name }}
+{% endif %}
 {% if inventory_tls_enabled|bool %}
       - name: {{ inventory_tls_secret_name }}
         secret:
