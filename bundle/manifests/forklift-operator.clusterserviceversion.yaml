@@ -232,7 +232,7 @@ spec:
 
     ### Install
 
-    OpenShift Virtualization / KubeVirt is required and must be installed prior attempting to deploy Forklift.
+    OpenShift Virtualization / KubeVirt must be installed on a migration target cluster before you can use Forklift to transfer any VMs to that cluster
 
     Once you have successfully installed the Operator, proceed to deploy components by creating the required ForkliftController CR.
 
