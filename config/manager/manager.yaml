@@ -2,52 +2,54 @@ apiVersion: v1
 kind: Namespace
 metadata:
   labels:
-    control-plane: controller-manager
+    control-plane: forklift-operator
   name: system
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller-manager
+  name: forklift-operator
   namespace: system
   labels:
-    control-plane: controller-manager
+    control-plane: forklift-operator
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      control-plane: controller-manager
-  replicas: 1
+      app: forklift
+      name: forklift-operator
   template:
     metadata:
-      annotations:
-        kubectl.kubernetes.io/default-container: manager
       labels:
-        control-plane: controller-manager
+        app: forklift
+        name: forklift-operator
     spec:
-      securityContext:
-        runAsNonRoot: true
-        # TODO(user): For common cases that do not require escalating privileges
-        # it is recommended to ensure that all your Pods/Containers are restrictive.
-        # More info: https://kubernetes.io/docs/concepts/security/pod-security-standards/#restricted
-        # Please uncomment the following code if your project does NOT have to work on old Kubernetes
-        # versions < 1.19 or on vendors versions which do NOT support this field by default (i.e. Openshift < 4.11 ).
-        # seccompProfile:
-        #   type: RuntimeDefault
+      serviceAccountName: forklift-operator
       containers:
       - args:
+        - --health-probe-bind-address=:6789
+        - --metrics-bind-address=127.0.0.1:8080
         - --leader-elect
         - --leader-election-id=forklift-operator
-        image: controller:latest
-        name: manager
         env:
+        - name: WATCH_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.annotations['olm.targetNamespaces']
         - name: ANSIBLE_GATHERING
           value: explicit
-        securityContext:
-          allowPrivilegeEscalation: false
-        # TODO(user): uncomment for common cases that do not require escalating privileges
-        # capabilities:
-        #   drop:
-        #     - "ALL"
+        - name: CONTROLLER_IMAGE
+          value: ${CONTROLLER_IMAGE}:${TAG}
+        - name: MUST_GATHER_IMAGE
+          value: ${MUST_GATHER_IMAGE}:${TAG}
+        - name: MUST_GATHER_API_IMAGE
+          value: ${MUST_GATHER_API_IMAGE}:${TAG}
+        - name: UI_IMAGE
+          value: ${UI_IMAGE}:${TAG}
+        - name: VALIDATION_IMAGE
+          value: ${VALIDATION_IMAGE}:${TAG}
+        - name: VIRT_V2V_IMAGE
+          value: ${VIRT_V2V_IMAGE}:${TAG}
         livenessProbe:
           httpGet:
             path: /healthz
@@ -60,14 +62,7 @@ spec:
             port: 6789
           initialDelaySeconds: 5
           periodSeconds: 10
-        # TODO(user): Configure the resources accordingly based on the project requirements.
-        # More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-        resources:
-          limits:
-            cpu: 500m
-            memory: 768Mi
-          requests:
-            cpu: 10m
-            memory: 256Mi
-      serviceAccountName: controller-manager
-      terminationGracePeriodSeconds: 10
+        image: ${IMG}:${TAG}
+        imagePullPolicy: Always
+        name: forklift-operator
+        resources: {}

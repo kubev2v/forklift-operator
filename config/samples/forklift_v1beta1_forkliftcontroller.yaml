@@ -1,6 +1,10 @@
+---
 apiVersion: forklift.konveyor.io/v1beta1
 kind: ForkliftController
 metadata:
-  name: forkliftcontroller-sample
+  name: forklift-controller
+  namespace: ${NAMESPACE}
 spec:
-  # TODO(user): Add fields here
+  feature_ui: 'true'
+  feature_validation: 'true'
+  feature_must_gather_api: 'true'

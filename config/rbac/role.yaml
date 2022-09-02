@@ -4,54 +4,30 @@ kind: ClusterRole
 metadata:
   name: manager-role
 rules:
-  ##
-  ## Base operator rules
-  ##
-  - apiGroups:
-      - ""
-    resources:
-      - secrets
-      - pods
-      - pods/exec
-      - pods/log
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  - apiGroups:
-      - apps
-    resources:
-      - deployments
-      - daemonsets
-      - replicasets
-      - statefulsets
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-  ##
-  ## Rules for forklift.konveyor.io/v1beta1, Kind: ForkliftController
-  ##
-  - apiGroups:
-      - forklift.konveyor.io
-    resources:
-      - forkliftcontrollers
-      - forkliftcontrollers/status
-      - forkliftcontrollers/finalizers
-    verbs:
-      - create
-      - delete
-      - get
-      - list
-      - patch
-      - update
-      - watch
-#+kubebuilder:scaffold:rules
+- apiGroups:
+  - config.openshift.io
+  resources:
+  - clusterversions
+  - proxies
+  verbs:
+  - get
+- apiGroups:
+  - oauth.openshift.io
+  resources:
+  - oauthclients
+  verbs:
+  - '*'
+- apiGroups:
+  - forklift.konveyor.io
+  resources:
+  - forkliftcontrollers
+  - forkliftcontrollers/status
+  - forkliftcontrollers/finalizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch

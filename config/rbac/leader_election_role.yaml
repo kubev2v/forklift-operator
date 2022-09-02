@@ -7,7 +7,42 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - pods
+  - services
+  - services/finalizers
+  - endpoints
+  - persistentvolumeclaims
+  - events
   - configmaps
+  - secrets
+  verbs:
+  - '*'
+- apiGroups:
+  - route.openshift.io
+  resources:
+  - routes
+  verbs:
+  - '*'
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - daemonsets
+  - replicasets
+  - statefulsets
+  verbs:
+  - '*'
+- apiGroups:
+  - monitoring.coreos.com
+  resources:
+  - servicemonitors
+  verbs:
+  - get
+  - create
+- apiGroups:
+  - apps.openshift.io
+  resources:
+  - deploymentconfigs
   verbs:
   - get
   - list
@@ -16,6 +51,20 @@ rules:
   - update
   - patch
   - delete
+- apiGroups:
+  - apps
+  resourceNames:
+  - forklift-operator
+  resources:
+  - deployments/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - forklift.konveyor.io
+  resources:
+  - '*'
+  verbs:
+  - '*'
 - apiGroups:
   - coordination.k8s.io
   resources:
@@ -26,12 +75,4 @@ rules:
   - watch
   - create
   - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
   - patch

@@ -19,8 +19,11 @@ We use semantic versioning convention (semver) for stable releases, release bran
 
 1. Create a new release branch, for example `release-v2.3.0`
 1. Create a PR for the new release branch
-   1. Run `tools/cut-release.py --version 2.3.0 --project-path .`
+   1. Run `VERSION=2.3.0 make bundle`
+   1. Bump the `forklift_operator_version` in `roles/forkliftcontroller/defaults/main.yml`
+   1. Add relatedImages to the CSV with the SHA digests.
    1. Review changes, commmit, and submit the PR for review
 1. Once the release PR is ready and merged, add it to the index image and push to quay.io
-   1. `tools/push-release-metadata.py --old-version 2.2.0 --new-version 2.3.0`
+   1. `CATALOG_BASE_IMG=quay.io/konveyor/forklift-operator-index:release-v2.2.0 VERSION=2.3.0 make catalog-build bundle-push`
+   1. `CATALOG_BASE_IMG=quay.io/konveyor/forklift-operator-index:release-v2.3.0 TAG=latest make catalog-build catalog-push`
    1. Create or refresh existing konveyor-forklift catalog source and validate `oc create -f forklift-operator-catalog.yaml`

@@ -11,3 +11,6 @@ bin
 *~
 *.swp
 *.retry
+.vscode
+bundle*
+index*
